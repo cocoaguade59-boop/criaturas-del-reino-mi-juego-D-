@@ -1119,6 +1119,24 @@ const CRE_DESC = {
   ],
 };
 
+// === GUARDADO ===
+const SAVE_KEY = 'criaturasDelReino_v2';
+function hasSaveGame() {
+  try { return !!localStorage.getItem(SAVE_KEY); } catch (e) { return false; }
+}
+function clearAllGameSaves() {
+  try {
+    localStorage.removeItem(SAVE_KEY);
+    // Limpieza de compatibilidad por si StackBlitz conservó claves antiguas.
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (k && /criaturas|reino/i.test(k)) localStorage.removeItem(k);
+    }
+  } catch (e) {
+    console.error('Error limpiando guardado:', e);
+  }
+}
+
 // === CONTADOR DE CAPTURAS POR ESPECIE ===
 let captureCount = {};
 
@@ -2970,6 +2988,8 @@ const G = {
   pts: [],
   nots: [],
   tFr: 0,
+  titleSel: 0,
+  hasSave: false,
   sSel: 0,
   bs: null,
   ds: null,
@@ -12582,12 +12602,42 @@ function scaledLv(base = 5, npc = null) {
 // ============================================================
 
 // === PANTALLA DE TÍTULO ===
+function startNewGameFlow() {
+  clearAllGameSaves();
+  G.hasSave = false;
+  G.sSel = 0;
+  G.scr = 'intro';
+  G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+}
+
 function uTitle() {
   G.tFr++;
+  G.hasSave = hasSaveGame();
+  const optCount = G.hasSave ? 2 : 1;
+  if (kp('ArrowUp') || kp('ArrowLeft')) {
+    G.titleSel = (G.titleSel + optCount - 1) % optCount;
+    sfx.sel();
+  }
+  if (kp('ArrowDown') || kp('ArrowRight')) {
+    G.titleSel = (G.titleSel + 1) % optCount;
+    sfx.sel();
+  }
   if (kp(' ') || kp('Enter')) {
     sfx.sel();
-    G.scr = 'intro';
-    G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+    if (G.hasSave && G.titleSel === 0) {
+      if (loadGame()) {
+        G.scr = 'world';
+        aN('¡Partida cargada!');
+      } else {
+        startNewGameFlow();
+      }
+    } else if (G.hasSave && G.titleSel === 1) {
+      G.scr = 'confirmReset';
+      G.resetSel = 0;
+      G.resetFromTitle = true;
+    } else {
+      startNewGameFlow();
+    }
   }
 }
 
@@ -12648,11 +12698,18 @@ function dTitle() {
   cx.font = '6px "Press Start 2P"';
   cx.fillText('v2.0', 320, 138);
 
-  // Presiona para empezar
-  if (Math.sin(f * 0.1) > 0) {
+  // Opciones de inicio
+  cx.fillStyle = '#fff';
+  cx.font = '9px "Press Start 2P"';
+  if (G.hasSave) {
+    const opts = ['Continuar partida guardada', 'Nueva partida desde Aldea Pitch'];
+    opts.forEach((o, i) => {
+      cx.fillStyle = G.titleSel === i ? '#ffd700' : '#A0B0C0';
+      cx.fillText(`${G.titleSel === i ? '▶ ' : '  '}${o}`, 320, 402 + i * 22);
+    });
+  } else if (Math.sin(f * 0.1) > 0) {
     cx.fillStyle = '#fff';
-    cx.font = '10px "Press Start 2P"';
-    cx.fillText('ESPACIO para comenzar', 320, 420);
+    cx.fillText('ESPACIO para comenzar nueva partida', 320, 420);
   }
 
   // Controles
@@ -15077,13 +15134,15 @@ function uConfirmReset() {
     sfx.sel();
     if (G.resetSel === 0) {
       // No reiniciar
-      G.scr = 'menu';
+      G.scr = G.resetFromTitle ? 'title' : 'menu';
+      G.resetFromTitle = false;
     } else {
       // Sí reiniciar
-      resetGame();
+      resetGame(!!G.resetFromTitle);
+      G.resetFromTitle = false;
     }
   }
-  if (kp('x') || kp('Escape')) G.scr = 'menu';
+  if (kp('x') || kp('Escape')) { G.scr = G.resetFromTitle ? 'title' : 'menu'; G.resetFromTitle = false; }
 }
 
 function dConfirmReset() {
@@ -15109,9 +15168,9 @@ function dConfirmReset() {
   cx.fillText(`${G.resetSel === 1 ? '▶ ' : '  '}Sí, reiniciar toda la partida`, 155, 296);
 }
 
-function resetGame() {
-  // Borrar save
-  localStorage.removeItem('criaturasDelReino_v2');
+function resetGame(startIntro = false) {
+  // Borrar save de forma robusta
+  clearAllGameSaves();
 
   // Reiniciar variables globales
   G.scr = 'title';
@@ -15133,6 +15192,8 @@ function resetGame() {
   G.pts = [];
   G.nots = [];
   G.tFr = 0;
+  G.titleSel = 0;
+  G.hasSave = false;
   G.sSel = 0;
   G.bs = null;
   G.ds = null;
@@ -15210,6 +15271,10 @@ function resetGame() {
 
   aN('¡Partida reiniciada!');
   sfx.sel();
+  if (startIntro) {
+    G.scr = 'intro';
+    G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+  }
 }
 
 // === PANTALLA DE MISIONES ===
@@ -18149,7 +18214,7 @@ function saveGame() {
       prevPos: G.prevPos,
     };
 
-    localStorage.setItem('criaturasDelReino_v2', JSON.stringify(save));
+    localStorage.setItem(SAVE_KEY, JSON.stringify(save));
     aN('¡Partida guardada!');
     sfx.sel();
   } catch (e) {
@@ -18160,7 +18225,7 @@ function saveGame() {
 
 function loadGame() {
   try {
-    const raw = localStorage.getItem('criaturasDelReino_v2');
+    const raw = localStorage.getItem(SAVE_KEY);
     if (!raw) return false;
     const save = JSON.parse(raw);
 
@@ -18476,12 +18541,9 @@ function init() {
   genCave(cave2, CC, CR);
   genCastle();
 
-  // Intentar cargar partida
-  const loaded = loadGame();
-  if (loaded) {
-    G.scr = 'world';
-    aN('¡Partida cargada!');
-  }
+  // No autocargar: el título ahora permite Continuar o Nueva partida.
+  G.hasSave = hasSaveGame();
+  G.titleSel = 0;
 
   // Iniciar loop
   loop();
