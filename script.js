@@ -3859,15 +3859,15 @@ function dNPC(x, y, id, f) {
       px(x + 13, by + 8, 6, 3, SK.c);
       px(x + 9, by + 0, 14, 10, SK.c);
       px(x + 10, by + 1, 12, 8, SK.b);
-      // Pelo CASTAÑO ONDULADO
-      px(x + 8, by - 3, 16, 5, '#6A4A28');
-      px(x + 7, by - 1, 3, 5, '#6A4A28');
-      px(x + 22, by - 1, 3, 5, '#6A4A28');
-      px(x + 9, by - 4, 4, 2, '#7A5A38');
-      px(x + 16, by - 4, 4, 2, '#7A5A38'); // Ondas
-      px(x + 7, by + 2, 2, 2, '#7A5A38');
-      px(x + 23, by + 2, 2, 2, '#7A5A38');
-      px(x + 12, by - 3, 3, 1, '#8A6A48');
+      // Pelo NEGRO ondulado
+      px(x + 8, by - 3, 16, 5, '#141210');
+      px(x + 7, by - 1, 3, 5, '#141210');
+      px(x + 22, by - 1, 3, 5, '#141210');
+      px(x + 9, by - 4, 4, 2, '#2C2620');
+      px(x + 16, by - 4, 4, 2, '#2C2620'); // Ondas
+      px(x + 7, by + 2, 2, 2, '#2C2620');
+      px(x + 23, by + 2, 2, 2, '#2C2620');
+      px(x + 12, by - 3, 3, 1, '#3A322C');
       px(x + 12, by + 4, 3, 3, '#fff');
       px(x + 18, by + 4, 3, 3, '#fff');
       px(x + 13, by + 5, 2, 2, '#241208');
@@ -3878,7 +3878,7 @@ function dNPC(x, y, id, f) {
       px(x + 14, by + 9, 4, 1, '#B08060');
       break;
 
-    case 'brisa': // Pelo castaño recogido, arriba blanco/negro abajo azul grisáceo
+    case 'brisa': // Pelo castaño suelto, arriba blanco/negro abajo azul grisáceo
       px(x + 10, by + 26, 4, 4, '#5A3818');
       px(x + 18, by + 26, 4, 4, '#5A3818');
       px(x + 8, by + 18, 16, 9, '#708898');
@@ -3895,14 +3895,15 @@ function dNPC(x, y, id, f) {
       px(x + 13, by + 9, 6, 3, SK.b);
       px(x + 9, by + 0, 14, 10, SK.b);
       px(x + 10, by + 1, 12, 8, SK.a);
-      // Pelo CASTAÑO recogido ondulado
-      px(x + 8, by - 2, 16, 4, '#6A4A28');
-      px(x + 7, by + 0, 3, 5, '#6A4A28');
-      px(x + 22, by + 0, 3, 5, '#6A4A28');
-      px(x + 13, by - 5, 6, 4, '#6A4A28');
-      px(x + 14, by - 6, 4, 2, '#7A5A38');
-      px(x + 12, by - 4, 2, 2, '#7A5A38');
-      px(x + 18, by - 4, 2, 2, '#7A5A38');
+      // Pelo CASTAÑO suelto (largo, enmarca el rostro)
+      px(x + 6, by - 2, 20, 7, '#6A4A28');
+      px(x + 5, by + 1, 4, 12, '#6A4A28');
+      px(x + 23, by + 1, 4, 12, '#6A4A28');
+      px(x + 7, by - 3, 18, 3, '#7A5A38');
+      px(x + 6, by + 11, 3, 3, '#5A3A20');
+      px(x + 23, by + 11, 3, 3, '#5A3A20');
+      px(x + 12, by - 4, 4, 3, '#7A5A38');
+      px(x + 17, by - 4, 4, 3, '#7A5A38');
       // Mejillas rosadas
       px(x + 10, by + 6, 2, 2, '#F0A0A0');
       px(x + 21, by + 6, 2, 2, '#F0A0A0');
@@ -5034,14 +5035,14 @@ function dTrainerBig(x, y, id, f) {
       px(x + 24, by + 14, 16, 8, SK.c);
       px(x + 18, by - 2, 28, 18, SK.c);
       px(x + 20, by + 0, 24, 14, SK.b);
-      // Pelo castaño ondulado
-      px(x + 16, by - 8, 32, 10, '#6A4A28');
-      px(x + 14, by - 4, 6, 10, '#6A4A28');
-      px(x + 44, by - 4, 6, 10, '#6A4A28');
-      px(x + 18, by - 10, 8, 4, '#7A5A38');
-      px(x + 32, by - 10, 8, 4, '#7A5A38');
-      px(x + 14, by + 0, 4, 4, '#7A5A38');
-      px(x + 46, by + 0, 4, 4, '#7A5A38');
+      // Pelo NEGRO ondulado
+      px(x + 16, by - 8, 32, 10, '#141210');
+      px(x + 14, by - 4, 6, 10, '#141210');
+      px(x + 44, by - 4, 6, 10, '#141210');
+      px(x + 18, by - 10, 8, 4, '#2C2620');
+      px(x + 32, by - 10, 8, 4, '#2C2620');
+      px(x + 14, by + 0, 4, 4, '#2C2620');
+      px(x + 46, by + 0, 4, 4, '#2C2620');
       px(x + 22, by + 6, 6, 5, '#fff');
       px(x + 36, by + 6, 6, 5, '#fff');
       px(x + 25, by + 8, 3, 3, '#241208');
@@ -5052,7 +5053,7 @@ function dTrainerBig(x, y, id, f) {
       px(x + 28, by + 16, 8, 2, '#B08060');
       break;
 
-    case 'brisa': // Pelo castaño recogido ondulado, blanco/negro arriba, azul gris abajo
+    case 'brisa': // Pelo castaño suelto ondulado, blanco/negro arriba, azul gris abajo
       px(x + 20, by + 60, 10, 8, '#5A3818');
       px(x + 34, by + 60, 10, 8, '#5A3818');
       px(x + 16, by + 38, 32, 24, '#708898');
@@ -5071,14 +5072,15 @@ function dTrainerBig(x, y, id, f) {
       px(x + 24, by + 14, 16, 8, SK.b);
       px(x + 18, by - 2, 28, 18, SK.b);
       px(x + 20, by + 0, 24, 14, SK.a);
-      // Pelo castaño recogido ondulado con moño
-      px(x + 16, by - 8, 32, 10, '#6A4A28');
-      px(x + 14, by - 4, 6, 10, '#6A4A28');
-      px(x + 44, by - 4, 6, 10, '#6A4A28');
-      px(x + 26, by - 14, 12, 8, '#6A4A28');
-      px(x + 28, by - 16, 8, 4, '#7A5A38');
-      px(x + 24, by - 12, 4, 4, '#7A5A38');
-      px(x + 36, by - 12, 4, 4, '#7A5A38');
+      // Pelo castaño suelto (largo, enmarca el rostro)
+      px(x + 14, by - 8, 36, 10, '#6A4A28');
+      px(x + 12, by - 4, 6, 14, '#6A4A28');
+      px(x + 46, by - 4, 6, 14, '#6A4A28');
+      px(x + 16, by - 10, 32, 4, '#7A5A38');
+      px(x + 14, by + 8, 4, 6, '#5A3A20');
+      px(x + 46, by + 8, 4, 6, '#5A3A20');
+      px(x + 24, by - 12, 6, 4, '#7A5A38');
+      px(x + 32, by - 12, 6, 4, '#7A5A38');
       // Mejillas rosadas
       px(x + 20, by + 10, 4, 4, '#F0A0A0');
       px(x + 40, by + 10, 4, 4, '#F0A0A0');
@@ -8340,19 +8342,18 @@ function dTileW(c, r) {
   if (t === undefined) return;
 
   switch (t) {
-    case 0: { // Hierba: verde todo el ano, nieve solo en el extremo norte
-      const cold = 1 - r / WR;
-      const snow = Math.max(0, (cold - 0.7) / 0.3);
-      const baseA = lerpColor('#58A830', '#EDF5ED', snow);
-      const baseB = lerpColor('#48982A', '#DCEADC', snow);
+    case 0: { // Hierba: blanca desde el 5o pueblo (norte), verde al sur
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      const baseA = lerpColor('#58A830', '#F2F8F4', snow);
+      const baseB = lerpColor('#48982A', '#E2ECE6', snow);
       cx.fillStyle = (c + r) % 2 ? baseA : baseB;
       cx.fillRect(x, y, T, T);
       cx.fillStyle = lerpColor('#408820', '#C2D4C2', snow);
       if ((c * 7 + r * 13) % 5 === 0) cx.fillRect(x + 8, y + 14, 2, 4);
       if ((c * 3 + r * 11) % 7 === 0) cx.fillRect(x + 20, y + 8, 3, 2);
       if ((c * 5 + r * 3) % 9 === 0) cx.fillRect(x + 24, y + 22, 2, 3);
-      if (snow > 0.25) {
-        cx.fillStyle = 'rgba(255,255,255,' + (0.45 + snow * 0.5).toFixed(2) + ')';
+      if (snow > 0.15) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.5 + snow * 0.5).toFixed(2) + ')';
         if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 5 + ((r * 7) % 22), y + 6, 2, 2);
         if ((c * 3 + r) % 5 === 0) cx.fillRect(x + 18, y + 20, 2, 2);
         if ((c + r) % 6 === 0) cx.fillRect(x + 12, y + 26, 3, 2);
@@ -8373,28 +8374,41 @@ function dTileW(c, r) {
       cx.fillRect(x, y, 1, T);
       break;
 
-    case 2: // Agua con reflejos
-      {
+    case 2: { // Agua: congelada en el norte, liquida al sur
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      if (snow > 0.5) {
+        // Lago congelado (hielo)
+        cx.fillStyle = '#CDE6F2';
+        cx.fillRect(x, y, T, T);
+        cx.fillStyle = '#B6D6E8';
+        if ((c + r) % 3 === 0) cx.fillRect(x + 4, y + 6, 10, 6);
+        if ((c * 2 + r) % 4 === 0) cx.fillRect(x + 18, y + 16, 12, 8);
+        cx.fillStyle = '#9CC2DA';
+        cx.fillRect(x + 6, y + 4, 14, 1);
+        cx.fillRect(x + 2, y + 20, 20, 1);
+        cx.fillStyle = 'rgba(255,255,255,.6)';
+        cx.fillRect(x + 10, y + 8, 8, 2);
+        cx.fillStyle = '#8FB0C8';
+        cx.fillRect(x, y, T, 1);
+        cx.fillRect(x, y + T - 1, T, 1);
+      } else {
+        // Agua con reflejos
         const w = Math.sin(fr * 0.04 + c * 0.7 + r * 0.5);
         cx.fillStyle = w > 0 ? '#2070C0' : '#3088D0';
         cx.fillRect(x, y, T, T);
-        // Olas
         cx.fillStyle = '#48A0E8';
         cx.fillRect(x + Math.sin(fr * 0.06 + c * 2) * 5 + 10, y + 8, 12, 2);
         cx.fillRect(x + Math.sin(fr * 0.05 + c * 1.5) * 4 + 6, y + 20, 10, 2);
-        // Reflejo brillante
         cx.fillStyle = 'rgba(255,255,255,.2)';
         cx.fillRect(x + Math.sin(fr * 0.08 + c) * 6 + 8, y + 14, 6, 1);
-        // Borde de agua
         cx.fillStyle = '#1858A0';
         cx.fillRect(x, y, T, 1);
         cx.fillRect(x, y + T - 1, T, 1);
       }
       break;
-
-    case 3: { // Pino estilo GBA (nieve solo en el norte)
-      const cold = 1 - r / WR;
-      const snow = Math.max(0, (cold - 0.72) / 0.28);
+    }
+    case 3: { // Pino estilo GBA (nieve segun altura)
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
       cx.fillStyle = lerpColor((c + r) % 2 ? '#4A9828' : '#3E8822', '#DCE8DC', snow);
       cx.fillRect(x, y, T, T);
       cx.fillStyle = '#5A3818'; cx.fillRect(x + 13, y + 21, 6, 11);
@@ -8409,7 +8423,7 @@ function dTileW(c, r) {
       cx.fillStyle = LD; cx.fillRect(x + 10, y + 2, 12, 9);
       cx.fillStyle = L;  cx.fillRect(x + 11, y + 3, 10, 7);
       cx.fillStyle = LL; cx.fillRect(x + 13, y + 4, 6, 2);
-      if (snow > 0.15) {
+      if (snow > 0.12) {
         cx.fillStyle = 'rgba(255,255,255,' + (0.55 + snow * 0.45).toFixed(2) + ')';
         cx.fillRect(x + 10, y + 1, 12, 3);
         cx.fillRect(x + 6, y + 8, 20, 2);
@@ -8472,14 +8486,19 @@ function dTileW(c, r) {
       }
       break;
 
-    case 5: { // Hierba alta (encuentros) - matas de pasto
-      cx.fillStyle = (c + r) % 2 ? '#5AA836' : '#4A9A2E';
+    case 5: { // Hierba alta (encuentros) - blanquea con la altura
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor((c + r) % 2 ? '#5AA836' : '#4A9A2E', '#E6F0EA', snow);
       cx.fillRect(x, y, T, T);
-      const blades = [[3, 3, 22], [9, 6, 17], [14, 2, 24], [19, 7, 15], [24, 4, 20], [6, 9, 12], [21, 10, 11], [16, 11, 9]];
-      cx.fillStyle = '#3A9C28';
+      const blades = [[3,3,22],[9,6,17],[14,2,24],[19,7,15],[24,4,20],[6,9,12],[21,10,11],[16,11,9]];
+      cx.fillStyle = lerpColor('#3A9C28', '#DCE8DC', snow);
       blades.forEach(b => cx.fillRect(x + b[0], y + b[1], 2, b[2]));
-      cx.fillStyle = '#66C642';
+      cx.fillStyle = lerpColor('#66C642', '#FFFFFF', snow);
       blades.forEach(b => cx.fillRect(x + b[0], y + b[1], 2, 3));
+      if (snow > 0.4) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.4 + snow * 0.5).toFixed(2) + ')';
+        blades.forEach(b => cx.fillRect(x + b[0] - 1, y + b[1] - 1, 4, 2));
+      }
       cx.fillStyle = 'rgba(0,0,0,.06)';
       cx.fillRect(x, y + 27, T, 5);
       break;
@@ -8556,10 +8575,11 @@ function dTileW(c, r) {
       cx.fillRect(x + T - 5, y + 8, 3, 2);
       break;
 
-    case 10: { // Cristal Vínculo (gema capturable) - facetas
-      cx.fillStyle = '#3E8A2A';
+    case 10: { // Cristal Vinculo - la base cambia con la altura (nieve)
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#3E8A2A', '#DCE8DC', snow);
       cx.fillRect(x, y, T, T);
-      cx.fillStyle = '#347A24';
+      cx.fillStyle = lerpColor('#347A24', '#C8D4C8', snow);
       cx.fillRect(x, y + 24, T, 8);
       cx.globalAlpha = 0.78 + Math.sin(fr * 0.1) * 0.22;
       cx.fillStyle = '#7A2FD0'; cx.fillRect(x + 11, y + 6, 10, 18);
