@@ -1133,13 +1133,13 @@ const POOLS = {
 const ALL_MOVES = [
   // === FUEGO ===
   {
-    nm: 'Llamarada',
+    nm: 'Escupitajo Ardiente',
     tp: 'fire',
     pw: 40,
     pp: 25,
     mp: 25,
     acc: 100,
-    desc: 'Lanza una ráfaga de fuego básica al enemigo.',
+    desc: 'Escupe una chispa ardiente básica al enemigo.',
   },
   {
     nm: 'Bola Ígnea',
@@ -1847,13 +1847,13 @@ class Cre {
     const m = {
       fire: [
         {
-          nm: 'Llamarada',
+          nm: 'Escupitajo Ardiente',
           tp: 'fire',
           pw: 40,
           pp: 25,
           mp: 25,
           acc: 100,
-          desc: 'Lanza una ráfaga de fuego básica al enemigo.',
+          desc: 'Escupe una chispa ardiente básica al enemigo.',
         },
         {
           nm: 'Picotazo',
@@ -2139,13 +2139,15 @@ class Cre {
     if (j.mv) {
       // Restaurar movimientos completos guardados
       c.mv = j.mv.map((savedMv) => {
+        // Migrar nombres antiguos de partidas guardadas
+        const savedName = savedMv.nm === 'Llamarada' ? 'Escupitajo Ardiente' : savedMv.nm;
         // Buscar el movimiento completo en ALL_MOVES o en los defaults
-        const fullMove = ALL_MOVES.find((m) => m.nm === savedMv.nm);
+        const fullMove = ALL_MOVES.find((m) => m.nm === savedName);
         if (fullMove) {
           return { ...fullMove, pp: savedMv.pp };
         }
         // Si no se encuentra en ALL_MOVES, buscar en los movimientos por defecto
-        const defaultMv = c.mv.find((m) => m.nm === savedMv.nm);
+        const defaultMv = c.mv.find((m) => m.nm === savedName);
         if (defaultMv) {
           return { ...defaultMv, pp: savedMv.pp };
         }
@@ -17149,11 +17151,11 @@ function dBattle() {
     cx.fillText(`🧪${G.pot} ❤${G.rev} 💎${G.crv}`, 25, 456);
   } else if (b.ph === 'move') {
     // Selección de movimientos: botones 2x2 con borde dinámico por tipo
-    dBox(10, 360, 620, 110, 'Movimientos');
+    dBox(10, 356, 620, 114, 'Movimientos');
     c.mv.forEach((m, i) => {
       const mx = 24 + (i % 2) * 296,
-        my = 382 + Math.floor(i / 2) * 41;
-      dMoveButton(mx, my, 280, 36, m, b.mvs === i);
+        my = 378 + Math.floor(i / 2) * 43;
+      dMoveButton(mx, my, 280, 40, m, b.mvs === i);
     });
     cx.fillStyle = '#777';
     cx.font = '5px "Press Start 2P"';
