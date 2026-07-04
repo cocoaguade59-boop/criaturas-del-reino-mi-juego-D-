@@ -11223,6 +11223,62 @@ const npcs = [
   },
 
   // ==========================================
+  // LIDERES DE GIMNASIO (Fases B-E): Tamara, Luchito, Andrea, Dan
+  // ==========================================
+  {
+    x: 41, y: 110,
+    tp: 'tamara',
+    nm: 'Tamara',
+    flag: 'metTamara',
+    isLeader: true,
+    leaderKey: 'tamara',
+    dlg: [['Soy Tamara, lider de Villa Storyboard.']],
+    postDlg: ['El reino fluye en perfecta armonia.'],
+    battle: true,
+    battleIntro: ['La armonia del set... jademos!'],
+    fixedTeam: [{ id: 'flamcrest' }, { id: 'axolotl' }, { id: 'ivygoat' }],
+  },
+  {
+    x: 55, y: 82,
+    tp: 'luchito',
+    nm: 'Luchito',
+    flag: 'metLuchito',
+    isLeader: true,
+    leaderKey: 'luchito',
+    dlg: [['Soy Luchito. Aqui el amor lo es todo.']],
+    postDlg: ['El amor vencio, como siempre.'],
+    battle: true,
+    battleIntro: ['Porque te amo, pelea conmigo!'],
+    fixedTeam: [{ id: 'flamingo' }, { id: 'glaciolote' }, { id: 'gorilan' }],
+  },
+  {
+    x: 31, y: 52,
+    tp: 'andrea',
+    nm: 'Andrea',
+    flag: 'metAndrea',
+    isLeader: true,
+    leaderKey: 'andrea',
+    dlg: [['Soy Andrea, tu profesora de Feria Ultima Toma.']],
+    postDlg: ['Aprobada. La ficcion es realidad.'],
+    battle: true,
+    battleIntro: ['Leccion final: nunca subestimes a tu profesora!'],
+    fixedTeam: [{ id: 'medusync' }, { id: 'spritefly' }, { id: 'thornbuck' }],
+  },
+  {
+    x: 45, y: 22,
+    tp: 'dan',
+    nm: 'Dan',
+    flag: 'metDan',
+    isLeader: true,
+    leaderKey: 'dan',
+    dlg: [['Soy Dan. Los chismes mueven el reino.']],
+    postDlg: ['La mejor publicidad es la verdad... y los chismes.'],
+    battle: true,
+    battleIntro: ['Camara, accion, combate!'],
+    fixedTeam: [{ id: 'ajolord' }, { id: 'pixie' }, { id: 'hedroble' }],
+  },
+
+  // ==========================================
   // DAVID-O EN PUEBLOS 2-5 (tienda)
   // ==========================================
   {
@@ -12133,6 +12189,7 @@ function resetLeaderMissions() {
   LEADER_MISSIONS.andrea.quizIdx = 0;
   LEADER_MISSIONS.andrea.quizActive = false;
   LEADER_MISSIONS.dan.gossip = 0;
+  LEADER_MISSIONS.dan.reported = [];
 }
 
 // Estado de diplomas del jugador
@@ -12625,6 +12682,247 @@ function uTower() {
   updateCamera(TWC, TWR);
 }
 
+// ============================================================
+// BLOQUE: MISIONES DE LIDERES (Fases B-E)
+// Pantallas especiales: Quiz (Andrea) y Chismes (Dan)
+// ============================================================
+
+// Lista de chismes para Dan. valid=true son los que cuentan.
+const DAN_GOSSIP_LIST = [
+  { text: 'Alessandro quiere pedirle a Gabriela vivir juntos', valid: true },
+  { text: 'Roberto ama a Brisa mas de lo que muestra', valid: true },
+  { text: 'Alex quiere una criatura grande para movilizarse', valid: true },
+  { text: 'Hernan extraña a Tishe', valid: true },
+  { text: 'Luchito quiere casarse', valid: true },
+  { text: 'Pachi y Andre son hermanos y se cuidan', valid: true },
+  // Distractores (falsos): suenan plausibles pero no cuentan
+  { text: 'Alejandro (no Alessandro) le pedira a Gabriela vivir juntos', valid: false },
+  { text: 'Piero esconde un tesoro de oro en la montana', valid: false },
+  { text: 'Nicole abandonara el reino para siempre', valid: false },
+  { text: 'El Rey Navarrete es en realidad una criatura disfrazada', valid: false },
+  { text: 'Deyna se mudo al otro lado del mar hace anos', valid: false },
+];
+
+function handleLeaderNPC(n) {
+  const M = LEADER_MISSIONS[n.leaderKey];
+  // Ya tiene diploma: dialogo breve, sin batalla (rebattle=once)
+  if (hasDiploma(n.leaderKey)) {
+    G.scr = 'dialog';
+    G.ds = {
+      npc: n,
+      dlgArr: n.postDlg || M.dlgVictory,
+      li: 0, ci: 0, tm: 0, full: false, afterBattle: false,
+    };
+    sfx.sel();
+    return;
+  }
+  // Andrea: leccion de preguntas (quiz)
+  if (n.leaderKey === 'andrea') {
+    G.scr = 'dialog';
+    G.ds = {
+      npc: n,
+      dlgArr: G.talkedTo[n.flag] ? M.dlgAccept : M.dlgStart,
+      li: 0, ci: 0, tm: 0, full: false, afterBattle: false, goto: 'andreaQuiz',
+    };
+    sfx.sel();
+    return;
+  }
+  // Dan: reportar chismes
+  if (n.leaderKey === 'dan') {
+    G.scr = 'dialog';
+    G.ds = {
+      npc: n,
+      dlgArr: G.talkedTo[n.flag] ? M.dlgAccept : M.dlgStart,
+      li: 0, ci: 0, tm: 0, full: false, afterBattle: false, goto: 'danGossip',
+    };
+    sfx.sel();
+    return;
+  }
+  // Tamara / Luchito: mision por condicion
+  if (M.check()) {
+    G.scr = 'dialog';
+    G.ds = { npc: n, dlgArr: M.dlgWin, li: 0, ci: 0, tm: 0, full: false, afterBattle: true };
+    sfx.sel();
+    return;
+  }
+  // Mision no cumplida: primera vez dlgStart, luego dlgFail
+  G.scr = 'dialog';
+  G.ds = {
+    npc: n,
+    dlgArr: G.talkedTo[n.flag] ? M.dlgFail : M.dlgStart,
+    li: 0, ci: 0, tm: 0, full: false, afterBattle: false,
+  };
+  sfx.sel();
+}
+
+// === ANDREA: QUIZ ===
+function showAndreaQuiz(npc) {
+  G.scr = 'andreaQuiz';
+  G.quizNPC = npc;
+  G.qState = { idx: 0, score: 0, sel: 0, phase: 'select', fb: null };
+}
+
+function uAndreaQuiz() {
+  const s = G.qState;
+  const M = LEADER_MISSIONS.andrea;
+  const q = M.questions[s.idx];
+  if (s.phase === 'select') {
+    if (kp('ArrowUp')) { s.sel = (s.sel + q.opts.length - 1) % q.opts.length; sfx.sel(); }
+    if (kp('ArrowDown')) { s.sel = (s.sel + 1) % q.opts.length; sfx.sel(); }
+    if (kp(' ') || kp('Enter')) {
+      if (s.sel === q.correct) { s.score++; s.fb = 'ok'; sfx.cap(); }
+      else { s.fb = 'bad'; sfx.nef(); }
+      s.phase = 'feedback';
+    }
+    if (kp('x') || kp('Escape')) { G.scr = 'world'; }
+  } else if (s.phase === 'feedback') {
+    if (kp(' ') || kp('Enter')) {
+      sfx.sel();
+      s.idx++;
+      if (s.idx >= M.questions.length) {
+        s.phase = 'done';
+      } else {
+        s.sel = 0;
+        s.phase = 'select';
+      }
+    }
+  } else if (s.phase === 'done') {
+    const npc = G.quizNPC;
+    if (s.score >= 2) {
+      G.ds = { npc: npc, dlgArr: M.dlgWin, li: 0, ci: 0, tm: 0, full: false, afterBattle: true };
+    } else {
+      G.ds = { npc: npc, dlgArr: M.dlgFail, li: 0, ci: 0, tm: 0, full: false, afterBattle: false };
+    }
+    G.scr = 'dialog';
+  }
+}
+
+function dAndreaQuiz() {
+  const s = G.qState;
+  const M = LEADER_MISSIONS.andrea;
+  const q = M.questions[s.idx];
+  // Fondo
+  cx.fillStyle = '#202830';
+  cx.fillRect(0, 0, 640, 480);
+  const boxX = 20, boxY = 20, boxW = 600, boxH = 110;
+  dDialogBox(boxX, boxY, boxW, boxH, 'Andrea - Leccion especial');
+  cx.fillStyle = '#000';
+  cx.font = '8px "Press Start 2P"';
+  const qlines = wrapText(q.q, 60);
+  qlines.forEach((ln, i) => cx.fillText(ln, boxX + 16, boxY + 28 + i * 16));
+  // Progreso
+  cx.fillStyle = '#ffd700';
+  cx.font = '8px "Press Start 2P"';
+  cx.fillText('Pregunta ' + (s.idx + 1) + '/' + M.questions.length + '  Aciertos: ' + s.score, boxX + 16, boxY + boxH - 8);
+  // Opciones
+  const oy = 150;
+  q.opts.forEach((opt, i) => {
+    const selected = s.sel === i && s.phase === 'select';
+    cx.fillStyle = selected ? '#C83030' : '#202830';
+    cx.font = '8px "Press Start 2P"';
+    cx.fillText((selected ? '▶ ' : '  ') + (String.fromCharCode(65 + i)) + ') ' + opt, 40, oy + i * 32);
+  });
+  // Feedback
+  if (s.phase === 'feedback') {
+    cx.fillStyle = s.fb === 'ok' ? '#30D848' : '#E03020';
+    cx.font = '9px "Press Start 2P"';
+    const mm = s.fb === 'ok' ? '¡Correcto!' : 'Incorrecto. Era: ' + q.opts[q.correct];
+    cx.fillText(mm, 40, 300);
+    cx.fillStyle = '#A0A0A0';
+    cx.font = '7px "Press Start 2P"';
+    cx.fillText('ENTER: continuar', 40, 320);
+  } else if (s.phase === 'select') {
+    cx.fillStyle = '#A0A0A0';
+    cx.font = '7px "Press Start 2P"';
+    cx.fillText('ARRIBA/ABAJO: elegir  ENTER: confirmar  X: salir', 40, 300);
+  }
+}
+
+// === DAN: CHISMES ===
+function showDanGossip(npc) {
+  G.scr = 'danGossip';
+  G.gossipNPC = npc;
+  if (!G.gossipState) G.gossipState = { sel: 0, fb: null, fbTm: 0 };
+  G.gossipState.fb = null;
+}
+
+function uDanGossip() {
+  const s = G.gossipState;
+  const D = DAN_GOSSIP_LIST;
+  if (s.fb) {
+    s.fbTm++;
+    if (s.fbTm > 70) s.fb = null;
+  }
+  if (kp('ArrowUp')) { s.sel = (s.sel + D.length - 1) % D.length; sfx.sel(); }
+  if (kp('ArrowDown')) { s.sel = (s.sel + 1) % D.length; sfx.sel(); }
+  if (kp(' ') || kp('Enter')) {
+    const it = D[s.sel];
+    const already = (LEADER_MISSIONS.dan.reported || []).indexOf(s.sel) !== -1;
+    if (it.valid && !already) {
+      LEADER_MISSIONS.dan.reported.push(s.sel);
+      LEADER_MISSIONS.dan.gossip++;
+      s.fb = 'ok';
+      sfx.cap();
+      if (LEADER_MISSIONS.dan.gossip >= LEADER_MISSIONS.dan.gossipNeeded) {
+        const npc = G.gossipNPC;
+        G.ds = { npc: npc, dlgArr: LEADER_MISSIONS.dan.dlgWin, li: 0, ci: 0, tm: 0, full: false, afterBattle: true };
+        G.scr = 'dialog';
+        return;
+      }
+    } else if (it.valid && already) {
+      s.fb = 'ya';
+      sfx.nef();
+    } else {
+      s.fb = 'bad';
+      sfx.nef();
+    }
+    s.fbTm = 0;
+  }
+  if (kp('x') || kp('Escape')) { G.scr = 'world'; }
+}
+
+function dDanGossip() {
+  const s = G.gossipState;
+  const D = DAN_GOSSIP_LIST;
+  const M = LEADER_MISSIONS.dan;
+  cx.fillStyle = '#202830';
+  cx.fillRect(0, 0, 640, 480);
+  const boxX = 20, boxY = 20, boxW = 600, boxH = 70;
+  dDialogBox(boxX, boxY, boxW, boxH, 'Dan - Reporte de chismes');
+  cx.fillStyle = '#000';
+  cx.font = '8px "Press Start 2P"';
+  cx.fillText('Habla de los varones del reino y reporta 3 chismes verdaderos.', boxX + 16, boxY + 26);
+  cx.fillStyle = '#C83030';
+  cx.font = '9px "Press Start 2P"';
+  cx.fillText('Reportados: ' + M.gossip + '/' + M.gossipNeeded, boxX + 16, boxY + 52);
+  // Lista
+  const oy = 110;
+  D.forEach((it, i) => {
+    const reported = (M.reported || []).indexOf(i) !== -1;
+    const selected = s.sel === i;
+    cx.fillStyle = selected ? '#C83030' : '#202830';
+    cx.font = '8px "Press Start 2P"';
+    let mark = '[ ]';
+    if (reported) mark = '[X]';
+    else if (selected) mark = '[ ]';
+    cx.fillText((selected ? '▶ ' : '  ') + mark + ' ' + it.text, 30, oy + i * 30);
+  });
+  // Feedback
+  cx.fillStyle = '#A0A0A0';
+  cx.font = '7px "Press Start 2P"';
+  cx.fillText('ARRIBA/ABAJO: navegar  ENTER: reportar  X: salir', 30, 460);
+  if (s.fb) {
+    let msg = '';
+    let col = '#30D848';
+    if (s.fb === 'ok') { msg = '¡Chisme aceptado!'; col = '#30D848'; }
+    else if (s.fb === 'ya') { msg = 'Ese chisme ya lo reportaste.'; col = '#E8C020'; }
+    else { msg = 'Eso no parece cierto... no cuenta.'; col = '#E03020'; }
+    cx.fillStyle = col;
+    cx.font = '9px "Press Start 2P"';
+    cx.fillText(msg, 30, 440);
+  }
+}
+
 // === CHECK NPC ===
 // === VERIFICAR SI UN NPC ES VISIBLE SEGÚN EL ESTADO DEL JUEGO ===
 function npcVisible(n) {
@@ -12640,6 +12938,12 @@ function checkNPC(list) {
     // Marcar como hablado
     if (n.flag) G.talkedTo[n.flag] = true;
     checkAllTalked();
+
+    // LIDERES DE GIMNASIO (Fases B-E)
+    if (n.isLeader) {
+      handleLeaderNPC(n);
+      return;
+    }
 
     // Curandero
     if (n.heal) {
@@ -13092,6 +13396,16 @@ function uDialog() {
         // ¿Edison con opciones?
         if (d.isEdison && postGame && !pairBattles) {
           showEdisonChoice();
+          return;
+        }
+
+        // Pantallas especiales de lideres (quiz / chismes)
+        if (d.goto === 'andreaQuiz') {
+          showAndreaQuiz(d.npc);
+          return;
+        }
+        if (d.goto === 'danGossip') {
+          showDanGossip(d.npc);
           return;
         }
 
@@ -15198,6 +15512,10 @@ function uBattle() {
             b.msg = n.m;
             b.ph = 'msg';
             b.tm = 0;
+          } else if (n.a === 'npcMsg') {
+            b.msg = n.m;
+            b.ph = 'msg';
+            b.tm = 0;
           } else if (n.a === 'end') {
             if (b.npcData) markNPCDefeated(b.npcData);
             if (b.npcData?.isPunk && postGame) {
@@ -15535,6 +15853,14 @@ function procAct(act) {
     }
     let dm = result.dmg;
     const ef = result.eff;
+
+    // Mision de Luchito: contar golpes super efectivos
+    if (ef > 1 && !result.missed) {
+      LEADER_MISSIONS.luchito.superEffectiveHits++;
+      if (LEADER_MISSIONS.luchito.superEffectiveHits === 3) {
+        aN('¡Mision de Luchito completada! (3 golpes super efectivos)');
+      }
+    }
 
     // Doble golpe
     if (mv.ef === 'hitTwice') {
@@ -16036,6 +16362,12 @@ function handleWin() {
 
   // === VICTORIA FINAL ===
   G.bWon++;
+  // Entregar diploma automaticamente al vencer a un lider de gimnasio
+  if (b.npcData && b.npcData.isLeader && !hasDiploma(b.npcData.leaderKey)) {
+    giveDiploma(b.npcData.leaderKey);
+    const LVM = LEADER_MISSIONS[b.npcData.leaderKey];
+    (LVM.dlgVictory || []).forEach((ln) => b.mq.push({ a: 'npcMsg', m: ln }));
+  }
   if (!exp) {
     b.msg = '¡Ganaste!';
   }
@@ -16933,6 +17265,12 @@ function update() {
     case 'pairSelect':
       uPairSelect();
       break;
+    case 'andreaQuiz':
+      uAndreaQuiz();
+      break;
+    case 'danGossip':
+      uDanGossip();
+      break;
     case 'confirmReset':
       uConfirmReset();
       break;
@@ -16969,6 +17307,12 @@ function draw() {
       break;
     case 'pairSelect':
       dPairSelect();
+      break;
+    case 'andreaQuiz':
+      dAndreaQuiz();
+      break;
+    case 'danGossip':
+      dDanGossip();
       break;
   }
 }
