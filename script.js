@@ -3404,21 +3404,45 @@ function dShadow(x, y, w = 10, h = 3) {
 }
 
 
-function dRouteBlocker(x, y, f) {
-  // Piedra/guardia simple: una roca rúnica visible en el camino.
-  dShadow(x + 16, y + 27, 11, 4);
-  px(x + 7, y + 12, 18, 15, '#4B5264');
-  px(x + 5, y + 16, 22, 10, '#596275');
-  px(x + 9, y + 9, 14, 6, '#6C768A');
-  px(x + 10, y + 12, 5, 3, '#7E8A9C');
-  px(x + 18, y + 16, 4, 2, '#333946');
-  px(x + 12, y + 20, 10, 2, '#363D4A');
-  if (f % 50 < 25) {
-    px(x + 14, y + 13, 4, 4, '#E8C830');
-    px(x + 15, y + 14, 2, 2, '#FFF0A0');
-  }
+function dRouteTree(x, y, f) {
+  // Árbol de bloqueo: hace que solo exista el camino central.
+  dShadow(x + 16, y + 29, 12, 4);
+  px(x + 13, y + 18, 7, 12, '#6A4828');
+  px(x + 11, y + 22, 11, 8, '#7A5630');
+  px(x + 6, y + 7, 20, 14, '#185C2A');
+  px(x + 3, y + 13, 26, 12, '#20743A');
+  px(x + 8, y + 3, 16, 10, '#2B8A45');
+  px(x + 10, y + 9, 8, 5, '#45A85A');
+  px(x + 22, y + 16, 4, 4, '#145020');
 }
 
+function dRouteProa(x, y, f) {
+  // Proa guardián en el único hueco del camino.
+  dShadow(x + 16, y + 31, 9, 3);
+  const by = y + Math.sin(f * 0.08) * 0.8;
+  px(x + 10, by + 26, 4, 4, '#4A3018');
+  px(x + 18, by + 26, 4, 4, '#4A3018');
+  px(x + 8, by + 18, 16, 9, '#2858A0');
+  px(x + 6, by + 10, 20, 10, '#E8E8E8');
+  px(x + 8, by + 12, 16, 7, '#F8F8F8');
+  px(x + 13, by + 12, 6, 6, '#C83030');
+  px(x + 15, by + 10, 2, 10, '#C83030');
+  px(x + 4, by + 12, 4, 8, SK.a);
+  px(x + 24, by + 12, 4, 8, SK.a);
+  px(x + 13, by + 8, 6, 3, SK.a);
+  px(x + 9, by + 0, 14, 10, SK.a);
+  px(x + 10, by + 1, 12, 8, SK.d);
+  px(x + 7, by - 3, 18, 5, '#2A5830');
+  px(x + 5, by - 1, 22, 3, '#3A7A40');
+  px(x + 12, by + 4, 3, 3, '#111');
+  px(x + 18, by + 4, 3, 3, '#111');
+  px(x + 14, by + 8, 4, 1, '#C08868');
+  if (f % 40 < 20) {
+    cx.fillStyle = '#ffd700';
+    cx.font = '9px "Press Start 2P"';
+    cx.fillText('!', x + 26, by - 5);
+  }
+}
 
 function dFallenPortrait(id, x, y, sc = 4) {
   cx.save();
@@ -11850,8 +11874,8 @@ const caveNpcs = [
     fixedTeam: [{ id: 'pixie' }, { id: 'elefantasy' }, { id: 'sidhe' }],
   },
   {
-    x: CC - 6,
-    y: 13,
+    x: Math.floor(CC / 2),
+    y: 5,
     map: 'cave2',
     tp: 'salogon',
     nm: 'SaloGon',
@@ -12807,12 +12831,13 @@ function showRouteBlockedDialog(gate) {
   const mission = LEADER_MISSIONS[gate.leader];
   G.scr = 'dialog';
   G.ds = {
-    npc: { nm: 'Guardia de Ruta' },
+    npc: { nm: 'Proa de Ruta' },
     dlgArr: [
-      `La salida norte de ${gate.place}`,
-      'está cerrada por orden del reino.',
-      `Necesitas vencer a ${mission.leaderNm}`,
-      `y obtener el diploma "${mission.diploma}".`,
+      `Soy el Proa asignado a ${gate.place}.`,
+      'Los árboles cierran los bordes:',
+      'solo este camino queda abierto.',
+      `Para pasar, vence a ${mission.leaderNm}`,
+      `y trae el diploma "${mission.diploma}".`,
     ],
     li: 0,
     ci: 0,
@@ -14116,10 +14141,15 @@ function showSaloGonVision(npc) {
     tm: 0,
     full: false,
     pages: [
-      { id: 'salogon', name: 'SaloGon', lines: ['Soy SaloGon, vidente de la Cueva Cristalina.', 'Antes vestía de muchos colores, pero por un error', 'algunos lo ven como un monstruo. Yo solo cuento memorias.'] },
-      { id: 'rafa', name: 'Rafa', lines: ['Rafa caminaba con anteojos empañados y camisa beige.', 'Decía que cada historia necesita a alguien que observe.', 'Su risa quedó atrapada en estas piedras.'] },
-      { id: 'maria', name: 'María', lines: ['María llevaba el cabello negro como noche sin luna.', 'Miraba seria, con ceño firme, porque protegía a todos.', 'Su camisa blanca aún brilla en mis visiones.'] },
-      { id: 'mancilla', name: 'Mancilla', lines: ['Mancilla fue un príncipe de armadura brillante.', 'Cabello castaño, chivito en el mentón, sin bigote.', 'Cayó sonriendo, como si ya conociera el final.'] },
+      { id: 'salogon', name: 'SaloGon', lines: ['Soy SaloGon, vidente de la Cueva Cristalina.', 'Me quedo al fondo porque aquí la piedra habla más claro.', 'Si escuchas con calma, cada cristal recuerda un nombre.'] },
+      { id: 'salogon', name: 'SaloGon', lines: ['Antes vestía de muchos colores, pero por un error', 'algunos lo ven como un monstruo.', 'Yo no muerdo; solo cuento memorias que nadie más quiere cargar.'] },
+      { id: 'rafa', name: 'Rafa', lines: ['Rafa caminaba con anteojos empañados y camisa beige.', 'Tenía el cabello corto y siempre parecía estar pensando.', 'Observaba detalles que otros pisaban sin mirar.'] },
+      { id: 'rafa', name: 'Rafa', lines: ['Decía que cada historia necesita a alguien que observe.', 'Cuando el ruido crecía, Rafa bajaba la voz.', 'Por eso aún puedo oírlo entre las gotas de esta cueva.'] },
+      { id: 'maria', name: 'María', lines: ['María llevaba el cabello negro como noche sin luna.', 'Miraba seria, con ceño firme, porque protegía a todos.', 'No era fría: era valiente incluso cuando tenía miedo.'] },
+      { id: 'maria', name: 'María', lines: ['Su camisa blanca aún brilla en mis visiones.', 'Su falda negra cruza el recuerdo como una sombra elegante.', 'Si la ves fruncir el ceño, es porque todavía está cuidando el camino.'] },
+      { id: 'mancilla', name: 'Mancilla', lines: ['Mancilla fue un príncipe de armadura brillante.', 'Cabello castaño, chivito en el mentón, sin bigote.', 'Entraba a la batalla como quien entra a un escenario.'] },
+      { id: 'mancilla', name: 'Mancilla', lines: ['Cayó sonriendo, como si ya conociera el final.', 'No todos los príncipes llevan corona.', 'Algunos solo dejan una promesa oxidada en la armadura.'] },
+      { id: 'salogon', name: 'SaloGon', lines: ['Esas son tres luces apagadas, pero no perdidas.', 'Si vuelves, puedo repetir sus nombres.', 'Un nombre recordado es una puerta que nunca termina de cerrarse.'] },
     ],
   };
   sfx.sel();
@@ -17146,14 +17176,15 @@ function drawMap() {
       er = Math.min(WR, sr + 17);
     for (let r = sr; r < er; r++) for (let c = sc; c < ec; c++) dTileW(c, r);
 
-    // Piedras/guardias de ruta según diplomas
+    // Bloqueo de rutas: árboles cierran los bordes y un Proa bloquea el camino.
     ROUTE_GATES.forEach((g) => {
       if (canPassRoute(g.from)) return;
       for (let dc = -Math.floor(g.w / 2); dc <= Math.floor(g.w / 2); dc++) {
         const sx = (g.x + dc) * T - cam.x;
         const sy = g.y * T - cam.y;
         if (sx > -40 && sx < 680 && sy > -40 && sy < 520) {
-          dRouteBlocker(sx, sy, fr);
+          if (dc === 0) dRouteProa(sx, sy - 8, fr);
+          else dRouteTree(sx, sy, fr);
         }
       }
     });
