@@ -3749,9 +3749,17 @@ function dPlayerChibi00s(x, y, dir, f) {
   }
 }
 
+const HERO_MAP_SCALE = 1.22; // tamaño del prota en mapa: a la altura de los NPCs normales
+
 function dPlayerGBA(x, y, dir, f) {
   if (HERO_STYLE === 'chibi00s') {
-    dPlayerChibi00s(x, y, dir, f);
+    // Escalar solo al protagonista para que no se vea más pequeño que el resto
+    // de personajes. David-O mantiene su proporción especial de NPC alto/delgado.
+    cx.save();
+    cx.translate(Math.round(x - 4), Math.round(y - 8));
+    cx.scale(HERO_MAP_SCALE, HERO_MAP_SCALE);
+    dPlayerChibi00s(0, 0, dir, f);
+    cx.restore();
     return;
   }
   if (heroReady && heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
