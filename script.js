@@ -3444,6 +3444,18 @@ function dRouteProa(x, y, f) {
   }
 }
 
+
+function dRouteSign(x, y, f) {
+  dShadow(x + 16, y + 29, 8, 3);
+  px(x + 14, y + 15, 4, 16, '#6A4828');
+  px(x + 7, y + 6, 22, 12, '#8A5A28');
+  px(x + 9, y + 8, 18, 8, '#C09048');
+  px(x + 10, y + 9, 16, 1, '#E0B060');
+  px(x + 11, y + 12, 10, 2, '#5A3818');
+  px(x + 23, y + 11, 2, 3, '#5A3818');
+  if (f % 60 < 30) px(x + 24, y + 5, 2, 2, '#ffd700');
+}
+
 function dFallenPortrait(id, x, y, sc = 4) {
   cx.save();
   cx.translate(x, y);
@@ -10387,6 +10399,31 @@ function buildVillage(sx, sy, id) {
     if (sy - 2 >= 2 && c >= 2 && c < WC - 2 && wMap[sy - 2][c] === 1)
       if (Math.random() < 0.3) wMap[sy - 2][c] = 6;
   }
+
+  // Aldea Pitch recibe una primera zona más clara y acogedora para tutorial.
+  if (id === 'pitch') {
+    // plaza central y caminos limpios hacia Alex/Luis/Alessandro
+    for (let r = sy + 1; r <= sy + 6; r++)
+      for (let c = sx - 1; c <= sx + 8; c++)
+        if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && wMap[r][c] !== 4) wMap[r][c] = 1;
+
+    // jardineras y árboles de borde sin cerrar el paso
+    const flowers = [
+      [sx - 1, sy], [sx + 3, sy], [sx + 8, sy],
+      [sx - 1, sy + 7], [sx + 3, sy + 7], [sx + 8, sy + 7],
+      [sx + 3, sy + 2], [sx + 4, sy + 2], [sx + 3, sy + 5], [sx + 4, sy + 5],
+    ];
+    flowers.forEach(([c, r]) => { if (wMap[r]?.[c] === 1 || wMap[r]?.[c] === 0) wMap[r][c] = 6; });
+    const trees = [[sx - 3, sy - 1], [sx + 10, sy - 1], [sx - 3, sy + 8], [sx + 10, sy + 8]];
+    trees.forEach(([c, r]) => { if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2) wMap[r][c] = 3; });
+
+    // sendero extra hasta el cartel de salida norte
+    for (let r = sy - 2; r <= sy + 7; r++)
+      if (r >= 2 && r < WR - 2) {
+        wMap[r][sx + 2] = 1;
+        wMap[r][sx + 3] = 1;
+      }
+  }
 }
 
 function placeCave(cx2, cy) {
@@ -10812,6 +10849,18 @@ const MAP_LOCATIONS = [
   { x: 65, y: 38, nm: 'C.Cristalina', col: '#80A0E0' },
   { x: 55, y: 6, nm: 'Torre P.A.', col: '#F060F0' },
 ];
+
+
+const ROUTE_SIGNS = [
+  { x: 20, y: 138, name: 'Cartel Aldea Pitch', lines: ['↑ Ruta 1 / Villa Storyboard', '↓ Aldea Pitch', 'Z: correr | X: menú'] },
+  { x: 36, y: 115, name: 'Cartel Ruta 1', lines: ['↑ Villa Storyboard', '↓ Aldea Pitch', 'Los Proa bloquean rutas sin diploma.'] },
+  { x: 50, y: 104, name: 'Cartel Ruta 2', lines: ['↑ Cantera Rodaje', '↓ Villa Storyboard', '← Cueva Volcánica'] },
+  { x: 64, y: 76, name: 'Cartel Ruta 3', lines: ['↑ Feria Última Toma', '↓ Cantera Rodaje', 'Piero suele explorar por aquí.'] },
+  { x: 31, y: 47, name: 'Cartel Ruta 4', lines: ['↑ Prados Montaje', '↓ Feria Última Toma', '→ Cueva Cristalina'] },
+  { x: 43, y: 16, name: 'Cartel Ruta 5', lines: ['↑ Castillo Difusión', '↓ Prados Montaje', 'La torre abre en post-game.'] },
+  { x: 14, y: 107, name: 'Cartel Cueva', lines: ['Cueva Volcánica', 'Se oyen ecos de punk antiguo.', 'Dicen que una pared busca dragones.'] },
+  { x: 71, y: 40, name: 'Cartel Cueva', lines: ['Cueva Cristalina', 'Al fondo vive SaloGon.', 'No todos los recuerdos son monstruos.'] },
+];
 // ============================================================
 // BLOQUE 10A: DATOS DE NPCs - ALDEAS
 // ============================================================
@@ -10903,19 +10952,22 @@ const npcs = [
     nm: 'Alex',
     dlg: [
       [
-        '¡Presiona Z para correr!',
-        'Más rápido = más emoción!',
-        'Como un travelling de cámara.',
+        '¡Hey! Controles rápidos:',
+        'Flechas para moverte',
+        'de casilla en casilla.',
+        'Z sirve para correr.',
       ],
       [
-        'Los Cristales Vínculo...',
-        '¡Son como el casting perfecto!',
-        'Atrapan criaturas ideales.',
+        'SPACE es acción:',
+        'hablar, leer carteles,',
+        'abrir cosas importantes.',
+        'Si dudas, presiona SPACE.',
       ],
       [
-        '¿El menú? Tecla X.',
-        'Ahí ves tu equipo, items,',
-        'y la Proa de criaturas.',
+        'X abre el menú.',
+        'Ahí ves equipo, mapa,',
+        'misiones, objetos y Proa.',
+        '¡No te pierdas, crack!',
       ],
     ],
     postDlg: ['¡Tu ritmo es imparable!', 'Sigue corriendo hacia el éxito!'],
@@ -10932,19 +10984,22 @@ const npcs = [
     nm: 'Luis',
     dlg: [
       [
-        'La vida es un río.',
-        'A veces te lleva, a veces te ahoga.',
-        'Pero siempre fluye.',
+        'Combate con calma, mi pana,',
+        'elige ataque y gana la gana.',
+        'Si el tipo es correcto,',
+        '¡el golpe sale perfecto!',
       ],
       [
-        'Los Cristales Vínculo...',
-        'Atrapan esencias, no cuerpos.',
-        'Como capturar un momento.',
+        'Fuego seca planta con pasión,',
+        'planta bebe agua con razón,',
+        'agua apaga fuego sin drama:',
+        '¡así se enciende la trama!',
       ],
       [
-        'Cada derrota es una lección.',
-        'Cada victoria, un aplauso.',
-        'Sigue en escena.',
+        'Para capturar sin apuro,',
+        'baja su vida, te lo aseguro.',
+        'Lanza Cristal Vínculo al final,',
+        '¡y quizá se una a tu coral!',
       ],
     ],
     postDlg: [
@@ -12529,7 +12584,8 @@ function uTitle() {
   G.tFr++;
   if (kp(' ') || kp('Enter')) {
     sfx.sel();
-    G.scr = 'starter';
+    G.scr = 'intro';
+    G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
   }
 }
 
@@ -12604,18 +12660,100 @@ function dTitle() {
   cx.textAlign = 'left';
 }
 
+// === INTRO TUTORIAL: ALESSANDRO ENTREGA EL INICIAL ===
+const INTRO_LINES = [
+  '¡Hey! ¡Bienvenido a Aldea Pitch!',
+  'Soy Alessandro. Este reino vive junto a criaturas mágicas.',
+  'Los Proa las cuidan cuando descansan, y los viajeros forman vínculos con ellas.',
+  'Para avanzar entre pueblos necesitarás diplomas de líderes, como medallas.',
+  'No te contaré todo: el camino, las cuevas y el castillo deben sorprenderte.',
+  'Pero no irás solo. Elige un compañero inicial de Fuego, Agua o Planta.'
+];
+
+function uIntro() {
+  if (!G.intro) G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+  const it = G.intro;
+  updateCamera(WC, WR);
+  if (it.phase === 0) {
+    it.y += 0.045;
+    if (it.y >= 143.55 || kp(' ') || kp('Enter')) {
+      it.y = 143.55;
+      it.phase = 1;
+      it.tm = 0;
+    }
+    return;
+  }
+  it.tm++;
+  const line = INTRO_LINES[it.li];
+  if (!it.full && it.tm % 2 === 0) {
+    it.ci++;
+    if (it.ci >= line.length) it.full = true;
+  }
+  if (kp(' ') || kp('Enter')) {
+    if (!it.full) {
+      it.ci = line.length;
+      it.full = true;
+    } else {
+      it.li++;
+      if (it.li >= INTRO_LINES.length) {
+        G.sSel = 0;
+        G.scr = 'starter';
+        G.intro = null;
+        return;
+      }
+      it.ci = 0;
+      it.tm = 0;
+      it.full = false;
+      sfx.sel();
+    }
+  }
+}
+
+function dIntro() {
+  updateCamera(WC, WR);
+  drawMap();
+  const it = G.intro || { y: 143.55, phase: 1, li: 0, ci: 0, full: false };
+  const ax = 20 * T - cam.x,
+    ay = it.y * T - cam.y;
+  dNPC(ax, ay - 8, 'alessandro', fr);
+  if (it.phase === 0) {
+    dDialogBox(20, 390, 600, 70, 'Alessandro');
+    cx.fillStyle = '#000';
+    cx.font = '8px "Press Start 2P"';
+    cx.fillText('Alessandro se acerca...', 36, 420);
+    cx.fillStyle = '#888';
+    cx.font = '6px "Press Start 2P"';
+    cx.fillText('SPACE: acelerar', 36, 448);
+    return;
+  }
+  const shown = INTRO_LINES[it.li].substring(0, it.ci);
+  const lines = wrapText(shown, 48);
+  dDialogBox(20, 372, 600, 96, 'Alessandro');
+  cx.fillStyle = '#000';
+  cx.font = '8px "Press Start 2P"';
+  lines.forEach((ln, i) => cx.fillText(ln, 36, 400 + i * 15));
+  cx.fillStyle = '#888';
+  cx.font = '6px "Press Start 2P"';
+  cx.fillText(`${it.li + 1}/${INTRO_LINES.length}`, 560, 456);
+  if (it.full) {
+    cx.fillStyle = '#000';
+    cx.font = '10px "Press Start 2P"';
+    cx.fillText('▼', 590, 456 + Math.sin(fr * 0.2) * 2);
+  }
+}
+
 // === PANTALLA DE SELECCIÓN DE INICIAL ===
 function uStarter() {
   if (kp('ArrowLeft')) {
-    G.sSel = (G.sSel + 4) % 5;
+    G.sSel = (G.sSel + 2) % 3;
     sfx.sel();
   }
   if (kp('ArrowRight')) {
-    G.sSel = (G.sSel + 1) % 5;
+    G.sSel = (G.sSel + 1) % 3;
     sfx.sel();
   }
   if (kp(' ') || kp('Enter')) {
-    const ids = ['flameye', 'axolotl', 'ivygoat', 'ornispia', 'pixie'];
+    const ids = ['flameye', 'axolotl', 'ivygoat'];
     const c = new Cre(ids[G.sSel], 5);
     G.party.push(c);
     sfx.cap();
@@ -12633,10 +12771,10 @@ function dStarter() {
   cx.fillStyle = '#ffd700';
   cx.font = '11px "Press Start 2P"';
   cx.textAlign = 'center';
-  cx.fillText('Elige tu compañero', 320, 34);
+  cx.fillText('Alessandro te entrega un compañero', 320, 34);
   cx.fillStyle = '#aaa';
   cx.font = '7px "Press Start 2P"';
-  cx.fillText('◀ ▶ elegir | SPACE confirmar', 320, 48);
+  cx.fillText('Solo Fuego, Agua o Planta | SPACE confirmar', 320, 48);
 
   const starters = [
     {
@@ -12647,34 +12785,27 @@ function dStarter() {
     },
     { id: 'axolotl', nm: 'Ajolotín', tp: 'water', desc: 'Siempre sonriente' },
     { id: 'ivygoat', nm: 'Hedroca', tp: 'plant', desc: 'Elegante mayordomo' },
-    { id: 'ornispia', nm: 'Ornispía', tp: 'dragon', desc: 'Agente secreto' },
-    {
-      id: 'pixie',
-      nm: 'Duendecillo',
-      tp: 'fairy',
-      desc: 'Ladrón de calcetines',
-    },
   ];
 
   starters.forEach((s, i) => {
-    const bx = 8 + i * 126,
+    const bx = 100 + i * 150,
       by = 68,
       sel = G.sSel === i;
 
     // Fondo seleccionado
     if (sel) {
       cx.fillStyle = 'rgba(255,215,0,.08)';
-      cx.fillRect(bx, by - 2, 124, 400);
+      cx.fillRect(bx, by - 2, 139, 400);
     }
 
     // Caja
-    dBox(bx + 2, by, 120, 395);
+    dBox(bx + 2, by, 135, 395);
 
     // Borde dorado si seleccionado
     if (sel) {
       cx.strokeStyle = '#ffd700';
       cx.lineWidth = 2;
-      cx.strokeRect(bx + 1, by - 1, 122, 397);
+      cx.strokeRect(bx + 1, by - 1, 137, 397);
       cx.lineWidth = 1;
     }
 
@@ -12682,15 +12813,15 @@ function dStarter() {
     cx.fillStyle = sel ? '#ffd700' : '#888';
     cx.font = '7px "Press Start 2P"';
     cx.textAlign = 'center';
-    cx.fillText(s.nm, bx + 62, by + 18);
+    cx.fillText(s.nm, bx + 68, by + 18);
 
     // Tipo
     cx.fillStyle = tCol(s.tp);
     cx.font = '7px "Press Start 2P"';
-    cx.fillText(tEmo(s.tp) + ' ' + tNam(s.tp), bx + 62, by + 32);
+    cx.fillText(tEmo(s.tp) + ' ' + tNam(s.tp), bx + 68, by + 32);
 
     // Sprite de criatura
-    dCre(bx + 28, by + 42, s.id, 3, fr);
+    dCre(bx + 36, by + 42, s.id, 3, fr);
 
     if (sel) {
       // Stats
@@ -12707,12 +12838,12 @@ function dStarter() {
       cx.fillStyle = '#A0B0C0';
       cx.font = '6px "Press Start 2P"';
       cx.textAlign = 'center';
-      cx.fillText(s.desc, bx + 62, by + 350);
+      cx.fillText(s.desc, bx + 68, by + 350);
 
       // Flecha indicadora
       cx.fillStyle = '#ffd700';
       cx.font = '14px "Press Start 2P"';
-      cx.fillText('▼', bx + 62, by - 8 + Math.sin(fr * 0.15) * 3);
+      cx.fillText('▼', bx + 68, by - 8 + Math.sin(fr * 0.15) * 3);
     }
   });
   cx.textAlign = 'left';
@@ -12941,6 +13072,20 @@ function showRouteBlockedDialog(gate) {
     full: false,
   };
   sfx.nef();
+}
+
+
+function nearRouteSign(sign) {
+  return G.curMap === 'world' && Math.abs(G.pl.x - sign.x) <= 1 && Math.abs(G.pl.y - sign.y) <= 1;
+}
+
+function checkRouteSign() {
+  const sign = ROUTE_SIGNS.find((sg) => nearRouteSign(sg));
+  if (!sign) return false;
+  G.scr = 'dialog';
+  G.ds = { npc: { nm: sign.name }, dlgArr: sign.lines, li: 0, ci: 0, tm: 0, full: false };
+  sfx.sel();
+  return true;
 }
 
 // === VERIFICACIONES ===
@@ -13229,6 +13374,7 @@ function uWorld() {
 
   // Acción
   if (kp(' ')) {
+    if (checkRouteSign()) return;
     checkNPC(npcs);
     // Edison post-game
     if (postGame) checkEdison();
@@ -13677,6 +13823,7 @@ function dDanGossip() {
 // === CHECK NPC ===
 // === VERIFICAR SI UN NPC ES VISIBLE SEGÚN EL ESTADO DEL JUEGO ===
 function npcVisible(n) {
+  if (G.scr === 'intro' && n.flag === 'metAles') return false;
   if (n.preOnly && postGame) return false;
   if (n.postOnly && !postGame) return false;
   if (n.map && n.map !== G.curMap) return false;
@@ -17273,6 +17420,22 @@ function drawMap() {
       er = Math.min(WR, sr + 17);
     for (let r = sr; r < er; r++) for (let c = sc; c < ec; c++) dTileW(c, r);
 
+    // Carteles de ruta
+    ROUTE_SIGNS.forEach((sg) => {
+      const sx = sg.x * T - cam.x,
+        sy = sg.y * T - cam.y;
+      if (sx > -40 && sx < 680 && sy > -40 && sy < 520) {
+        dRouteSign(sx, sy, fr);
+        if (nearRouteSign(sg)) {
+          cx.fillStyle = '#ffd700';
+          cx.font = '6px "Press Start 2P"';
+          cx.textAlign = 'center';
+          cx.fillText('LEER', sx + 16, sy - 8 + Math.sin(fr * 0.15) * 2);
+          cx.textAlign = 'left';
+        }
+      }
+    });
+
     // Bloqueo de rutas: árboles cierran los bordes y un Proa bloquea el camino.
     ROUTE_GATES.forEach((g) => {
       if (canPassRoute(g.from)) return;
@@ -18107,6 +18270,9 @@ function update() {
     case 'title':
       uTitle();
       break;
+    case 'intro':
+      uIntro();
+      break;
     case 'starter':
       uStarter();
       break;
@@ -18155,6 +18321,9 @@ function draw() {
   switch (G.scr) {
     case 'title':
       dTitle();
+      break;
+    case 'intro':
+      dIntro();
       break;
     case 'starter':
       dStarter();
