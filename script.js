@@ -3403,6 +3403,61 @@ function dShadow(x, y, w = 10, h = 3) {
   cx.fill();
 }
 
+
+function dRouteBlocker(x, y, f) {
+  // Piedra/guardia simple: una roca rúnica visible en el camino.
+  dShadow(x + 16, y + 27, 11, 4);
+  px(x + 7, y + 12, 18, 15, '#4B5264');
+  px(x + 5, y + 16, 22, 10, '#596275');
+  px(x + 9, y + 9, 14, 6, '#6C768A');
+  px(x + 10, y + 12, 5, 3, '#7E8A9C');
+  px(x + 18, y + 16, 4, 2, '#333946');
+  px(x + 12, y + 20, 10, 2, '#363D4A');
+  if (f % 50 < 25) {
+    px(x + 14, y + 13, 4, 4, '#E8C830');
+    px(x + 15, y + 14, 2, 2, '#FFF0A0');
+  }
+}
+
+
+function dFallenPortrait(id, x, y, sc = 4) {
+  cx.save();
+  cx.translate(x, y);
+  cx.scale(sc, sc);
+  const R = (a, b, w, h, c) => px(a, b, w, h, c);
+  const SK1 = '#F0C8A0', SK2 = '#D9A77E', OUT = '#171717';
+  // marco interno de personaje 24x32
+  if (id === 'rafa') {
+    R(7, 27, 4, 4, '#506858'); R(14, 27, 4, 4, '#506858');
+    R(7, 20, 4, 8, '#607868'); R(14, 20, 4, 8, '#607868');
+    R(5, 12, 16, 9, '#D8C8A0'); R(7, 13, 12, 7, '#E8D8B8');
+    R(4, 13, 4, 8, SK1); R(18, 13, 4, 8, SK1);
+    R(9, 9, 6, 4, SK2); R(6, 2, 14, 9, SK1); R(7, 3, 12, 7, '#F5D2AA');
+    R(5, 0, 16, 5, '#2B2018'); R(6, -1, 14, 2, '#3A2A20');
+    R(6, 5, 5, 4, OUT); R(13, 5, 5, 4, OUT); R(7, 6, 3, 2, '#C8D8E8'); R(14, 6, 3, 2, '#C8D8E8'); R(11, 6, 2, 1, OUT);
+    R(10, 10, 5, 1, '#8A5040');
+  } else if (id === 'maria') {
+    R(8, 27, 4, 4, '#1A1A1A'); R(14, 27, 4, 4, '#1A1A1A');
+    R(6, 19, 16, 9, '#171717'); R(5, 12, 18, 8, '#F0F0F0'); R(7, 13, 14, 6, '#FFFFFF');
+    R(4, 13, 4, 8, SK1); R(20, 13, 4, 8, SK1);
+    R(9, 9, 6, 4, SK2); R(6, 2, 14, 9, SK1); R(7, 3, 12, 7, '#F5D2AA');
+    R(4, 0, 18, 6, '#111'); R(3, 3, 4, 18, '#111'); R(19, 3, 4, 18, '#111'); R(5, 16, 3, 8, '#080808'); R(20, 16, 3, 8, '#080808');
+    R(7, 5, 4, 3, '#fff'); R(15, 5, 4, 3, '#fff'); R(8, 6, 2, 2, OUT); R(16, 6, 2, 2, OUT);
+    R(7, 4, 5, 1, OUT); R(15, 4, 5, 1, OUT); R(11, 10, 5, 1, '#7A3030');
+  } else { // mancilla
+    R(7, 27, 4, 4, '#6E7788'); R(14, 27, 4, 4, '#6E7788');
+    R(7, 20, 4, 8, '#8790A0'); R(14, 20, 4, 8, '#8790A0');
+    R(4, 11, 18, 11, '#98A4B8'); R(6, 12, 14, 9, '#B8C4D8'); R(10, 14, 6, 5, '#E8C830');
+    R(3, 11, 4, 5, '#C8A830'); R(21, 11, 4, 5, '#C8A830');
+    R(9, 8, 6, 5, SK2); R(6, 1, 14, 10, SK1); R(7, 2, 12, 8, '#F5D2AA');
+    R(5, -1, 16, 5, '#7A5128'); R(4, 1, 4, 6, '#6A4120'); R(18, 1, 4, 6, '#6A4120');
+    R(8, 5, 3, 3, '#fff'); R(15, 5, 3, 3, '#fff'); R(9, 6, 2, 2, OUT); R(16, 6, 2, 2, OUT);
+    R(11, 9, 5, 4, '#5A321C'); // chivito, sin bigote
+    R(11, 9, 5, 1, '#8A5040');
+  }
+  cx.restore();
+}
+
 // === GRADIENTE DE FONDO (para batalla) ===
 function dBattleBG() {
   const gr = cx.createLinearGradient(0, 0, 0, 240);
@@ -4924,6 +4979,26 @@ function dNPC(x, y, id, f) {
     // CUEVA
     // ==========================================
 
+    case 'salogon': // Vidente gris con capucha
+      px(x + 10, by + 27, 5, 3, '#3A3A42');
+      px(x + 18, by + 27, 5, 3, '#3A3A42');
+      px(x + 5, by + 11, 22, 17, '#555965');
+      px(x + 7, by + 12, 18, 15, '#666A76');
+      px(x + 9, by + 14, 14, 12, '#4A4D58');
+      px(x + 4, by + 13, 4, 10, '#4D515C');
+      px(x + 24, by + 13, 4, 10, '#4D515C');
+      px(x + 13, by + 8, 6, 4, '#B8A090');
+      px(x + 8, by - 2, 16, 13, '#3F424C');
+      px(x + 6, by + 0, 20, 7, '#565A66');
+      px(x + 9, by + 3, 14, 8, '#2A2C34');
+      px(x + 12, by + 5, 2, 2, '#C8D8F8');
+      px(x + 19, by + 5, 2, 2, '#C8D8F8');
+      px(x + 15, by + 8, 3, 1, '#8A7070');
+      // Orbe del vidente
+      px(x + 25, by + 18, 5, 5, '#90A0D8');
+      px(x + 26, by + 19, 3, 3, '#C8D8FF');
+      break;
+
     case 'oloman': // Mohawk rojo, chaqueta cuero, estoperoles, piercings
       px(x + 8, by + 24, 6, 6, '#181818');
       px(x + 18, by + 24, 6, 6, '#181818');
@@ -4970,41 +5045,65 @@ function dNPC(x, y, id, f) {
     // CASTILLO
     // ==========================================
 
-    case 'yam': // Mujer con armadura reluciente, sin casco, pelo negro recogido
-      px(x + 8, by + 26, 6, 4, '#8090A0');
-      px(x + 18, by + 26, 6, 4, '#8090A0');
-      px(x + 9, by + 22, 5, 5, '#8898A8');
-      px(x + 18, by + 22, 5, 5, '#8898A8');
-      px(x + 4, by + 10, 24, 12, '#A0B0C0');
-      px(x + 6, by + 11, 20, 10, '#B0C0D0');
-      px(x + 8, by + 12, 16, 8, '#C0D0E0');
-      px(x + 12, by + 13, 8, 6, '#E8C830');
-      px(x + 14, by + 14, 4, 4, '#D8B820'); // Emblema
-      px(x + 1, by + 10, 5, 4, '#A0B0C0');
-      px(x + 26, by + 10, 5, 4, '#A0B0C0'); // Hombreras
-      px(x + 13, by + 8, 6, 3, SK.a);
-      px(x + 9, by + 0, 14, 10, SK.a);
-      px(x + 10, by + 1, 12, 8, SK.d);
-      // Pelo NEGRO RECOGIDO (mujer)
-      px(x + 8, by - 2, 16, 4, '#1A1A1A');
-      px(x + 7, by + 0, 3, 4, '#1A1A1A');
-      px(x + 22, by + 0, 3, 4, '#1A1A1A');
-      px(x + 13, by - 4, 6, 3, '#1A1A1A'); // Moño militar
-      px(x + 9, by - 3, 14, 2, '#282828');
-      // Ojos femeninos
-      px(x + 11, by + 3, 4, 4, '#fff');
-      px(x + 18, by + 3, 4, 4, '#fff');
-      px(x + 13, by + 4, 2, 3, '#2858A0');
-      px(x + 20, by + 4, 2, 3, '#2858A0');
-      px(x + 13, by + 4, 1, 1, '#fff');
-      px(x + 20, by + 4, 1, 1, '#fff');
-      px(x + 11, by + 3, 1, 1, '#1A1A1A');
-      px(x + 21, by + 3, 1, 1, '#1A1A1A'); // Pestañas
-      px(x + 14, by + 8, 4, 1, '#E08888');
-      if (fr % 40 < 20) {
-        cx.fillStyle = '#E8C830';
-        cx.font = '10px "Press Start 2P"';
-        cx.fillText('!', x + 28, by - 4);
+    case 'yam': // Pre-game con casco; post-game sin casco
+      if (!postGame) {
+        // Armadura tosca con cuernos y hacha
+        px(x + 8, by + 26, 6, 4, '#565A60');
+        px(x + 18, by + 26, 6, 4, '#565A60');
+        px(x + 9, by + 22, 5, 5, '#6A6E76');
+        px(x + 18, by + 22, 5, 5, '#6A6E76');
+        px(x + 4, by + 10, 24, 12, '#707782');
+        px(x + 6, by + 11, 20, 10, '#858C98');
+        px(x + 8, by + 13, 16, 7, '#59606A');
+        px(x + 1, by + 9, 6, 5, '#7C838E');
+        px(x + 25, by + 9, 6, 5, '#7C838E');
+        // Hacha
+        px(x + 28, by + 8, 2, 22, '#6A4828');
+        px(x + 25, by + 7, 7, 5, '#A8B0B8');
+        px(x + 27, by + 6, 5, 7, '#C0C8D0');
+        // Casco con cuernos
+        px(x + 8, by - 1, 16, 12, '#68707C');
+        px(x + 10, by + 1, 12, 9, '#808894');
+        px(x + 11, by + 4, 4, 2, '#151515');
+        px(x + 18, by + 4, 4, 2, '#151515');
+        px(x + 5, by - 3, 5, 3, '#D8D0B0');
+        px(x + 22, by - 3, 5, 3, '#D8D0B0');
+        px(x + 3, by - 5, 4, 2, '#F0E8C8');
+        px(x + 25, by - 5, 4, 2, '#F0E8C8');
+        px(x + 14, by + 8, 4, 1, '#303030');
+      } else {
+        // Sin casco: chica sociable de cabello negro largo, iris negros sin escleróticas
+        px(x + 8, by + 26, 6, 4, '#8090A0');
+        px(x + 18, by + 26, 6, 4, '#8090A0');
+        px(x + 9, by + 22, 5, 5, '#8898A8');
+        px(x + 18, by + 22, 5, 5, '#8898A8');
+        px(x + 4, by + 10, 24, 12, '#A0B0C0');
+        px(x + 6, by + 11, 20, 10, '#B0C0D0');
+        px(x + 8, by + 12, 16, 8, '#C0D0E0');
+        px(x + 12, by + 13, 8, 6, '#E8C830');
+        px(x + 14, by + 14, 4, 4, '#D8B820');
+        px(x + 1, by + 10, 5, 4, '#A0B0C0');
+        px(x + 26, by + 10, 5, 4, '#A0B0C0');
+        px(x + 13, by + 8, 6, 3, SK.a);
+        px(x + 9, by + 0, 14, 10, SK.a);
+        px(x + 10, by + 1, 12, 8, SK.d);
+        px(x + 7, by - 2, 18, 5, '#111');
+        px(x + 6, by + 1, 4, 17, '#111');
+        px(x + 22, by + 1, 4, 17, '#111');
+        px(x + 5, by + 14, 3, 8, '#080808');
+        px(x + 24, by + 14, 3, 8, '#080808');
+        px(x + 8, by - 3, 16, 2, '#282828');
+        px(x + 12, by + 4, 3, 3, '#050505');
+        px(x + 18, by + 4, 3, 3, '#050505');
+        px(x + 13, by + 4, 1, 1, '#303030');
+        px(x + 19, by + 4, 1, 1, '#303030');
+        px(x + 13, by + 8, 6, 2, '#E08888');
+        px(x + 15, by + 8, 2, 1, '#F8F8F8');
+        if (fr % 40 < 20) {
+          cx.fillStyle = '#E8C830';
+          cx.font = '10px "Press Start 2P"';
+          cx.fillText('!', x + 28, by - 4);
+        }
       }
       break;
 
@@ -5878,47 +5977,63 @@ function dTrainerBig(x, y, id, f) {
       px(x + 28, by + 14, 8, 2, '#D0A088');
       break;
 
-    case 'yam': // Mujer con armadura reluciente, sin casco, pelo negro recogido
-      px(x + 18, by + 58, 14, 10, '#8090A0');
-      px(x + 34, by + 58, 14, 10, '#8090A0');
-      px(x + 18, by + 42, 14, 18, '#8898A8');
-      px(x + 32, by + 42, 14, 18, '#8898A8');
-      px(x + 8, by + 18, 48, 26, '#A0B0C0');
-      px(x + 12, by + 20, 40, 22, '#B0C0D0');
-      px(x + 16, by + 22, 32, 18, '#C0D0E0');
-      // Emblema dorado en pecho
-      px(x + 24, by + 24, 16, 12, '#E8C830');
-      px(x + 28, by + 28, 8, 4, '#D8B820');
-      // Hombreras
-      px(x + 4, by + 18, 8, 8, '#A0B0C0');
-      px(x + 52, by + 18, 8, 8, '#A0B0C0');
-      px(x + 6, by + 20, 4, 4, '#C0D0E0');
-      px(x + 54, by + 20, 4, 4, '#C0D0E0');
-      px(x + 6, by + 24, 8, 14, SK.a);
-      px(x + 50, by + 24, 8, 14, SK.a);
-      px(x + 24, by + 12, 16, 8, SK.a);
-      px(x + 18, by - 4, 28, 18, SK.a);
-      px(x + 20, by - 2, 24, 14, SK.d);
-      // Pelo NEGRO recogido (mujer militar)
-      px(x + 16, by - 10, 32, 8, '#1A1A1A');
-      px(x + 14, by - 6, 6, 10, '#1A1A1A');
-      px(x + 44, by - 6, 6, 10, '#1A1A1A');
-      px(x + 26, by - 14, 12, 6, '#1A1A1A');
-      px(x + 28, by - 16, 8, 4, '#282828');
-      px(x + 18, by - 10, 28, 4, '#282828');
-      // Ojos femeninos azules
-      px(x + 22, by + 2, 8, 6, '#fff');
-      px(x + 36, by + 2, 8, 6, '#fff');
-      px(x + 25, by + 4, 4, 4, '#2858A0');
-      px(x + 39, by + 4, 4, 4, '#2858A0');
-      px(x + 25, by + 4, 2, 2, '#fff');
-      px(x + 39, by + 4, 2, 2, '#fff');
-      // Pestañas
-      px(x + 22, by + 2, 2, 1, '#1A1A1A');
-      px(x + 28, by + 2, 2, 1, '#1A1A1A');
-      px(x + 36, by + 2, 2, 1, '#1A1A1A');
-      px(x + 42, by + 2, 2, 1, '#1A1A1A');
-      px(x + 28, by + 12, 8, 2, '#E08888');
+    case 'yam': // Pre-game con casco; post-game sin casco
+      if (!postGame) {
+        // Armadura tosca con cuernos y hacha, versión grande
+        px(x + 18, by + 58, 14, 10, '#565A60');
+        px(x + 34, by + 58, 14, 10, '#565A60');
+        px(x + 18, by + 42, 14, 18, '#6A6E76');
+        px(x + 32, by + 42, 14, 18, '#6A6E76');
+        px(x + 8, by + 18, 48, 26, '#707782');
+        px(x + 12, by + 20, 40, 22, '#858C98');
+        px(x + 16, by + 24, 32, 14, '#59606A');
+        px(x + 4, by + 16, 12, 10, '#7C838E');
+        px(x + 48, by + 16, 12, 10, '#7C838E');
+        // Hacha
+        px(x + 56, by + 8, 4, 58, '#6A4828');
+        px(x + 48, by + 8, 16, 12, '#A8B0B8');
+        px(x + 52, by + 4, 12, 18, '#C0C8D0');
+        // Casco
+        px(x + 16, by - 6, 32, 28, '#68707C');
+        px(x + 20, by - 2, 24, 22, '#808894');
+        px(x + 22, by + 8, 8, 4, '#151515');
+        px(x + 36, by + 8, 8, 4, '#151515');
+        px(x + 8, by - 12, 12, 7, '#D8D0B0');
+        px(x + 44, by - 12, 12, 7, '#D8D0B0');
+        px(x + 2, by - 18, 10, 5, '#F0E8C8');
+        px(x + 54, by - 18, 10, 5, '#F0E8C8');
+        px(x + 28, by + 16, 8, 2, '#303030');
+      } else {
+        // Yam post-game: amable, cabello negro largo, ojos negros sin escleróticas
+        px(x + 18, by + 58, 14, 10, '#8090A0');
+        px(x + 34, by + 58, 14, 10, '#8090A0');
+        px(x + 18, by + 42, 14, 18, '#8898A8');
+        px(x + 32, by + 42, 14, 18, '#8898A8');
+        px(x + 8, by + 18, 48, 26, '#A0B0C0');
+        px(x + 12, by + 20, 40, 22, '#B0C0D0');
+        px(x + 16, by + 22, 32, 18, '#C0D0E0');
+        px(x + 24, by + 24, 16, 12, '#E8C830');
+        px(x + 28, by + 28, 8, 4, '#D8B820');
+        px(x + 4, by + 18, 8, 8, '#A0B0C0');
+        px(x + 52, by + 18, 8, 8, '#A0B0C0');
+        px(x + 6, by + 24, 8, 14, SK.a);
+        px(x + 50, by + 24, 8, 14, SK.a);
+        px(x + 24, by + 12, 16, 8, SK.a);
+        px(x + 18, by - 4, 28, 18, SK.a);
+        px(x + 20, by - 2, 24, 14, SK.d);
+        px(x + 14, by - 10, 36, 10, '#111');
+        px(x + 12, by - 4, 8, 36, '#111');
+        px(x + 44, by - 4, 8, 36, '#111');
+        px(x + 10, by + 24, 6, 20, '#080808');
+        px(x + 48, by + 24, 6, 20, '#080808');
+        px(x + 18, by - 12, 28, 5, '#282828');
+        px(x + 24, by + 4, 6, 6, '#050505');
+        px(x + 36, by + 4, 6, 6, '#050505');
+        px(x + 26, by + 4, 2, 2, '#303030');
+        px(x + 38, by + 4, 2, 2, '#303030');
+        px(x + 28, by + 14, 10, 3, '#E08888');
+        px(x + 31, by + 14, 4, 1, '#F8F8F8');
+      }
       break;
 
     case 'ravell': // Bufón amarillo y verde rayas, cascabeles
@@ -10378,6 +10493,51 @@ function genCave(map, cols, rows) {
     attempts++;
   }
 }
+
+
+function addOloSecretChamber(map) {
+  // Cámara oculta de Mr. Olo-Man en Cueva Volcánica.
+  // La sala ya existe tras la pared; la entrada secreta se abre desde (19,24) hacia la izquierda.
+  for (let r = 22; r <= 27; r++) {
+    for (let c = 4; c <= 10; c++) map[r][c] = 20;
+  }
+  for (let c = 11; c <= 17; c++) map[24][c] = 20;
+  map[24][18] = 21; // pared secreta cerrada
+  map[23][18] = 21;
+  map[25][18] = 21;
+}
+
+function hasTwoActiveDragons() {
+  return G.party.filter((c) => c && c.tp === 'dragon' && c.hp > 0).length >= 2;
+}
+
+function tryOloSecretEntrance() {
+  if (G.curMap !== 'cave1' || G.pl.stepTarget) return false;
+  const c = Math.round(G.pl.x),
+    r = Math.round(G.pl.y);
+  if (c === 19 && r === 24 && kh('ArrowLeft') && cave1[24]?.[18] === 21) {
+    if (hasTwoActiveDragons()) {
+      cave1[24][18] = 20;
+      sfx.cap();
+      aN('¡La pared responde a tus dragones!');
+    } else {
+      G.scr = 'dialog';
+      G.ds = {
+        npc: { nm: 'Pared antigua' },
+        dlgArr: [
+          'Una marca de dos dragones',
+          'brilla en la piedra.',
+          'Necesitas 2 criaturas Dragón',
+          'vivas en tu equipo activo.',
+        ],
+        li: 0, ci: 0, tm: 0, full: false,
+      };
+      sfx.nef();
+    }
+    return true;
+  }
+  return false;
+}
 // === GENERACIÓN DEL CASTILLO ===
 function genCastle() {
   for (let r = 0; r < KR; r++) {
@@ -10457,6 +10617,7 @@ function solidW(c, r) {
   if (t === 13) return true;
   if (t === 9) return true;
   if (t === 12 && !towerOpen) return true;
+  if (routeGateBlocks(c, r)) return true;
   return false;
 }
 
@@ -11652,8 +11813,9 @@ const npcs = [
 
 const caveNpcs = [
   {
-    x: Math.floor(CC / 2),
-    y: 5,
+    x: 6,
+    y: 24,
+    map: 'cave1',
     tp: 'oloman',
     nm: 'Mr. Olo-Man',
     dlg: [
@@ -11686,6 +11848,16 @@ const caveNpcs = [
       'energía! ¡COMBATAMOS!',
     ],
     fixedTeam: [{ id: 'pixie' }, { id: 'elefantasy' }, { id: 'sidhe' }],
+  },
+  {
+    x: CC - 6,
+    y: 13,
+    map: 'cave2',
+    tp: 'salogon',
+    nm: 'SaloGon',
+    flag: 'metSaloGon',
+    vision: true,
+    dlg: [['Soy SaloGon, vidente de la cueva.']],
   },
 ];
 
@@ -12614,6 +12786,42 @@ function canPassRoute(fromPueblo) {
   }
 }
 
+
+const ROUTE_GATES = [
+  { from: 'storyboard', leader: 'tamara', x: 40, y: 104, w: 11, place: 'Villa Storyboard' },
+  { from: 'rodaje', leader: 'luchito', x: 54, y: 76, w: 11, place: 'Cantera Rodaje' },
+  { from: 'ultimatoma', leader: 'andrea', x: 30, y: 46, w: 11, place: 'Feria Última Toma' },
+  { from: 'montaje', leader: 'dan', x: 44, y: 16, w: 11, place: 'Prados Montaje' },
+];
+
+function routeGateAt(c, r) {
+  return ROUTE_GATES.find((g) => r === g.y && Math.abs(c - g.x) <= Math.floor(g.w / 2));
+}
+
+function routeGateBlocks(c, r) {
+  const g = routeGateAt(c, r);
+  return !!(g && !canPassRoute(g.from));
+}
+
+function showRouteBlockedDialog(gate) {
+  const mission = LEADER_MISSIONS[gate.leader];
+  G.scr = 'dialog';
+  G.ds = {
+    npc: { nm: 'Guardia de Ruta' },
+    dlgArr: [
+      `La salida norte de ${gate.place}`,
+      'está cerrada por orden del reino.',
+      `Necesitas vencer a ${mission.leaderNm}`,
+      `y obtener el diploma "${mission.diploma}".`,
+    ],
+    li: 0,
+    ci: 0,
+    tm: 0,
+    full: false,
+  };
+  sfx.nef();
+}
+
 // === VERIFICACIONES ===
 
 function checkAllTalked() {
@@ -12770,6 +12978,22 @@ function getNPCBattleIntro(npc) {
 
 // === MUNDO PRINCIPAL ===
 function uWorld() {
+  // Guardias de ruta: bloquean la salida norte si falta el diploma del líder.
+  if (!G.pl.stepTarget) {
+    let dx = 0, dy = 0;
+    if (kh('ArrowUp')) dy = -1;
+    else if (kh('ArrowDown')) dy = 1;
+    else if (kh('ArrowLeft')) dx = -1;
+    else if (kh('ArrowRight')) dx = 1;
+    if (dx || dy) {
+      const gate = routeGateAt(Math.round(G.pl.x) + dx, Math.round(G.pl.y) + dy);
+      if (gate && !canPassRoute(gate.from)) {
+        showRouteBlockedDialog(gate);
+        return;
+      }
+    }
+  }
+
   // Entrada a cuevas en modo cuadrícula: si estás justo debajo de una puerta
   // de cueva y empujas hacia arriba, entras sin intentar caminar sobre el muro.
   if (!G.pl.stepTarget && kh('ArrowUp')) {
@@ -12902,6 +13126,8 @@ function uWorld() {
 // === CUEVA ===
 function uCave() {
   const map = G.curMap === 'cave1' ? cave1 : cave2;
+
+  if (tryOloSecretEntrance()) return;
 
   const oldX = G.pl.x;
   const oldY = G.pl.y;
@@ -13107,13 +13333,15 @@ const DAN_GOSSIP_LIST = [
 
 function handleLeaderNPC(n) {
   const M = LEADER_MISSIONS[n.leaderKey];
-  // Ya tiene diploma: dialogo breve, sin batalla (rebattle=once)
+  // Ya tiene diploma: diálogo breve. En post-game el ciclo de Olo-Man
+  // permite re-batallas contra líderes sin repetir la misión/diploma.
   if (hasDiploma(n.leaderKey)) {
     G.scr = 'dialog';
     G.ds = {
       npc: n,
       dlgArr: n.postDlg || M.dlgVictory,
-      li: 0, ci: 0, tm: 0, full: false, afterBattle: false,
+      li: 0, ci: 0, tm: 0, full: false,
+      afterBattle: postGame && canNPCBattle(n),
     };
     sfx.sel();
     return;
@@ -13330,6 +13558,7 @@ function dDanGossip() {
 function npcVisible(n) {
   if (n.preOnly && postGame) return false;
   if (n.postOnly && !postGame) return false;
+  if (n.map && n.map !== G.curMap) return false;
   return true;
 }
 function checkNPC(list) {
@@ -13340,6 +13569,12 @@ function checkNPC(list) {
     // Marcar como hablado
     if (n.flag) G.talkedTo[n.flag] = true;
     checkAllTalked();
+
+    // SaloGon: pantalla especial de relatos con retratos
+    if (n.vision) {
+      showSaloGonVision(n);
+      return;
+    }
 
     // LIDERES DE GIMNASIO (Fases B-E)
     if (n.isLeader) {
@@ -13868,6 +14103,87 @@ function dDialog() {
     cx.fillStyle = '#000';
     cx.font = '10px "Press Start 2P"';
     cx.fillText('▼', arrowX, arrowY + Math.sin(fr * 0.2) * 2);
+  }
+}
+
+
+function showSaloGonVision(npc) {
+  G.scr = 'vision';
+  G.vision = {
+    npc,
+    idx: 0,
+    ci: 0,
+    tm: 0,
+    full: false,
+    pages: [
+      { id: 'salogon', name: 'SaloGon', lines: ['Soy SaloGon, vidente de la Cueva Cristalina.', 'Antes vestía de muchos colores, pero por un error', 'algunos lo ven como un monstruo. Yo solo cuento memorias.'] },
+      { id: 'rafa', name: 'Rafa', lines: ['Rafa caminaba con anteojos empañados y camisa beige.', 'Decía que cada historia necesita a alguien que observe.', 'Su risa quedó atrapada en estas piedras.'] },
+      { id: 'maria', name: 'María', lines: ['María llevaba el cabello negro como noche sin luna.', 'Miraba seria, con ceño firme, porque protegía a todos.', 'Su camisa blanca aún brilla en mis visiones.'] },
+      { id: 'mancilla', name: 'Mancilla', lines: ['Mancilla fue un príncipe de armadura brillante.', 'Cabello castaño, chivito en el mentón, sin bigote.', 'Cayó sonriendo, como si ya conociera el final.'] },
+    ],
+  };
+  sfx.sel();
+}
+
+function uVision() {
+  const v = G.vision;
+  if (!v) { G.scr = 'world'; return; }
+  v.tm++;
+  const text = v.pages[v.idx].lines.join(' ');
+  if (!v.full && v.tm % 2 === 0) {
+    v.ci++;
+    if (v.ci >= text.length) v.full = true;
+  }
+  if (kp(' ') || kp('Enter')) {
+    if (!v.full) {
+      v.ci = text.length;
+      v.full = true;
+    } else {
+      v.idx++;
+      if (v.idx >= v.pages.length) {
+        G.scr = 'world';
+        G.vision = null;
+      } else {
+        v.ci = 0; v.tm = 0; v.full = false;
+        sfx.sel();
+      }
+    }
+  }
+  if (kp('x') || kp('Escape')) { G.scr = 'world'; G.vision = null; }
+}
+
+function dVision() {
+  drawMap();
+  const v = G.vision;
+  const page = v.pages[v.idx];
+  cx.fillStyle = 'rgba(0,0,0,.72)';
+  cx.fillRect(0, 0, 640, 480);
+  dBoxMenu(170, 35, 300, 235, page.name);
+  // Recuadro pixel-art central
+  px(220, 68, 200, 160, '#08080E');
+  px(226, 74, 188, 148, '#E8D8A8');
+  px(232, 80, 176, 136, '#1A1A2E');
+  px(238, 86, 164, 124, '#2A2A42');
+  if (page.id === 'salogon') {
+    cx.save(); cx.translate(288, 120); cx.scale(2.2, 2.2); dNPC(0, 0, 'salogon', fr); cx.restore();
+  } else {
+    dFallenPortrait(page.id, 272, 86, 4);
+  }
+  const allText = page.lines.join(' ');
+  const shown = allText.substring(0, v.ci);
+  const lines = wrapText(shown, 52);
+  const boxH = 78;
+  dDialogBox(20, 390, 600, boxH, page.name);
+  cx.fillStyle = '#000';
+  cx.font = '8px "Press Start 2P"';
+  lines.slice(0, 4).forEach((ln, i) => cx.fillText(ln, 36, 414 + i * 14));
+  cx.fillStyle = '#888';
+  cx.font = '6px "Press Start 2P"';
+  cx.fillText(`${v.idx + 1}/${v.pages.length}`, 560, 456);
+  if (v.full) {
+    cx.fillStyle = '#000';
+    cx.font = '10px "Press Start 2P"';
+    cx.fillText('▼', 590, 456 + Math.sin(fr * 0.2) * 2);
   }
 }
 
@@ -14562,6 +14878,7 @@ function resetGame() {
   pairBattles = false;
   proa = [];
   towerKey = { edison: false, roberto: false, gabriela: false, ximena: false };
+  diplomas = { tamara: false, luchito: false, andrea: false, dan: false };
   captureCount = {};
   lastHealPos = { x: 20, y: 145, map: 'world' };
 
@@ -14608,6 +14925,7 @@ function resetGame() {
   }
   genWorld();
   genCave(cave1, CC, CR);
+  addOloSecretChamber(cave1);
   genCave(cave2, CC, CR);
   genCastle();
 
@@ -16828,6 +17146,18 @@ function drawMap() {
       er = Math.min(WR, sr + 17);
     for (let r = sr; r < er; r++) for (let c = sc; c < ec; c++) dTileW(c, r);
 
+    // Piedras/guardias de ruta según diplomas
+    ROUTE_GATES.forEach((g) => {
+      if (canPassRoute(g.from)) return;
+      for (let dc = -Math.floor(g.w / 2); dc <= Math.floor(g.w / 2); dc++) {
+        const sx = (g.x + dc) * T - cam.x;
+        const sy = g.y * T - cam.y;
+        if (sx > -40 && sx < 680 && sy > -40 && sy < 520) {
+          dRouteBlocker(sx, sy, fr);
+        }
+      }
+    });
+
     // NPCs del mundo
     npcs.forEach((n) => {
       if (!npcVisible(n)) return;
@@ -16874,6 +17204,7 @@ function drawMap() {
 
     // NPCs cueva
     caveNpcs.forEach((n) => {
+      if (!npcVisible(n)) return;
       const sx = n.x * T - cam.x,
         sy = n.y * T - cam.y;
       if (sx > -40 && sx < 680) {
@@ -17411,6 +17742,7 @@ function saveGame() {
       tExp: G.tExp,
       mFriend: G.mFriend,
       bossDialogs: G.bossDialogs,
+      diplomas,
 
       // Post-game
       postGame,
@@ -17466,6 +17798,12 @@ function loadGame() {
     G.tExp = save.tExp || 0;
     G.mFriend = save.mFriend || 0;
     G.bossDialogs = save.bossDialogs || 0;
+    diplomas = save.diplomas || {
+      tamara: !!save.npcDefeats?.metTamara,
+      luchito: !!save.npcDefeats?.metLuchito,
+      andrea: !!save.npcDefeats?.metAndrea,
+      dan: !!save.npcDefeats?.metDan,
+    };
 
     // Post-game
     postGame = save.postGame || false;
@@ -17677,6 +18015,9 @@ function update() {
     case 'confirmReset':
       uConfirmReset();
       break;
+    case 'vision':
+      uVision();
+      break;
   }
 }
 
@@ -17717,6 +18058,9 @@ function draw() {
     case 'danGossip':
       dDanGossip();
       break;
+    case 'vision':
+      dVision();
+      break;
   }
 }
 
@@ -17731,6 +18075,7 @@ function init() {
   // Generar mapas
   genWorld();
   genCave(cave1, CC, CR);
+  addOloSecretChamber(cave1);
   genCave(cave2, CC, CR);
   genCastle();
 
