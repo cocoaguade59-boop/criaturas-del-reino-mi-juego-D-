@@ -3357,126 +3357,87 @@ function drawParticles() {
 // === NUEVO SPRITE DEL JUGADOR - ESTILO PIXEL MEDIEVAL ===
 // === SPRITE DEL JUGADOR - ESTILO PIXEL ART MEDIEVAL ===
 function dPlayerGBA(x, y, dir, f) {
-  const bob = G.pl.moving ? Math.sin(f * 0.3) * 1.5 : 0;
+  // Prota estilo GBA/RPG Maker: solo rectangulos, 16x24, contorno negro 1px
+  const bob = G.pl.moving ? Math.sin(f * 0.3) * 1.2 : 0;
   const by = y + bob;
-  const wf = G.pl.moving ? (Math.floor(f / 4) % 2) : 0;
+  const OX = x + 8;        // cuerpo de 16px centrado en el tile de 32px
+  const OY = by + 14;      // los pies quedan ~ a ppy+30 (suelo del tile)
 
-  const OUT = '#0E0E10';
-  const HAIR = '#141210', HAIRL = '#2C2620';
+  const OUT = '#0E0E10';     // contorno negro
+  const HAIR = '#16110D';    // pelo negro
   const SKIN = '#F2CBA0', SKINS = '#D6A878';
-  const TUN = '#E9DCAE', TUNS = '#C9B67E';
-  const CAPE = '#2E8B3A', CAPES = '#1E6B28', CAPEL = '#48AA56';
-  const BRN = '#6E4A26', BOOT = '#3A2410';
-  const BELT = '#5A3A1E', BUCKLE = '#D9B24A';
-  const EYE = '#241208';
+  const SHIRT = '#3FA34D', SHIRTS = '#2E7D38';
+  const PANTS = '#3A2414';   // pantalon marron oscuro
+  const BOOT = '#5A3818';    // botas marrones
+  const BELT = '#5A3A1E';    // cinturon marron
+  const BUCKLE = '#E8C24A';  // hebilla dorada
+  const EYE = '#0E0E10';     // ojos negros (sin pupila)
+  const MOUTH = '#7A2A18';   // boca
 
+  // sombra en el suelo
   cx.fillStyle = 'rgba(0,0,0,.22)';
   cx.beginPath();
-  cx.ellipse(x + 16, by + 37, 10, 3, 0, 0, Math.PI * 2);
+  cx.ellipse(x + 16, by + 39, 8, 2.5, 0, 0, Math.PI * 2);
   cx.fill();
 
+  // helpers (rectangulos alineados; sin curvas ni poligonos)
+  const R = (c, r, w, h, col) => px(OX + c, OY + r, w, h, col);
+  const RO = (c, r, w, h, col) => { px(OX + c - 1, OY + r - 1, w + 2, h + 2, OUT); R(c, r, w, h, col); };
+
   switch (dir) {
-    case 0: {
-      px(x + 4, by + 17, 4, 16, CAPES);
-      px(x + 24, by + 17, 4, 16, CAPES);
-      const s1 = wf ? 1 : 0;
-      px(x + 8, by + 28 + s1, 6, 9, OUT); px(x + 9, by + 29 + s1, 4, 8, BRN);
-      px(x + 18, by + 28 - s1, 6, 9, OUT); px(x + 19, by + 29 - s1, 4, 8, BRN);
-      px(x + 8, by + 35 + s1, 7, 3, OUT); px(x + 9, by + 35 + s1, 5, 2, BOOT);
-      px(x + 17, by + 35 - s1, 7, 3, OUT); px(x + 18, by + 35 - s1, 5, 2, BOOT);
-      px(x + 6, by + 17, 20, 12, OUT);
-      px(x + 7, by + 18, 18, 10, TUN);
-      px(x + 7, by + 18, 18, 2, TUNS);
-      px(x + 11, by + 20, 2, 8, TUNS);
-      px(x + 19, by + 20, 2, 8, TUNS);
-      px(x + 7, by + 25, 18, 3, BELT);
-      px(x + 14, by + 25, 4, 3, BUCKLE);
-      px(x + 5, by + 19, 4, 8, OUT); px(x + 6, by + 20, 2, 6, TUN); px(x + 5, by + 26, 3, 3, SKIN);
-      px(x + 23, by + 19, 4, 8, OUT); px(x + 24, by + 20, 2, 6, TUN); px(x + 24, by + 26, 3, 3, SKIN);
-      px(x + 13, by + 15, 6, 3, SKINS);
-      px(x + 8, by + 2, 16, 14, OUT);
-      px(x + 9, by + 3, 14, 12, SKIN);
-      px(x + 9, by + 3, 14, 2, SKINS);
-      px(x + 6, by - 3, 20, 8, OUT);
-      px(x + 7, by - 2, 18, 6, HAIR);
-      px(x + 7, by - 4, 3, 3, HAIR);
-      px(x + 12, by - 5, 3, 4, HAIR);
-      px(x + 17, by - 4, 3, 3, HAIR);
-      px(x + 22, by - 3, 3, 3, HAIR);
-      px(x + 9, by - 2, 2, 2, HAIRL);
-      px(x + 19, by - 2, 2, 2, HAIRL);
-      px(x + 9, by + 1, 5, 3, HAIR);
-      px(x + 16, by + 1, 6, 3, HAIR);
-      px(x + 13, by + 2, 2, 2, HAIR);
-      px(x + 10, by + 5, 3, 1, OUT);
-      px(x + 18, by + 5, 3, 1, OUT);
-      px(x + 11, by + 6, 3, 4, '#FFFFFF');
-      px(x + 17, by + 6, 3, 4, '#FFFFFF');
-      px(x + 12, by + 7, 2, 2, EYE);
-      px(x + 18, by + 7, 2, 2, EYE);
-      px(x + 12, by + 7, 1, 1, '#FFFFFF');
-      px(x + 18, by + 7, 1, 1, '#FFFFFF');
-      px(x + 14, by + 11, 4, 1, '#A85038');
-      px(x + 10, by + 10, 2, 1, '#F0A088');
-      px(x + 20, by + 10, 2, 1, '#F0A088');
+    case 0: { // ===== FRENTE =====
+      RO(4, 21, 3, 3, BOOT); RO(9, 21, 3, 3, BOOT);   // botas
+      RO(5, 18, 6, 4, PANTS);                         // piernas / pantalon
+      RO(2, 12, 2, 5, SHIRT); RO(12, 12, 2, 5, SHIRT);// brazos (mangas)
+      R(2, 16, 2, 2, SKIN); R(12, 16, 2, 2, SKIN);    // manos
+      RO(3, 12, 10, 6, SHIRT); R(3, 13, 10, 1, SHIRTS);// camisa hombros rectos
+      R(4, 16, 8, 2, BELT); R(7, 16, 2, 2, BUCKLE);   // cinturon + hebilla centrada
+      R(6, 11, 4, 1, SKIN);                           // cuello
+      // cabeza
+      R(1, 0, 14, 11, OUT);     // base / contorno
+      R(2, 0, 12, 3, HAIR);     // copete
+      R(2, 0, 2, 9, HAIR);      // mecha izquierda (hasta mandibula)
+      R(12, 0, 2, 9, HAIR);     // mecha derecha
+      R(4, 4, 8, 7, SKIN);      // cara
+      R(4, 3, 8, 1, HAIR);      // flequillo corto
+      R(5, 4, 2, 4, EYE);       // ojo izquierdo 2x4 sin pupila
+      R(9, 4, 2, 4, EYE);       // ojo derecho 2x4 sin pupila
+      R(6, 8, 4, 2, MOUTH);     // boca 4x2
       break;
     }
-    case 3: {
-      const s1 = wf ? 1 : 0;
-      px(x + 8, by + 28 + s1, 6, 9, OUT); px(x + 9, by + 29 + s1, 4, 8, BRN);
-      px(x + 18, by + 28 - s1, 6, 9, OUT); px(x + 19, by + 29 - s1, 4, 8, BRN);
-      px(x + 8, by + 35 + s1, 7, 3, OUT); px(x + 9, by + 35 + s1, 5, 2, BOOT);
-      px(x + 17, by + 35 - s1, 7, 3, OUT); px(x + 18, by + 35 - s1, 5, 2, BOOT);
-      px(x + 5, by + 14, 22, 19, OUT);
-      px(x + 6, by + 15, 20, 17, CAPE);
-      px(x + 6, by + 15, 20, 3, CAPEL);
-      px(x + 7, by + 18, 6, 13, CAPES);
-      px(x + 19, by + 18, 6, 13, CAPES);
-      px(x + 15, by + 18, 2, 14, CAPEL);
-      px(x + 5, by + 27, 3, 3, SKIN);
-      px(x + 24, by + 27, 3, 3, SKIN);
-      px(x + 13, by + 13, 6, 3, SKINS);
-      px(x + 6, by - 4, 20, 18, OUT);
-      px(x + 7, by - 3, 18, 16, HAIR);
-      px(x + 8, by - 4, 16, 4, HAIRL);
-      px(x + 7, by + 2, 3, 9, HAIR);
-      px(x + 22, by + 2, 3, 9, HAIR);
-      px(x + 10, by - 5, 4, 3, HAIR);
-      px(x + 18, by - 5, 4, 3, HAIR);
+    case 3: { // ===== ESPALDA =====
+      RO(4, 21, 3, 3, BOOT); RO(9, 21, 3, 3, BOOT);
+      RO(5, 18, 6, 4, PANTS);
+      RO(2, 12, 2, 5, SHIRT); RO(12, 12, 2, 5, SHIRT);
+      R(2, 16, 2, 2, SKIN); R(12, 16, 2, 2, SKIN);
+      RO(3, 12, 10, 6, SHIRT); R(3, 13, 10, 1, SHIRTS);
+      R(4, 16, 8, 2, BELT); R(7, 16, 2, 2, BUCKLE);
+      R(6, 11, 4, 1, SKIN);     // nuca
+      R(1, 0, 14, 11, OUT);     // cabeza toda de pelo
+      R(2, 0, 12, 11, HAIR);
+      R(4, 1, 2, 3, '#2A221A'); // sombra de volumen en el pelo
       break;
     }
     case 1:
-    case 2: {
+    case 2: { // ===== PERFIL (derecha / izquierda) =====
       const flip = dir === 2;
-      const R = (px1, py, w, h, c) => px(x + (flip ? 32 - px1 - w : px1), by + py, w, h, c);
-      const s = wf ? 1 : 0;
-      R(2, 14, 7, 17, OUT);
-      R(3, 15, 5, 15, CAPE);
-      R(3, 15, 5, 3, CAPEL);
-      R(11 - s, 28, 6, 9, OUT); R(12 - s, 29, 4, 8, BRN);
-      R(17 + s, 28, 6, 9, OUT); R(18 + s, 29, 4, 8, BRN);
-      R(11 - s, 35, 6, 3, OUT); R(12 - s, 35, 4, 2, BOOT);
-      R(17 + s, 35, 6, 3, OUT); R(18 + s, 35, 4, 2, BOOT);
-      R(8, 17, 13, 12, OUT);
-      R(9, 18, 11, 10, TUN);
-      R(9, 18, 11, 2, TUNS);
-      R(17, 19, 4, 7, TUN);
-      R(18, 25, 4, 4, OUT); R(18, 25, 3, 3, SKIN);
-      R(9, 25, 11, 3, BELT); R(13, 25, 3, 3, BUCKLE);
-      R(11, 15, 6, 3, SKINS);
-      R(9, 1, 14, 14, OUT);
-      R(10, 2, 12, 12, SKIN);
-      R(10, 2, 12, 2, SKINS);
-      R(9, -3, 14, 6, OUT);
-      R(10, -2, 12, 5, HAIR);
-      R(9, -4, 4, 3, HAIR);
-      R(20, 0, 3, 7, HAIR);
-      R(11, -5, 3, 3, HAIR);
-      R(21, 8, 2, 2, SKINS);
-      R(16, 6, 3, 4, '#FFFFFF');
-      R(17, 7, 2, 2, EYE);
-      R(17, 7, 1, 1, '#FFFFFF');
-      R(17, 12, 3, 1, '#A85038');
+      const Rf = (c, r, w, h, col) => px(OX + (flip ? 16 - c - w : c), OY + r, w, h, col);
+      const ROf = (c, r, w, h, col) => { px(OX + (flip ? 16 - c - w : c) - 1, OY + r - 1, w + 2, h + 2, OUT); Rf(c, r, w, h, col); };
+      ROf(4, 21, 3, 3, BOOT); ROf(8, 21, 3, 3, BOOT);  // botas
+      ROf(5, 18, 5, 4, PANTS);                         // pierna / pantalon
+      Rf(11, 13, 2, 4, SHIRT); Rf(11, 16, 2, 2, SKIN); // brazo delantero + mano
+      ROf(3, 12, 10, 6, SHIRT); Rf(3, 13, 10, 1, SHIRTS);// camisa
+      Rf(4, 16, 8, 2, BELT); Rf(9, 16, 2, 2, BUCKLE);  // cinturon + hebilla al frente
+      Rf(5, 11, 4, 1, SKIN);                           // cuello
+      // cabeza de perfil (el frente mira a la derecha en dir=1)
+      Rf(4, 0, 9, 11, OUT);     // base
+      Rf(4, 0, 9, 3, HAIR);     // copete
+      Rf(4, 0, 2, 9, HAIR);     // pelo en la nuca (atras)
+      Rf(5, 4, 7, 7, SKIN);     // cara
+      Rf(5, 3, 7, 1, HAIR);     // frente
+      Rf(11, 6, 1, 2, SKINS);   // nariz (rectangulo)
+      Rf(8, 4, 2, 4, EYE);      // ojo 2x4
+      Rf(9, 8, 3, 2, MOUTH);    // boca
       break;
     }
   }
@@ -8503,49 +8464,64 @@ function dTileW(c, r) {
       cx.fillRect(x, y + 27, T, 5);
       break;
     }
-    case 6: // Flores decorativas
-      cx.fillStyle = '#48982A';
+    case 6: { // Flores decorativas - misma base de hierba que la roca + nieve
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
       cx.fillRect(x, y, T, T);
-      // Tallo
-      cx.fillStyle = '#38A028';
-      cx.fillRect(x + 15, y + 14, 2, 12);
-      // Flores
-      cx.fillStyle = '#F06888';
-      cx.fillRect(x + 10, y + 10, 4, 4);
-      cx.fillRect(x + 18, y + 10, 4, 4);
-      cx.fillStyle = '#F8E830';
-      cx.fillRect(x + 14, y + 10, 4, 4);
-      // Hojas
-      cx.fillStyle = '#48B830';
-      cx.fillRect(x + 12, y + 18, 3, 3);
-      cx.fillRect(x + 18, y + 20, 3, 3);
-      // Pétalos extra
-      cx.fillStyle = '#F8A0B0';
-      cx.fillRect(x + 10, y + 8, 2, 2);
-      cx.fillRect(x + 20, y + 8, 2, 2);
+      cx.fillStyle = lerpColor('#48982A', '#E2ECE6', snow);
+      if ((c + r) % 2 === 0) cx.fillRect(x + 6, y + 8, 4, 4);
+      if ((c * 3 + r) % 5 === 0) cx.fillRect(x + 20, y + 18, 5, 3);
+      if (snow > 0.15) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.4 + snow * 0.5).toFixed(2) + ')';
+        if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 10, y + 6, 2, 2);
+        if ((c + r) % 6 === 0) cx.fillRect(x + 22, y + 22, 3, 2);
+      }
+      // tallos
+      cx.fillStyle = lerpColor('#38A028', '#CFE0CF', snow);
+      cx.fillRect(x + 11, y + 14, 2, 12);
+      cx.fillRect(x + 19, y + 16, 2, 10);
+      // hojas
+      cx.fillStyle = lerpColor('#48B830', '#DCEADA', snow);
+      cx.fillRect(x + 9, y + 18, 3, 3);
+      cx.fillRect(x + 20, y + 20, 3, 3);
+      // flores
+      cx.fillStyle = '#E85A82'; cx.fillRect(x + 8, y + 8, 5, 5);
+      cx.fillStyle = '#F07FA0'; cx.fillRect(x + 9, y + 9, 3, 3);
+      cx.fillStyle = '#E8C830'; cx.fillRect(x + 16, y + 8, 5, 5);
+      cx.fillStyle = '#F4E060'; cx.fillRect(x + 17, y + 9, 3, 3);
+      cx.fillStyle = '#D85078'; cx.fillRect(x + 23, y + 12, 4, 4);
+      cx.fillStyle = '#F2A0B0'; cx.fillRect(x + 24, y + 13, 2, 2);
+      cx.fillStyle = '#FFF0A0'; cx.fillRect(x + 10, y + 10, 1, 1); cx.fillRect(x + 18, y + 10, 1, 1);
       break;
+    }
 
-    case 7: // Roca grande
-      cx.fillStyle = '#48982A';
+    case 7: { // Roca grande - misma base de hierba que las flores + nieve
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
       cx.fillRect(x, y, T, T);
-      // Roca base
-      cx.fillStyle = '#707070';
-      cx.fillRect(x + 4, y + 10, 24, 18);
-      cx.fillStyle = '#888888';
-      cx.fillRect(x + 6, y + 8, 20, 14);
-      cx.fillStyle = '#989898';
-      cx.fillRect(x + 8, y + 10, 16, 8);
-      // Brillo
-      cx.fillStyle = '#A8A8A8';
-      cx.fillRect(x + 10, y + 10, 6, 3);
-      // Grietas
-      cx.fillStyle = '#585858';
-      cx.fillRect(x + 14, y + 14, 1, 6);
-      cx.fillRect(x + 18, y + 12, 1, 4);
-      // Sombra
-      cx.fillStyle = 'rgba(0,0,0,.15)';
-      cx.fillRect(x + 6, y + 24, 20, 4);
+      cx.fillStyle = lerpColor('#48982A', '#E2ECE6', snow);
+      if ((c + r) % 2 === 0) cx.fillRect(x + 6, y + 8, 4, 4);
+      if ((c * 3 + r) % 5 === 0) cx.fillRect(x + 20, y + 18, 5, 3);
+      if (snow > 0.15) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.4 + snow * 0.5).toFixed(2) + ')';
+        if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 10, y + 6, 2, 2);
+        if ((c + r) % 6 === 0) cx.fillRect(x + 22, y + 22, 3, 2);
+      }
+      // Roca
+      cx.fillStyle = '#6E6E6E'; cx.fillRect(x + 5, y + 11, 22, 16);
+      cx.fillStyle = '#828282'; cx.fillRect(x + 6, y + 9, 20, 13);
+      cx.fillStyle = '#969696'; cx.fillRect(x + 8, y + 11, 16, 7);
+      cx.fillStyle = '#A8A8A8'; cx.fillRect(x + 10, y + 11, 6, 3); // brillo
+      cx.fillStyle = '#585858'; cx.fillRect(x + 14, y + 15, 1, 6); cx.fillRect(x + 19, y + 13, 1, 4); // grietas
+      cx.fillStyle = 'rgba(0,0,0,.18)'; cx.fillRect(x + 6, y + 24, 20, 4); // sombra
+      // polvo de nieve sobre la roca al norte
+      if (snow > 0.2) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.45 + snow * 0.5).toFixed(2) + ')';
+        cx.fillRect(x + 6, y + 8, 20, 3);
+        cx.fillRect(x + 10, y + 11, 8, 2);
+      }
       break;
+    }
 
     case 9: // Entrada de cueva
       cx.fillStyle = '#48982A';
@@ -8569,10 +8545,14 @@ function dTileW(c, r) {
       cx.fillRect(x + T - 4, y, 4, T);
       cx.fillStyle = '#8A7A68';
       cx.fillRect(x + 2, y + 1, T - 4, 3);
-      // Detalle de musgo
-      cx.fillStyle = '#48A030';
-      cx.fillRect(x + 2, y + 6, 3, 2);
-      cx.fillRect(x + T - 5, y + 8, 3, 2);
+      // Detalle de musgo adaptativo (verde al sur, blanco al norte)
+      {
+        const snow9 = Math.max(0, Math.min(1, (68 - r) / 46));
+        const moss9 = lerpColor('#48A030', '#EEF4EE', snow9);
+        cx.fillStyle = moss9;
+        cx.fillRect(x + 2, y + 6, 3, 2);
+        cx.fillRect(x + T - 5, y + 8, 3, 2);
+      }
       break;
 
     case 10: { // Cristal Vinculo - la base cambia con la altura (nieve)
@@ -8668,45 +8648,65 @@ function dTileW(c, r) {
       }
       break;
 
-    case 12: // Torre Presupuesto Aprobado (post-game)
-      {
-        cx.fillStyle = '#48982A';
+    case 12: { // Torre / castillo imponente (post-game) - musgo adaptativo
+        const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+        const moss = lerpColor('#4FA03A', '#EEF4EE', snow);     // verde al sur, blanco al norte
+        const mossD = lerpColor('#3C7A2E', '#D8E6D8', snow);
+        // Suelo (hierba del bioma)
+        cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
         cx.fillRect(x, y, T, T);
+        // Cuerpo de piedra de la torre
+        cx.fillStyle = '#6E7686'; cx.fillRect(x + 4, y + 4, 24, 28);
+        cx.fillStyle = '#7E8696'; cx.fillRect(x + 5, y + 5, 22, 26);
+        // Ladrillos
+        cx.fillStyle = '#666E7E';
+        for (let br = 0; br < 4; br++) cx.fillRect(x + 5, y + 9 + br * 5, 22, 1);
+        cx.fillStyle = '#5E6676';
+        cx.fillRect(x + 15, y + 5, 1, 27);
+        cx.fillRect(x + 10, y + 10, 1, 4); cx.fillRect(x + 21, y + 10, 1, 4);
+        cx.fillRect(x + 10, y + 15, 1, 4); cx.fillRect(x + 21, y + 15, 1, 4);
+        cx.fillRect(x + 10, y + 20, 1, 4); cx.fillRect(x + 21, y + 20, 1, 4);
+        // Almenas (battlements) en lo alto
+        cx.fillStyle = '#6E7686';
+        cx.fillRect(x + 4, y, 4, 6); cx.fillRect(x + 11, y, 4, 6); cx.fillRect(x + 18, y, 4, 6); cx.fillRect(x + 24, y, 4, 6);
+        cx.fillStyle = '#7E8696';
+        cx.fillRect(x + 5, y + 1, 2, 4); cx.fillRect(x + 12, y + 1, 2, 4); cx.fillRect(x + 19, y + 1, 2, 4); cx.fillRect(x + 25, y + 1, 2, 4);
+        // Musgo adaptativo en la base
+        cx.fillStyle = mossD; cx.fillRect(x + 5, y + 28, 22, 4);
+        cx.fillStyle = moss;
+        cx.fillRect(x + 5, y + 29, 3, 2); cx.fillRect(x + 10, y + 30, 3, 2); cx.fillRect(x + 16, y + 28, 3, 2); cx.fillRect(x + 23, y + 30, 3, 2);
+        // Ventana arqueada
+        cx.fillStyle = '#2A1E12'; cx.fillRect(x + 14, y + 11, 4, 6);
+        cx.fillStyle = '#4A3520'; cx.fillRect(x + 15, y + 12, 2, 4);
+        // Puerta
         if (!towerOpen) {
-          // Puerta cerrada con cerradura
-          cx.fillStyle = '#606878';
-          cx.fillRect(x + 4, y + 2, 24, 28);
-          cx.fillStyle = '#707888';
-          cx.fillRect(x + 6, y + 4, 20, 24);
-          cx.fillStyle = '#808898';
-          cx.fillRect(x + 8, y + 6, 16, 20);
-          cx.fillStyle = '#E8C830';
-          cx.fillRect(x + 14, y + 14, 4, 4); // Cerradura
-          cx.fillStyle = '#C8A830';
-          cx.fillRect(x + 15, y + 18, 2, 4); // Ojo cerradura
+          cx.fillStyle = '#3A2010'; cx.fillRect(x + 11, y + 20, 10, 12);
+          cx.fillStyle = '#4A3018'; cx.fillRect(x + 12, y + 21, 8, 11);
+          cx.fillStyle = '#5A4028'; cx.fillRect(x + 13, y + 22, 6, 9);
+          cx.fillStyle = '#484858'; cx.fillRect(x + 11, y + 24, 10, 1); cx.fillRect(x + 11, y + 28, 10, 1);
+          cx.fillStyle = '#C8A830'; cx.fillRect(x + 15, y + 25, 2, 3); // cerradura
         } else {
-          // Puerta abierta brillante
-          cx.fillStyle = '#606878';
-          cx.fillRect(x + 4, y + 2, 24, 28);
           const tgl = Math.sin(fr * 0.08) * 0.2 + 0.8;
           cx.globalAlpha = tgl;
-          cx.fillStyle = '#F8E8A0';
-          cx.fillRect(x + 6, y + 4, 20, 24);
-          cx.fillStyle = '#F8F0C0';
-          cx.fillRect(x + 8, y + 6, 16, 20);
+          cx.fillStyle = '#F8E8A0'; cx.fillRect(x + 11, y + 20, 10, 12);
+          cx.fillStyle = '#F8F0C0'; cx.fillRect(x + 13, y + 22, 6, 10);
           cx.globalAlpha = 1;
-          // Estrellas saliendo
-          if (fr % 20 < 10) {
-            cx.fillStyle = '#F8E830';
-            cx.fillRect(x + 10 + Math.sin(fr * 0.1) * 4, y + 8, 2, 2);
-            cx.fillRect(x + 18 + Math.sin(fr * 0.15) * 3, y + 14, 2, 2);
-          }
+          if (fr % 20 < 10) { cx.fillStyle = '#F8E830'; cx.fillRect(x + 13 + Math.sin(fr * 0.1) * 3, y + 8, 2, 2); }
         }
+        // Bandera en lo alto
+        cx.fillStyle = '#8A6A30'; cx.fillRect(x + 15, y - 6, 2, 8);
+        cx.fillStyle = '#C83030'; cx.fillRect(x + 17, y - 5, 8, 5);
+        cx.fillStyle = '#E05050'; cx.fillRect(x + 17, y - 5, 8, 2);
+        cx.fillStyle = moss; cx.fillRect(x + 4, y - 1, 3, 1);
+        break;
       }
-      break;
 
     case 13: // Muro de castillo exterior
       {
+        // Musgo adaptativo al bioma (verde al sur, blanco al norte)
+        const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+        const moss = lerpColor('#3A6838', '#E2ECE6', snow);
+        const mossD = lerpColor('#2E5236', '#D2DED2', snow);
         // Base de piedra gris
         cx.fillStyle = '#606878';
         cx.fillRect(x, y, T, T);
@@ -8744,11 +8744,11 @@ function dTileW(c, r) {
 
         // Musgo en juntas
         if ((c * 5 + r * 3) % 7 === 0) {
-          cx.fillStyle = '#3A6838';
+          cx.fillStyle = moss;
           cx.fillRect(x + 14, y + 12, 3, 2);
         }
         if ((c * 3 + r * 7) % 9 === 0) {
-          cx.fillStyle = '#3A6838';
+          cx.fillStyle = moss;
           cx.fillRect(x + 8, y + 23, 4, 2);
         }
 
@@ -9713,7 +9713,7 @@ function genWorld() {
   hPath(65, 30, 65);
   vPath(30, 47, 77);
   vPath(30, 35, 65);
-  hPath(42, 65, 72);
+  hPath(42, 30, 72);   // llega al corredor central (conecta la entrada de la Cueva Cristalina)
   vPath(72, 30, 50);
   hPath(35, 44, 72);
   vPath(44, 17, 47);
@@ -9721,6 +9721,9 @@ function genWorld() {
   hPath(10, 37, 44);
   vPath(37, 4, 14);
   hPath(5, 50, 60);
+  // Rutas de garantia (conectividad total del mapa)
+  hPath(35, 30, 44);   // une el corredor del noreste con la red principal
+  hPath(82, 50, 65);   // conecta la aldea Rodaje al corredor central
 
   // ============================================================
   // LAGOS - Reposicionados para NO bloquear caminos
@@ -9769,7 +9772,7 @@ function genWorld() {
   placeCave(15, 105);
   placeCave(72, 38);
   buildCastleExt(37, 7);
-  buildTower(58, 4);
+  buildTower(33, 8);
 
   let cv2 = 0;
   while (cv2 < 45) {
@@ -9836,7 +9839,15 @@ function placeCave(cx2, cy) {
         Math.random() < 0.3
       )
         wMap[r][c] = 7;
+    
+  // Bolsillo de acceso: camino limpio en todo el entorno para poder rodear la
+  // entrada sin que rocas/arboles aleatorios bloqueen el paso nunca.
+  for (let r = cy - 2; r <= cy + 2; r++)
+    for (let c = cx2 - 2; c <= cx2 + 2; c++) {
+      if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && wMap[r][c] !== 2 && wMap[r][c] !== 9)
+        wMap[r][c] = 1;
     }
+}
 }
 
 function buildCastleExt(sx, sy) {
