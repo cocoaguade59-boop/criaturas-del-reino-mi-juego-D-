@@ -12029,6 +12029,25 @@ function getCurrentLevelZone() {
   return { id: 'unknown', nm: 'Zona desconocida', min: 5, max: 5 };
 }
 
+
+function getCurrentLocationHUD() {
+  if (G.curMap === 'cave1') return { kind: 'CUEVA', name: 'Volcánica' };
+  if (G.curMap === 'cave2') return { kind: 'CUEVA', name: 'Cristalina' };
+  if (G.curMap === 'castle') return { kind: 'CASTILLO', name: 'Difusión' };
+  if (G.curMap === 'tower') return { kind: 'TORRE', name: 'P.A.' };
+
+  const c = Math.floor(G.pl.x),
+    r = Math.floor(G.pl.y);
+  const tile = wMap[r]?.[c];
+  if (tile === 11 || tile === 13) return { kind: 'CASTILLO', name: 'Difusión' };
+  if (tile === 12) return { kind: 'TORRE', name: 'P.A.' };
+
+  const z = getWorldZoneAt(c, r);
+  if (!z) return { kind: 'ZONA', name: 'Desconocida' };
+  if (z.id && z.id.startsWith('route')) return { kind: 'RUTA', name: z.nm.replace('Ruta ', '') };
+  return { kind: 'PUEBLO', name: z.nm };
+}
+
 function getNPCLevelZone(npc) {
   if (G.curMap === 'world') {
     return getWorldZoneAt(Math.floor(npc.x), Math.floor(npc.y));
@@ -16835,11 +16854,17 @@ function drawMap() {
     dEXP(14, 35, 100, 4, c.ex, c.exTo);
   }
 
-  // Inventario rápido
+  // Ubicación actual (reemplaza el letrero grande de objetos)
+  const locHUD = getCurrentLocationHUD();
   dBox(490, 4, 146, 26);
-  cx.fillStyle = '#aaa';
-  cx.font = '6px "Press Start 2P"';
-  cx.fillText(`💎${G.crv} 🧪${G.pot} ❤${G.rev} 💰${G.gold}`, 498, 20);
+  cx.fillStyle = '#ffd700';
+  cx.font = '5px "Press Start 2P"';
+  cx.textAlign = 'center';
+  cx.fillText(locHUD.kind, 563, 15);
+  cx.fillStyle = '#fff';
+  cx.font = locHUD.name.length > 15 ? '4px "Press Start 2P"' : '5px "Press Start 2P"';
+  cx.fillText(locHUD.name, 563, 25);
+  cx.textAlign = 'left';
 
   // Sprint
   if (G.pl.sprint) {
