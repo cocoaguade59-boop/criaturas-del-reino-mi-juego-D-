@@ -3373,7 +3373,142 @@ if (typeof Image !== 'undefined') {
   } catch (e) { heroImg = null; }
 }
 
+// Variante actual del protagonista.
+// 'chibi00s' = proporciones cabezonas tipo RPG portátil de los 00s,
+// con paleta verde/beige (sin copiar assets comerciales).
+// Cambia a 'spritesheet' si quieres volver al sprite medieval importado.
+const HERO_STYLE = 'chibi00s';
+
+function dPlayerChibi00s(x, y, dir, f) {
+  const moving = !!G.pl.moving;
+  const step = moving ? (Math.floor(G.pl.f / 6) % 2 === 0 ? 1 : -1) : 0;
+  const bob = moving ? Math.sin(f * 0.32) * 1 : 0;
+  const by = Math.round(y + bob);
+  const OX = x + 8;
+  const OY = by + 7;
+
+  const OUT = '#1A1512';
+  const SKIN = '#F2C79B';
+  const SKIN2 = '#D69B72';
+  const HAIR = '#2A1810';
+  const HAIR2 = '#4A2A18';
+  const GREEN = '#3FA34D';
+  const GREEN2 = '#2B7A36';
+  const GREEN3 = '#64C86A';
+  const BEIGE = '#D9C49A';
+  const BEIGE2 = '#B99B6A';
+  const PANTS = '#4A3828';
+  const BOOT = '#3A2418';
+  const EYE = '#171717';
+  const BLUSH = '#E89A8F';
+
+  // sombra ovalada de tile
+  cx.fillStyle = 'rgba(0,0,0,.24)';
+  cx.beginPath();
+  cx.ellipse(x + 16, by + 34, 9, 2.8, 0, 0, Math.PI * 2);
+  cx.fill();
+
+  const R = (c, r, w, h, col) => px(OX + c, OY + r, w, h, col);
+  const RO = (c, r, w, h, col) => {
+    px(OX + c - 1, OY + r - 1, w + 2, h + 2, OUT);
+    R(c, r, w, h, col);
+  };
+  const Rf = (flip, c, r, w, h, col) => R(flip ? 16 - c - w : c, r, w, h, col);
+  const ROf = (flip, c, r, w, h, col) => {
+    px(OX + (flip ? 16 - c - w : c) - 1, OY + r - 1, w + 2, h + 2, OUT);
+    Rf(flip, c, r, w, h, col);
+  };
+
+  if (dir === 0) {
+    // Frente: cabeza grande, cuerpo compacto, ropa verde/beige.
+    RO(3, 20, 4, 3, BOOT);
+    RO(9, 20, 4, 3, BOOT);
+    R(5, 17, 3, 4, PANTS);
+    R(9, 17, 3, 4, PANTS);
+    if (step > 0) { R(4, 20, 3, 1, '#5A3A24'); }
+    if (step < 0) { R(9, 20, 3, 1, '#5A3A24'); }
+
+    RO(3, 12, 10, 7, GREEN);
+    R(4, 13, 8, 2, GREEN3);
+    R(4, 17, 8, 2, GREEN2);
+    R(5, 14, 6, 2, BEIGE); // pañuelo / zona beige antes roja
+    R(7, 15, 2, 4, BEIGE2);
+    R(1, 13 + (step < 0 ? 1 : 0), 3, 5, GREEN2);
+    R(12, 13 + (step > 0 ? 1 : 0), 3, 5, GREEN2);
+    R(1, 17 + (step < 0 ? 1 : 0), 3, 2, SKIN);
+    R(12, 17 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+
+    // Cabeza y pelo
+    R(1, 1, 14, 11, OUT);
+    R(2, 2, 12, 10, SKIN);
+    R(2, 1, 12, 4, HAIR);
+    R(1, 3, 3, 7, HAIR);
+    R(12, 3, 3, 7, HAIR);
+    R(4, 4, 8, 1, HAIR2);
+    // gorrita/diadema verde (sustituye lila)
+    R(2, 0, 12, 3, GREEN2);
+    R(5, -1, 6, 2, GREEN3);
+    R(6, 0, 4, 1, '#AEE8A0');
+    R(5, 6, 2, 3, EYE);
+    R(10, 6, 2, 3, EYE);
+    R(4, 9, 2, 1, BLUSH);
+    R(11, 9, 2, 1, BLUSH);
+    R(7, 10, 3, 1, '#8A4A3A');
+  } else if (dir === 3) {
+    // Espalda
+    RO(3, 20, 4, 3, BOOT);
+    RO(9, 20, 4, 3, BOOT);
+    R(5, 17, 3, 4, PANTS);
+    R(9, 17, 3, 4, PANTS);
+    RO(3, 12, 10, 7, GREEN);
+    R(4, 13, 8, 2, GREEN3);
+    R(4, 17, 8, 2, GREEN2);
+    R(5, 14, 6, 2, BEIGE);
+    R(1, 13 + (step > 0 ? 1 : 0), 3, 5, GREEN2);
+    R(12, 13 + (step < 0 ? 1 : 0), 3, 5, GREEN2);
+    R(1, 17 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+    R(12, 17 + (step < 0 ? 1 : 0), 3, 2, SKIN);
+
+    R(1, 1, 14, 11, OUT);
+    R(2, 2, 12, 10, HAIR);
+    R(3, 3, 10, 2, HAIR2);
+    R(1, 4, 3, 7, HAIR);
+    R(12, 4, 3, 7, HAIR);
+    R(2, 0, 12, 3, GREEN2);
+    R(5, -1, 6, 2, GREEN3);
+    R(6, 0, 4, 1, '#AEE8A0');
+  } else {
+    // Perfil derecha / izquierda
+    const flip = dir === 2;
+    ROf(flip, 4, 20, 4, 3, BOOT);
+    ROf(flip, 9, 20, 3, 3, BOOT);
+    Rf(flip, 5, 17, 3, 4, PANTS);
+    Rf(flip, 9, 17, 3, 4, PANTS);
+    RO(flip ? 3 : 4, 12, 10, 7, GREEN);
+    Rf(flip, 5, 13, 7, 2, GREEN3);
+    Rf(flip, 5, 17, 7, 2, GREEN2);
+    Rf(flip, 6, 14, 5, 2, BEIGE);
+    Rf(flip, 11, 14 + (step > 0 ? 1 : 0), 3, 5, GREEN2);
+    Rf(flip, 11, 18 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+
+    Rf(flip, 4, 1, 10, 11, OUT);
+    Rf(flip, 5, 2, 8, 10, SKIN);
+    Rf(flip, 4, 1, 9, 4, HAIR);
+    Rf(flip, 4, 4, 3, 7, HAIR);
+    Rf(flip, 5, 4, 7, 1, HAIR2);
+    Rf(flip, 4, 0, 10, 3, GREEN2);
+    Rf(flip, 7, -1, 5, 2, GREEN3);
+    Rf(flip, 11, 6, 2, 3, EYE);
+    Rf(flip, 13, 8, 1, 2, SKIN2); // nariz
+    Rf(flip, 10, 10, 3, 1, '#8A4A3A');
+  }
+}
+
 function dPlayerGBA(x, y, dir, f) {
+  if (HERO_STYLE === 'chibi00s') {
+    dPlayerChibi00s(x, y, dir, f);
+    return;
+  }
   if (heroReady && heroImg && heroImg.complete && heroImg.naturalWidth > 0) {
     const row = (HERO_DIR_ROW[dir] !== undefined) ? HERO_DIR_ROW[dir] : 0;
     const moving = G.pl.moving;
