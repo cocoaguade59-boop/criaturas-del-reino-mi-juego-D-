@@ -17,7 +17,9 @@ let cam = { x: 0, y: 0 },
   cave2 = [],
   castMap = [];
 let lastHealPos = { x: 20, y: 145, map: 'world' };
-(postGame = false), (towerOpen = false), (oloDefeated = false);
+let postGame = false,
+  towerOpen = false,
+  oloDefeated = false;
 let npcDefeats = {},
   pairBattles = false;
 let proa = []; // Almacén de criaturas extra
@@ -12268,17 +12270,6 @@ function checkTowerKey() {
 }
 
 // === VERIFICAR POST-GAME ===
-function activatePostGame() {
-  if (postGame) return;
-  postGame = true;
-  aN('¡El reino ha cambiado!');
-
-  // Generar mapa de la torre
-  genTower();
-
-  // Edison aparece al lado de Claudia
-  // (se maneja en checkNPC cuando postGame=true)
-}
 
 // === VERIFICAR SI NPC PUEDE COMBATIR ===
 function canNPCBattle(npc) {
@@ -13665,22 +13656,17 @@ function uMenu() {
   }
 
   if (kp('ArrowUp') || kp('ArrowLeft')) {
-    G.ms.s = (G.ms.s + 8) % 9;
+    G.ms.s = (G.ms.s + 7) % 8;
     sfx.sel();
   }
   if (kp('ArrowDown') || kp('ArrowRight')) {
-    G.ms.s = (G.ms.s + 1) % 9;
+    G.ms.s = (G.ms.s + 1) % 8;
     sfx.sel();
   }
   if (kp(' ') || kp('Enter')) {
     sfx.sel();
     switch (G.ms.s) {
       case 0:
-        G.proaOpen = true;
-        G.proaSel = 0;
-        G.proaMode = 'view';
-        break;
-      case 1:
         if (G.pot > 0 && G.party.length > 0) {
           G.pot--;
           G.party[0].heal(Math.floor(G.party[0].mHp * 0.2));
@@ -13688,7 +13674,7 @@ function uMenu() {
           aN('+HP!');
         } else aN('¡Sin pociones!');
         break;
-      case 2:
+      case 1:
         {
           const f = G.party.find((c) => c.hp <= 0);
           if (f && G.rev > 0) {
@@ -13699,24 +13685,24 @@ function uMenu() {
           } else aN('Nadie caído o sin revivir.');
         }
         break;
-      case 3:
+      case 2:
         G.proaOpen = true;
         G.proaSel = 0;
         G.proaMode = 'view';
         break;
-      case 4:
+      case 3:
         G.showMap = true;
         break;
-      case 5:
+      case 4:
         G.showMissions = true;
         break;
-      case 6:
+      case 5:
         saveGame();
         break;
-      case 7:
+      case 6:
         G.scr = 'world';
         break;
-      case 8:
+      case 7:
         G.scr = 'confirmReset';
         G.resetSel = 0;
         break;
@@ -13745,10 +13731,9 @@ function dMenu() {
 
   dBoxMenu(16, 16, 175, 290, 'MENÚ');
   const opts = [
-    'Equipo',
     'Poción',
     'Revivir',
-    'Proa',
+    'Equipo',
     'Mapa',
     'Misiones',
     'Guardar',
