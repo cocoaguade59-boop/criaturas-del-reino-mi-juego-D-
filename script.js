@@ -11783,55 +11783,78 @@ const towerBlockedDlg = [
 
 function moveEntity(checkSolid, cols, rows, map) {
   const p = G.pl;
-  G.pl.sprint = !!G.keys['z'];
-  const spd = G.pl.sprint ? 0.2 : 0.08;
-  let mv = false;
+  p.sprint = !!G.keys['z'];
+  const spd = p.sprint ? 0.22 : 0.12;
 
-  // Arriba
-  if (kh('ArrowUp')) {
-    const ny = p.y - spd;
-    if (!checkSolid(Math.floor(p.x), Math.floor(ny), map, cols, rows)) {
-      p.y = ny;
-      mv = true;
-      p.d = 3;
-    }
-  }
-  // Abajo
-  if (kh('ArrowDown')) {
-    const ny = p.y + spd;
-    if (!checkSolid(Math.floor(p.x), Math.floor(ny), map, cols, rows)) {
-      p.y = ny;
-      mv = true;
-      p.d = 0;
-    }
-  }
-  // Izquierda
-  if (kh('ArrowLeft')) {
-    const nx = p.x - spd;
-    if (!checkSolid(Math.floor(nx), Math.floor(p.y), map, cols, rows)) {
-      p.x = nx;
-      mv = true;
-      p.d = 2;
-    }
-  }
-  // Derecha
-  if (kh('ArrowRight')) {
-    const nx = p.x + spd;
-    if (!checkSolid(Math.floor(nx), Math.floor(p.y), map, cols, rows)) {
-      p.x = nx;
-      mv = true;
-      p.d = 1;
-    }
-  }
+  // Si está en medio de un paso, termina ese desplazamiento antes de aceptar otro.
+  // Esto hace que el jugador avance de casilla en casilla, no flotando libremente.
+  if (p.stepTarget) {
+    const dx = p.stepTarget.x - p.x;
+    const dy = p.stepTarget.y - p.y;
+    const dist = Math.hypot(dx, dy);
 
-  // Animación y sonido al moverse
-  if (mv) {
+    if (dist <= spd) {
+      p.lastStepFrom = p.stepFrom || { x: p.x, y: p.y };
+      p.x = p.stepTarget.x;
+      p.y = p.stepTarget.y;
+      p.stepTarget = null;
+      p.stepFrom = null;
+      p.moving = false;
+      p.f++;
+      sfx.walk();
+      return true; // acaba de entrar a una nueva casilla
+    }
+
+    p.x += (dx / dist) * spd;
+    p.y += (dy / dist) * spd;
+    p.moving = true;
     p.f++;
-    if (p.f % (G.pl.sprint ? 4 : 8) === 0) sfx.walk();
+    if (p.f % (p.sprint ? 4 : 8) === 0) sfx.walk();
+    return false;
   }
 
-  G.pl.moving = mv;
-  return mv;
+  // Mantener al jugador alineado a la cuadrícula cuando no está caminando.
+  p.x = Math.round(p.x);
+  p.y = Math.round(p.y);
+
+  let dx = 0,
+    dy = 0,
+    dir = p.d;
+
+  // Una sola dirección por paso: sin diagonales ni micro-deslizamientos.
+  if (kh('ArrowUp')) {
+    dy = -1;
+    dir = 3;
+  } else if (kh('ArrowDown')) {
+    dy = 1;
+    dir = 0;
+  } else if (kh('ArrowLeft')) {
+    dx = -1;
+    dir = 2;
+  } else if (kh('ArrowRight')) {
+    dx = 1;
+    dir = 1;
+  }
+
+  if (dx === 0 && dy === 0) {
+    p.moving = false;
+    return false;
+  }
+
+  p.d = dir;
+  const nx = p.x + dx;
+  const ny = p.y + dy;
+
+  if (checkSolid(nx, ny, map, cols, rows)) {
+    p.moving = false;
+    return false;
+  }
+
+  p.stepFrom = { x: p.x, y: p.y };
+  p.stepTarget = { x: nx, y: ny };
+  p.moving = true;
+  p.f++;
+  return false;
 }
 
 // === SEGUIDOR EN TORRE (primera criatura del equipo) ===
@@ -12590,6 +12613,26 @@ function getNPCBattleIntro(npc) {
 
 // === MUNDO PRINCIPAL ===
 function uWorld() {
+  // Entrada a cuevas en modo cuadrícula: si estás justo debajo de una puerta
+  // de cueva y empujas hacia arriba, entras sin intentar caminar sobre el muro.
+  if (!G.pl.stepTarget && kh('ArrowUp')) {
+    const etc = Math.round(G.pl.x),
+      etr = Math.round(G.pl.y);
+    if (wMap[etr - 1]?.[etc] === 9) {
+      G.prevPos = { x: G.pl.x, y: G.pl.y };
+      G.caveReturnPos = { x: G.pl.x, y: G.pl.y };
+      G.curMap = etc <= 40 ? 'cave1' : 'cave2';
+      G.pl.x = Math.floor(CC / 2);
+      G.pl.y = CR - 3;
+      G.pl.d = 3;
+      G.pl.stepTarget = null;
+      G.pl.moving = false;
+      updateCamera(CC, CR);
+      aN(etc <= 40 ? 'Cueva Volcánica...' : 'Cueva Cristalina...');
+      return;
+    }
+  }
+
   const mv = moveEntity((c, r) => solidW(c, r), WC, WR);
 
   if (mv) {
@@ -12705,13 +12748,14 @@ function uCave() {
 
   const oldX = G.pl.x;
   const oldY = G.pl.y;
-  const oldC = Math.floor(oldX);
-  const oldR = Math.floor(oldY);
-  const oldTile = map[oldR]?.[oldC];
 
   const mv = moveEntity(solidC, CC, CR, map);
 
   if (mv) {
+    const from = G.pl.lastStepFrom || { x: oldX, y: oldY };
+    const oldC = Math.floor(from.x);
+    const oldR = Math.floor(from.y);
+    const oldTile = map[oldR]?.[oldC];
     const tc = Math.floor(G.pl.x);
     const tr = Math.floor(G.pl.y);
     let tile = map[tr]?.[tc];
