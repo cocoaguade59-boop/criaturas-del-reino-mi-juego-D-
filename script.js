@@ -15009,11 +15009,11 @@ function dMenu() {
     'Misiones',
     'Guardar',
     'Volver',
-    'Reiniciar',
+    'Reiniciar toda la partida',
   ];
   opts.forEach((o, i) => {
     cx.fillStyle = G.ms.s === i ? '#ffd700' : '#fff';
-    cx.font = '8px "Press Start 2P"';
+    cx.font = i === 7 ? '6px "Press Start 2P"' : '8px "Press Start 2P"';
     cx.fillText(`${G.ms.s === i ? '▶ ' : '  '}${o}`, 34, 48 + i * 28);
   });
   cx.fillStyle = '#aaa';
@@ -15091,21 +15091,22 @@ function dConfirmReset() {
   cx.fillStyle = 'rgba(0,0,0,.7)';
   cx.fillRect(0, 0, 640, 480);
 
-  dBoxMenu(140, 160, 360, 160, '⚠️ REINICIAR');
+  dBoxMenu(125, 150, 390, 180, '⚠️ REINICIO TOTAL');
 
   cx.fillStyle = '#E83030';
   cx.font = '8px "Press Start 2P"';
-  cx.fillText('¿Borrar TODA tu partida?', 160, 200);
+  cx.fillText('¿Reiniciar TODA la partida?', 145, 190);
   cx.fillStyle = '#aaa';
   cx.font = '7px "Press Start 2P"';
-  cx.fillText('Esto no se puede deshacer.', 160, 220);
+  cx.fillText('Borra save, equipo, diplomas y progreso.', 145, 212);
+  cx.fillText('Esto no se puede deshacer.', 145, 230);
 
   cx.fillStyle = G.resetSel === 0 ? '#ffd700' : '#888';
   cx.font = '9px "Press Start 2P"';
-  cx.fillText(`${G.resetSel === 0 ? '▶ ' : '  '}No, volver`, 180, 260);
+  cx.fillText(`${G.resetSel === 0 ? '▶ ' : '  '}No, volver al menú`, 155, 270);
 
   cx.fillStyle = G.resetSel === 1 ? '#E83030' : '#888';
-  cx.fillText(`${G.resetSel === 1 ? '▶ ' : '  '}Sí, borrar todo`, 180, 284);
+  cx.fillText(`${G.resetSel === 1 ? '▶ ' : '  '}Sí, reiniciar toda la partida`, 155, 296);
 }
 
 function resetGame() {
@@ -17833,8 +17834,8 @@ function dBattle() {
     cx.fillStyle = '#000';
     cx.font = '8px "Press Start 2P"';
     const shakeTxt = t < 28 ? 'El cristal vuela...' : `Sacudidas: ${Math.min(cap.shakes, Math.max(0, Math.floor((t - 28) / 28)))}/3`;
-    cx.fillText('¡Cristal Vínculo!', 28, 414);
-    cx.fillText(shakeTxt, 28, 434);
+    cx.fillText('¡Nuevo sistema de captura!', 28, 414);
+    cx.fillText('Cristal Vínculo: ' + shakeTxt, 28, 434);
     cx.fillStyle = '#606060';
     cx.font = '6px "Press Start 2P"';
     cx.fillText(`Probabilidad estimada: ${Math.round((cap.chance || 0) * 100)}%`, 28, 454);
@@ -17864,6 +17865,12 @@ function dBattle() {
     cx.fillStyle = '#555';
     cx.font = '5px "Press Start 2P"';
     cx.fillText(`🧪${G.pot} ❤${G.rev} 💎${G.crv}`, 25, 456);
+    if (b.ms === 4 && !(b.isMerch || b.isBoss || b.npcTeam)) {
+      const capChance = calcCaptureChance(b.en);
+      cx.fillStyle = capChance >= 0.65 ? '#30D848' : capChance >= 0.35 ? '#C89000' : '#D02020';
+      cx.font = '6px "Press Start 2P"';
+      cx.fillText(`Captura mejorada: ${Math.round(capChance * 100)}%`, 300, 456);
+    }
   } else if (b.ph === 'move') {
     // Selección de movimientos: botones 2x2 con borde dinámico por tipo
     dBox(10, 356, 620, 114, 'Movimientos');
