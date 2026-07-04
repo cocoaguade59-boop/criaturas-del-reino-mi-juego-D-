@@ -3357,159 +3357,131 @@ function drawParticles() {
 // === NUEVO SPRITE DEL JUGADOR - ESTILO PIXEL MEDIEVAL ===
 // === SPRITE DEL JUGADOR - ESTILO PIXEL ART MEDIEVAL ===
 function dPlayerGBA(x, y, dir, f) {
-  const bob = Math.sin(f * 0.15) * 1;
+  const bob = G.pl.moving ? Math.sin(f * 0.3) * 1.5 : 0;
   const by = y + bob;
+  const wf = G.pl.moving ? (Math.floor(f / 4) % 2) : 0;
 
-  // Colores (paleta de la imagen)
-  const OUT = '#000000';
-  const HAIR = '#1A1A1A',
-    HAIRL = '#333333';
-  const SKIN = '#F0C8A0',
-    SKINS = '#D8A878';
-  const TUN = '#3A7A3A',
-    TUNS = '#2A5A2A';
-  const BRN = '#6A4A28',
-    BRND = '#4A3018';
-  const GOLD = '#E8C030';
+  const OUT = '#0E0E10';
+  const HAIR = '#141210', HAIRL = '#2C2620';
+  const SKIN = '#F2CBA0', SKINS = '#D6A878';
+  const TUN = '#E9DCAE', TUNS = '#C9B67E';
+  const CAPE = '#2E8B3A', CAPES = '#1E6B28', CAPEL = '#48AA56';
+  const BRN = '#6E4A26', BOOT = '#3A2410';
+  const BELT = '#5A3A1E', BUCKLE = '#D9B24A';
+  const EYE = '#241208';
 
-  // Sombra
-  cx.fillStyle = 'rgba(0,0,0,.2)';
+  cx.fillStyle = 'rgba(0,0,0,.22)';
   cx.beginPath();
-  cx.ellipse(x + 16, by + 35, 10, 3, 0, 0, Math.PI * 2);
+  cx.ellipse(x + 16, by + 37, 10, 3, 0, 0, Math.PI * 2);
   cx.fill();
 
   switch (dir) {
-    case 0: // === FRENTE ===
-      // Pelo
-      px(x + 6, by - 3, 20, 13, OUT);
-      px(x + 7, by - 2, 18, 11, HAIR);
-      px(x + 9, by - 1, 5, 2, HAIRL);
-      // Cabeza
+    case 0: {
+      px(x + 4, by + 17, 4, 16, CAPES);
+      px(x + 24, by + 17, 4, 16, CAPES);
+      const s1 = wf ? 1 : 0;
+      px(x + 8, by + 28 + s1, 6, 9, OUT); px(x + 9, by + 29 + s1, 4, 8, BRN);
+      px(x + 18, by + 28 - s1, 6, 9, OUT); px(x + 19, by + 29 - s1, 4, 8, BRN);
+      px(x + 8, by + 35 + s1, 7, 3, OUT); px(x + 9, by + 35 + s1, 5, 2, BOOT);
+      px(x + 17, by + 35 - s1, 7, 3, OUT); px(x + 18, by + 35 - s1, 5, 2, BOOT);
+      px(x + 6, by + 17, 20, 12, OUT);
+      px(x + 7, by + 18, 18, 10, TUN);
+      px(x + 7, by + 18, 18, 2, TUNS);
+      px(x + 11, by + 20, 2, 8, TUNS);
+      px(x + 19, by + 20, 2, 8, TUNS);
+      px(x + 7, by + 25, 18, 3, BELT);
+      px(x + 14, by + 25, 4, 3, BUCKLE);
+      px(x + 5, by + 19, 4, 8, OUT); px(x + 6, by + 20, 2, 6, TUN); px(x + 5, by + 26, 3, 3, SKIN);
+      px(x + 23, by + 19, 4, 8, OUT); px(x + 24, by + 20, 2, 6, TUN); px(x + 24, by + 26, 3, 3, SKIN);
+      px(x + 13, by + 15, 6, 3, SKINS);
       px(x + 8, by + 2, 16, 14, OUT);
       px(x + 9, by + 3, 14, 12, SKIN);
       px(x + 9, by + 3, 14, 2, SKINS);
-      // Flequillo con picos
-      px(x + 9, by + 2, 4, 3, HAIR);
-      px(x + 15, by + 2, 2, 2, HAIR);
-      px(x + 19, by + 2, 4, 3, HAIR);
-      // Patillas
-      px(x + 7, by + 3, 2, 7, HAIR);
-      px(x + 23, by + 3, 2, 7, HAIR);
-      // Ojos
-      px(x + 11, by + 6, 3, 4, OUT);
-      px(x + 18, by + 6, 3, 4, OUT);
-      // Mejillas + boca
-      px(x + 10, by + 11, 2, 2, '#F0A890');
-      px(x + 20, by + 11, 2, 2, '#F0A890');
-      px(x + 14, by + 12, 4, 1, '#A86850');
-      // Cuello
-      px(x + 13, by + 16, 6, 2, SKINS);
-      // Torso (túnica)
-      px(x + 6, by + 17, 20, 11, OUT);
-      px(x + 7, by + 18, 18, 9, TUN);
-      px(x + 7, by + 18, 18, 2, TUNS);
-      px(x + 7, by + 19, 3, 6, TUNS);
-      px(x + 22, by + 19, 3, 6, TUNS);
-      // Manos
-      px(x + 5, by + 24, 4, 4, OUT);
-      px(x + 6, by + 24, 3, 3, SKIN);
-      px(x + 23, by + 24, 4, 4, OUT);
-      px(x + 24, by + 24, 3, 3, SKIN);
-      // Cinturón + hebilla
-      px(x + 7, by + 25, 18, 3, BRND);
-      px(x + 14, by + 25, 4, 3, GOLD);
-      px(x + 15, by + 26, 2, 1, '#F8E060');
-      // Piernas
-      px(x + 8, by + 28, 7, 8, OUT);
-      px(x + 9, by + 28, 5, 7, BRN);
-      px(x + 17, by + 28, 7, 8, OUT);
-      px(x + 18, by + 28, 5, 7, BRN);
-      px(x + 15, by + 28, 2, 7, OUT);
-      px(x + 9, by + 33, 6, 3, BRND);
-      px(x + 18, by + 33, 6, 3, BRND);
+      px(x + 6, by - 3, 20, 8, OUT);
+      px(x + 7, by - 2, 18, 6, HAIR);
+      px(x + 7, by - 4, 3, 3, HAIR);
+      px(x + 12, by - 5, 3, 4, HAIR);
+      px(x + 17, by - 4, 3, 3, HAIR);
+      px(x + 22, by - 3, 3, 3, HAIR);
+      px(x + 9, by - 2, 2, 2, HAIRL);
+      px(x + 19, by - 2, 2, 2, HAIRL);
+      px(x + 9, by + 1, 5, 3, HAIR);
+      px(x + 16, by + 1, 6, 3, HAIR);
+      px(x + 13, by + 2, 2, 2, HAIR);
+      px(x + 10, by + 5, 3, 1, OUT);
+      px(x + 18, by + 5, 3, 1, OUT);
+      px(x + 11, by + 6, 3, 4, '#FFFFFF');
+      px(x + 17, by + 6, 3, 4, '#FFFFFF');
+      px(x + 12, by + 7, 2, 2, EYE);
+      px(x + 18, by + 7, 2, 2, EYE);
+      px(x + 12, by + 7, 1, 1, '#FFFFFF');
+      px(x + 18, by + 7, 1, 1, '#FFFFFF');
+      px(x + 14, by + 11, 4, 1, '#A85038');
+      px(x + 10, by + 10, 2, 1, '#F0A088');
+      px(x + 20, by + 10, 2, 1, '#F0A088');
       break;
-
-    case 3: // === ESPALDA ===
-      // Cabeza toda de pelo
-      px(x + 6, by - 3, 20, 18, OUT);
-      px(x + 7, by - 2, 18, 16, HAIR);
-      px(x + 8, by - 1, 16, 4, HAIRL);
-      px(x + 9, by + 4, 3, 6, HAIRL);
-      // Cuello
-      px(x + 13, by + 15, 6, 2, SKINS);
-      // Torso
-      px(x + 6, by + 17, 20, 11, OUT);
-      px(x + 7, by + 18, 18, 9, TUN);
-      px(x + 7, by + 18, 18, 2, TUNS);
-      px(x + 7, by + 19, 3, 6, TUNS);
-      px(x + 22, by + 19, 3, 6, TUNS);
-      // Manos
-      px(x + 5, by + 24, 4, 4, OUT);
-      px(x + 6, by + 24, 3, 3, SKIN);
-      px(x + 23, by + 24, 4, 4, OUT);
-      px(x + 24, by + 24, 3, 3, SKIN);
-      // Cinturón
-      px(x + 7, by + 25, 18, 3, BRND);
-      // Piernas
-      px(x + 8, by + 28, 7, 8, OUT);
-      px(x + 9, by + 28, 5, 7, BRN);
-      px(x + 17, by + 28, 7, 8, OUT);
-      px(x + 18, by + 28, 5, 7, BRN);
-      px(x + 15, by + 28, 2, 7, OUT);
-      px(x + 9, by + 33, 6, 3, BRND);
-      px(x + 18, by + 33, 6, 3, BRND);
+    }
+    case 3: {
+      const s1 = wf ? 1 : 0;
+      px(x + 8, by + 28 + s1, 6, 9, OUT); px(x + 9, by + 29 + s1, 4, 8, BRN);
+      px(x + 18, by + 28 - s1, 6, 9, OUT); px(x + 19, by + 29 - s1, 4, 8, BRN);
+      px(x + 8, by + 35 + s1, 7, 3, OUT); px(x + 9, by + 35 + s1, 5, 2, BOOT);
+      px(x + 17, by + 35 - s1, 7, 3, OUT); px(x + 18, by + 35 - s1, 5, 2, BOOT);
+      px(x + 5, by + 14, 22, 19, OUT);
+      px(x + 6, by + 15, 20, 17, CAPE);
+      px(x + 6, by + 15, 20, 3, CAPEL);
+      px(x + 7, by + 18, 6, 13, CAPES);
+      px(x + 19, by + 18, 6, 13, CAPES);
+      px(x + 15, by + 18, 2, 14, CAPEL);
+      px(x + 5, by + 27, 3, 3, SKIN);
+      px(x + 24, by + 27, 3, 3, SKIN);
+      px(x + 13, by + 13, 6, 3, SKINS);
+      px(x + 6, by - 4, 20, 18, OUT);
+      px(x + 7, by - 3, 18, 16, HAIR);
+      px(x + 8, by - 4, 16, 4, HAIRL);
+      px(x + 7, by + 2, 3, 9, HAIR);
+      px(x + 22, by + 2, 3, 9, HAIR);
+      px(x + 10, by - 5, 4, 3, HAIR);
+      px(x + 18, by - 5, 4, 3, HAIR);
       break;
-
-    case 1: // === DERECHA ===
+    }
+    case 1:
     case 2: {
-      // === IZQUIERDA (espejo) ===
       const flip = dir === 2;
-      const F = (px1) => (flip ? 32 - px1 : px1); // espejo horizontal
-      const R = (px1, py, w, h, c) =>
-        px(x + (flip ? 32 - px1 - w : px1), by + py, w, h, c);
-      // Pelo
-      R(7, -3, 18, 13, OUT);
-      R(8, -2, 16, 11, HAIR);
-      R(9, -1, 5, 2, HAIRL);
-      // Cabeza (perfil)
-      R(9, 2, 14, 14, OUT);
-      R(10, 3, 12, 12, SKIN);
-      R(10, 3, 12, 2, SKINS);
-      // Flequillo lateral
-      R(9, 2, 4, 4, HAIR);
-      R(20, 3, 3, 5, HAIR);
-      // Nariz (perfil)
+      const R = (px1, py, w, h, c) => px(x + (flip ? 32 - px1 - w : px1), by + py, w, h, c);
+      const s = wf ? 1 : 0;
+      R(2, 14, 7, 17, OUT);
+      R(3, 15, 5, 15, CAPE);
+      R(3, 15, 5, 3, CAPEL);
+      R(11 - s, 28, 6, 9, OUT); R(12 - s, 29, 4, 8, BRN);
+      R(17 + s, 28, 6, 9, OUT); R(18 + s, 29, 4, 8, BRN);
+      R(11 - s, 35, 6, 3, OUT); R(12 - s, 35, 4, 2, BOOT);
+      R(17 + s, 35, 6, 3, OUT); R(18 + s, 35, 4, 2, BOOT);
+      R(8, 17, 13, 12, OUT);
+      R(9, 18, 11, 10, TUN);
+      R(9, 18, 11, 2, TUNS);
+      R(17, 19, 4, 7, TUN);
+      R(18, 25, 4, 4, OUT); R(18, 25, 3, 3, SKIN);
+      R(9, 25, 11, 3, BELT); R(13, 25, 3, 3, BUCKLE);
+      R(11, 15, 6, 3, SKINS);
+      R(9, 1, 14, 14, OUT);
+      R(10, 2, 12, 12, SKIN);
+      R(10, 2, 12, 2, SKINS);
+      R(9, -3, 14, 6, OUT);
+      R(10, -2, 12, 5, HAIR);
+      R(9, -4, 4, 3, HAIR);
+      R(20, 0, 3, 7, HAIR);
+      R(11, -5, 3, 3, HAIR);
       R(21, 8, 2, 2, SKINS);
-      // Ojo
-      R(17, 6, 3, 4, OUT);
-      // Boca
-      R(18, 12, 3, 1, '#A86850');
-      // Cuello
-      R(13, 16, 6, 2, SKINS);
-      // Torso
-      R(8, 17, 16, 11, OUT);
-      R(9, 18, 14, 9, TUN);
-      R(9, 18, 14, 2, TUNS);
-      // Brazo adelantado
-      R(18, 19, 4, 7, TUNS);
-      R(19, 25, 4, 4, OUT);
-      R(19, 25, 3, 3, SKIN);
-      // Cinturón
-      R(9, 25, 14, 3, BRND);
-      R(18, 25, 3, 3, GOLD);
-      // Piernas
-      R(10, 28, 6, 8, OUT);
-      R(11, 28, 4, 7, BRN);
-      R(16, 28, 6, 8, OUT);
-      R(17, 28, 4, 7, BRND);
-      R(11, 33, 5, 3, BRND);
-      R(17, 33, 5, 3, BRND);
+      R(16, 6, 3, 4, '#FFFFFF');
+      R(17, 7, 2, 2, EYE);
+      R(17, 7, 1, 1, '#FFFFFF');
+      R(17, 12, 3, 1, '#A85038');
       break;
     }
   }
 }
 
-// === VERSIÓN GRANDE DEL JUGADOR (para menú/mapa) ===
 function dPlayerBig(x, y) {
   const by = y;
 
@@ -3898,8 +3870,8 @@ function dNPC(x, y, id, f) {
       px(x + 12, by - 3, 3, 1, '#8A6A48');
       px(x + 12, by + 4, 3, 3, '#fff');
       px(x + 18, by + 4, 3, 3, '#fff');
-      px(x + 13, by + 5, 2, 2, '#2858A0');
-      px(x + 19, by + 5, 2, 2, '#2858A0');
+      px(x + 13, by + 5, 2, 2, '#241208');
+      px(x + 19, by + 5, 2, 2, '#241208');
       px(x + 13, by + 5, 1, 1, '#fff');
       px(x + 19, by + 5, 1, 1, '#fff');
       px(x + 13, by + 8, 6, 1, '#B08060');
@@ -5072,8 +5044,8 @@ function dTrainerBig(x, y, id, f) {
       px(x + 46, by + 0, 4, 4, '#7A5A38');
       px(x + 22, by + 6, 6, 5, '#fff');
       px(x + 36, by + 6, 6, 5, '#fff');
-      px(x + 25, by + 8, 3, 3, '#2858A0');
-      px(x + 39, by + 8, 3, 3, '#2858A0');
+      px(x + 25, by + 8, 3, 3, '#241208');
+      px(x + 39, by + 8, 3, 3, '#241208');
       px(x + 25, by + 8, 2, 1, '#fff');
       px(x + 39, by + 8, 2, 1, '#fff');
       px(x + 26, by + 14, 12, 2, '#B08060');
@@ -8368,31 +8340,25 @@ function dTileW(c, r) {
   if (t === undefined) return;
 
   switch (t) {
-    case 0: { // Hierba con clima progresivo (verde al sur -> nieve al norte)
-      // cold: 0 al sur (r=WR) -> 1 al norte (r=0)
+    case 0: { // Hierba: verde todo el ano, nieve solo en el extremo norte
       const cold = 1 - r / WR;
-      // Mezclar el verde de la hierba hacia blanco de nieve segun la altitud
-      const baseA = lerpColor('#58A830', '#EDF5ED', cold);
-      const baseB = lerpColor('#48982A', '#DCEADC', cold);
+      const snow = Math.max(0, (cold - 0.7) / 0.3);
+      const baseA = lerpColor('#58A830', '#EDF5ED', snow);
+      const baseB = lerpColor('#48982A', '#DCEADC', snow);
       cx.fillStyle = (c + r) % 2 ? baseA : baseB;
       cx.fillRect(x, y, T, T);
-      // Briznas de hierba (se ocultan poco a poco bajo la nieve)
-      if (cold < 0.55) {
-        cx.fillStyle = lerpColor('#408820', '#C2D4C2', cold / 0.55);
-        if ((c * 7 + r * 13) % 5 === 0) cx.fillRect(x + 8, y + 14, 2, 4);
-        if ((c * 3 + r * 11) % 7 === 0) cx.fillRect(x + 20, y + 8, 3, 2);
-        if ((c * 5 + r * 3) % 9 === 0) cx.fillRect(x + 24, y + 22, 2, 3);
-      }
-      // Parches de nieve y copos que aparecen en la zona fria
-      if (cold > 0.4) {
-        cx.fillStyle = 'rgba(255,255,255,.92)';
+      cx.fillStyle = lerpColor('#408820', '#C2D4C2', snow);
+      if ((c * 7 + r * 13) % 5 === 0) cx.fillRect(x + 8, y + 14, 2, 4);
+      if ((c * 3 + r * 11) % 7 === 0) cx.fillRect(x + 20, y + 8, 3, 2);
+      if ((c * 5 + r * 3) % 9 === 0) cx.fillRect(x + 24, y + 22, 2, 3);
+      if (snow > 0.25) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.45 + snow * 0.5).toFixed(2) + ')';
         if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 5 + ((r * 7) % 22), y + 6, 2, 2);
         if ((c * 3 + r) % 5 === 0) cx.fillRect(x + 18, y + 20, 2, 2);
         if ((c + r) % 6 === 0) cx.fillRect(x + 12, y + 26, 3, 2);
       }
       break;
     }
-
     case 1: // Camino de tierra con textura
       cx.fillStyle = '#C8B898';
       cx.fillRect(x, y, T, T);
@@ -8426,66 +8392,31 @@ function dTileW(c, r) {
       }
       break;
 
-    case 3: // Pino con clima progresivo
-      // Determinar nivel de frío (0 a 1) basado en la fila (r=150 es sur, r=0 es norte)
+    case 3: { // Pino estilo GBA (nieve solo en el norte)
       const cold = 1 - r / WR;
-
-      // Colores base de tierra que cambian a blanco/gris según el frío
-      const groundCol =
-        cold > 0.7 ? '#D0D8D0' : (c + r) % 2 ? '#4A9828' : '#3E8822';
-      cx.fillStyle = groundCol;
+      const snow = Math.max(0, (cold - 0.72) / 0.28);
+      cx.fillStyle = lerpColor((c + r) % 2 ? '#4A9828' : '#3E8822', '#DCE8DC', snow);
       cx.fillRect(x, y, T, T);
-
-      // Tronco
-      cx.fillStyle = '#5A3818';
-      cx.fillRect(x + 13, y + 20, 6, 12);
-
-      // Copa del pino - Los verdes se oscurecen o aclaran con nieve
-      let leafCol = '#1A6818'; // Oscuro base
-      let leafLight = '#30A830'; // Claro base
-
-      if (cold > 0.4) {
-        // Clima Templado/Frío
-        leafCol = '#145014';
-        leafLight = '#288028';
-      }
-      if (cold > 0.7) {
-        // Clima Ártico (Norte)
-        leafCol = '#2D452D';
-        leafLight = '#80A080';
-      }
-
-      // Dibujar capas
-      cx.fillStyle = leafCol;
-      cx.fillRect(x + 4, y + 14, 24, 8); // Base
-      cx.fillRect(x + 6, y + 8, 20, 8); // Medio
-      cx.fillRect(x + 10, y + 2, 12, 8); // Punta
-
-      cx.fillStyle = leafLight;
-      cx.fillRect(x + 6, y + 15, 20, 6);
-      cx.fillRect(x + 8, y + 9, 16, 6);
-      cx.fillRect(x + 12, y + 3, 8, 6);
-
-      // NIEVE EN LAS PUNTAS (Aumenta según el frío)
-      if (cold > 0.3) {
-        cx.fillStyle = '#F0F8F0';
-        cx.fillRect(x + 13, y + 1, 6, 2); // Punta siempre con algo de nieve
-      }
-      if (cold > 0.6) {
-        cx.fillStyle = '#FFFFFF';
-        // Nieve cayendo por las ramas
-        cx.fillRect(x + 10, y + 3, 3, 2);
-        cx.fillRect(x + 19, y + 3, 3, 2);
-        cx.fillRect(x + 6, y + 9, 4, 2);
-        cx.fillRect(x + 22, y + 9, 4, 2);
-      }
-      if (cold > 0.85) {
-        // Nieve total en el extremo norte
-        cx.fillStyle = '#FFFFFF';
-        cx.fillRect(x + 4, y + 14, 24, 2);
+      cx.fillStyle = '#5A3818'; cx.fillRect(x + 13, y + 21, 6, 11);
+      cx.fillStyle = '#6A4820'; cx.fillRect(x + 13, y + 21, 2, 11);
+      const L = '#1E6E22', LL = '#339A36', LD = '#14521A';
+      cx.fillStyle = LD; cx.fillRect(x + 2, y + 16, 28, 9);
+      cx.fillStyle = L;  cx.fillRect(x + 3, y + 17, 26, 7);
+      cx.fillStyle = LL; cx.fillRect(x + 6, y + 18, 14, 2);
+      cx.fillStyle = LD; cx.fillRect(x + 6, y + 9, 20, 9);
+      cx.fillStyle = L;  cx.fillRect(x + 7, y + 10, 18, 7);
+      cx.fillStyle = LL; cx.fillRect(x + 10, y + 11, 10, 2);
+      cx.fillStyle = LD; cx.fillRect(x + 10, y + 2, 12, 9);
+      cx.fillStyle = L;  cx.fillRect(x + 11, y + 3, 10, 7);
+      cx.fillStyle = LL; cx.fillRect(x + 13, y + 4, 6, 2);
+      if (snow > 0.15) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.55 + snow * 0.45).toFixed(2) + ')';
+        cx.fillRect(x + 10, y + 1, 12, 3);
         cx.fillRect(x + 6, y + 8, 20, 2);
+        cx.fillRect(x + 2, y + 15, 28, 2);
       }
       break;
+    }
     case 4: // Casa/edificio estilo Pokémon (no se entra)
       {
         // Determinar color de techo por posición
@@ -8541,29 +8472,18 @@ function dTileW(c, r) {
       }
       break;
 
-    case 5: // Hierba alta (encuentros)
-      cx.fillStyle = (c + r) % 2 ? '#58A830' : '#48982A';
+    case 5: { // Hierba alta (encuentros) - matas de pasto
+      cx.fillStyle = (c + r) % 2 ? '#5AA836' : '#4A9A2E';
       cx.fillRect(x, y, T, T);
-      // Hierba alta estática con más detalle
-      cx.fillStyle = '#38A028';
-      cx.fillRect(x + 3, y + 2, 3, 22);
-      cx.fillRect(x + 13, y + 4, 3, 20);
-      cx.fillRect(x + 23, y + 6, 3, 16);
-      cx.fillStyle = '#48B830';
-      cx.fillRect(x + 8, y + 6, 3, 16);
-      cx.fillRect(x + 18, y + 2, 3, 20);
-      // Puntas más claras
-      cx.fillStyle = '#60C840';
-      cx.fillRect(x + 3, y + 2, 3, 3);
-      cx.fillRect(x + 13, y + 4, 3, 3);
-      cx.fillRect(x + 23, y + 6, 3, 3);
-      cx.fillRect(x + 8, y + 6, 3, 3);
-      cx.fillRect(x + 18, y + 2, 3, 3);
-      // Sombra base
-      cx.fillStyle = 'rgba(0,0,0,.05)';
-      cx.fillRect(x, y + 26, T, 6);
+      const blades = [[3, 3, 22], [9, 6, 17], [14, 2, 24], [19, 7, 15], [24, 4, 20], [6, 9, 12], [21, 10, 11], [16, 11, 9]];
+      cx.fillStyle = '#3A9C28';
+      blades.forEach(b => cx.fillRect(x + b[0], y + b[1], 2, b[2]));
+      cx.fillStyle = '#66C642';
+      blades.forEach(b => cx.fillRect(x + b[0], y + b[1], 2, 3));
+      cx.fillStyle = 'rgba(0,0,0,.06)';
+      cx.fillRect(x, y + 27, T, 5);
       break;
-
+    }
     case 6: // Flores decorativas
       cx.fillStyle = '#48982A';
       cx.fillRect(x, y, T, T);
@@ -8636,34 +8556,28 @@ function dTileW(c, r) {
       cx.fillRect(x + T - 5, y + 8, 3, 2);
       break;
 
-    case 10: // Cristal Vínculo
-      {
-        cx.fillStyle = '#48982A';
-        cx.fillRect(x, y, T, T);
-        const gl = Math.sin(fr * 0.12) * 0.3 + 0.7;
-        cx.globalAlpha = gl;
-        // Cristal
-        cx.fillStyle = '#8030E0';
-        cx.fillRect(x + 10, y + 6, 12, 18);
-        cx.fillStyle = '#A050F0';
-        cx.fillRect(x + 12, y + 8, 8, 14);
-        cx.fillStyle = '#C070F8';
-        cx.fillRect(x + 14, y + 10, 4, 10);
-        // Brillo
-        cx.fillStyle = '#E0A8F8';
-        cx.fillRect(x + 14, y + 10, 2, 3);
-        cx.fillStyle = '#fff';
-        cx.fillRect(x + 15, y + 11, 1, 1);
-        // Destellos
-        if (fr % 30 < 15) {
-          cx.fillStyle = '#F8F0F8';
-          cx.fillRect(x + 8, y + 4, 2, 2);
-          cx.fillRect(x + 22, y + 14, 2, 2);
-        }
-        cx.globalAlpha = 1;
+    case 10: { // Cristal Vínculo (gema capturable) - facetas
+      cx.fillStyle = '#3E8A2A';
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#347A24';
+      cx.fillRect(x, y + 24, T, 8);
+      cx.globalAlpha = 0.78 + Math.sin(fr * 0.1) * 0.22;
+      cx.fillStyle = '#7A2FD0'; cx.fillRect(x + 11, y + 6, 10, 18);
+      cx.fillStyle = '#5E1FA8';
+      cx.beginPath(); cx.moveTo(x + 11, y + 6); cx.lineTo(x + 8, y + 12); cx.lineTo(x + 11, y + 24); cx.closePath(); cx.fill();
+      cx.fillStyle = '#9A4FE0';
+      cx.beginPath(); cx.moveTo(x + 21, y + 6); cx.lineTo(x + 24, y + 12); cx.lineTo(x + 21, y + 24); cx.closePath(); cx.fill();
+      cx.fillStyle = '#B56CF0';
+      cx.beginPath(); cx.moveTo(x + 16, y - 2); cx.lineTo(x + 11, y + 6); cx.lineTo(x + 21, y + 6); cx.closePath(); cx.fill();
+      cx.fillStyle = '#E6B8FF'; cx.fillRect(x + 14, y + 9, 3, 12);
+      cx.globalAlpha = 1;
+      if (Math.floor(fr / 22) % 2 === 0) {
+        cx.fillStyle = '#FFFFFF';
+        cx.fillRect(x + 7, y + 3, 2, 2);
+        cx.fillRect(x + 23, y + 13, 2, 2);
       }
       break;
-
+    }
     case 11: // Puerta del castillo
       {
         // Marco de piedra del castillo
@@ -11628,6 +11542,7 @@ function moveEntity(checkSolid, cols, rows, map) {
     if (p.f % (G.pl.sprint ? 4 : 8) === 0) sfx.walk();
   }
 
+  G.pl.moving = mv;
   return mv;
 }
 
