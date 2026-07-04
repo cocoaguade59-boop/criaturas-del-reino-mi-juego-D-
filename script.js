@@ -3380,39 +3380,42 @@ if (typeof Image !== 'undefined') {
 const HERO_STYLE = 'chibi00s';
 
 function dPlayerChibi00s(x, y, dir, f) {
+  // Protagonista original inspirado en entrenadores RPG portátiles de los 00s:
+  // gorra roja con frente claro, chaqueta roja, mochila y proporción chibi.
+  // No es un calco de ningún personaje comercial.
   const moving = !!G.pl.moving;
   const step = moving ? (Math.floor(G.pl.f / 6) % 2 === 0 ? 1 : -1) : 0;
   const bob = moving ? Math.sin(f * 0.32) * 1 : 0;
   const by = Math.round(y + bob);
   const OX = x + 8;
-  const OY = by + 7;
+  const OY = by + 6;
 
-  const OUT = '#1A1512';
-  const SKIN = '#F2C79B';
-  const SKIN2 = '#D69B72';
-  const HAIR = '#2A1810';
-  const HAIR2 = '#4A2A18';
-  const GREEN = '#3FA34D';
-  const GREEN2 = '#2B7A36';
-  const GREEN3 = '#64C86A';
-  const BEIGE = '#D9C49A';
-  const BEIGE2 = '#B99B6A';
-  const PANTS = '#4A3828';
+  const OUT = '#151515';
+  const SKIN = '#F0C49A';
+  const SKIN2 = '#D99B70';
+  const HAIR = '#24160F';
+  const HAIR2 = '#4A2A1A';
+  const RED = '#D92F2F';
+  const RED2 = '#A81F27';
+  const RED3 = '#F06050';
+  const WHITE = '#F4F0E8';
+  const SHADE = '#CFC7B8';
+  const SHIRT = '#202838';
+  const JEAN = '#315D9A';
+  const JEAN2 = '#203F70';
+  const BAG = '#C2A06A';
+  const BAG2 = '#8A6A3A';
   const BOOT = '#3A2418';
-  const EYE = '#171717';
-  const BLUSH = '#E89A8F';
+  const EYE = '#101010';
+  const MOUTH = '#8A463A';
 
-  // sombra ovalada de tile
-  cx.fillStyle = 'rgba(0,0,0,.24)';
+  cx.fillStyle = 'rgba(0,0,0,.25)';
   cx.beginPath();
-  cx.ellipse(x + 16, by + 34, 9, 2.8, 0, 0, Math.PI * 2);
+  cx.ellipse(x + 16, by + 35, 9, 2.8, 0, 0, Math.PI * 2);
   cx.fill();
 
   const R = (c, r, w, h, col) => px(OX + c, OY + r, w, h, col);
-  const RO = (c, r, w, h, col) => {
-    px(OX + c - 1, OY + r - 1, w + 2, h + 2, OUT);
-    R(c, r, w, h, col);
-  };
+  const RO = (c, r, w, h, col) => { px(OX + c - 1, OY + r - 1, w + 2, h + 2, OUT); R(c, r, w, h, col); };
   const Rf = (flip, c, r, w, h, col) => R(flip ? 16 - c - w : c, r, w, h, col);
   const ROf = (flip, c, r, w, h, col) => {
     px(OX + (flip ? 16 - c - w : c) - 1, OY + r - 1, w + 2, h + 2, OUT);
@@ -3420,87 +3423,112 @@ function dPlayerChibi00s(x, y, dir, f) {
   };
 
   if (dir === 0) {
-    // Frente: cabeza grande, cuerpo compacto, ropa verde/beige.
-    RO(3, 20, 4, 3, BOOT);
-    RO(9, 20, 4, 3, BOOT);
-    R(5, 17, 3, 4, PANTS);
-    R(9, 17, 3, 4, PANTS);
-    if (step > 0) { R(4, 20, 3, 1, '#5A3A24'); }
-    if (step < 0) { R(9, 20, 3, 1, '#5A3A24'); }
+    // FRENTE
+    RO(3, 21, 4, 3, BOOT);
+    RO(9, 21, 4, 3, BOOT);
+    R(5, 17, 3, 5, JEAN);
+    R(9, 17, 3, 5, JEAN);
+    R(5, 20, 3, 2, step > 0 ? JEAN2 : JEAN);
+    R(9, 20, 3, 2, step < 0 ? JEAN2 : JEAN);
 
-    RO(3, 12, 10, 7, GREEN);
-    R(4, 13, 8, 2, GREEN3);
-    R(4, 17, 8, 2, GREEN2);
-    R(5, 14, 6, 2, BEIGE); // pañuelo / zona beige antes roja
-    R(7, 15, 2, 4, BEIGE2);
-    R(1, 13 + (step < 0 ? 1 : 0), 3, 5, GREEN2);
-    R(12, 13 + (step > 0 ? 1 : 0), 3, 5, GREEN2);
-    R(1, 17 + (step < 0 ? 1 : 0), 3, 2, SKIN);
-    R(12, 17 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+    // mochila asomando por los costados
+    R(1, 12, 3, 8, BAG2);
+    R(12, 12, 3, 8, BAG2);
+    R(2, 13, 1, 5, BAG);
+    R(13, 13, 1, 5, BAG);
 
-    // Cabeza y pelo
-    R(1, 1, 14, 11, OUT);
-    R(2, 2, 12, 10, SKIN);
-    R(2, 1, 12, 4, HAIR);
-    R(1, 3, 3, 7, HAIR);
-    R(12, 3, 3, 7, HAIR);
-    R(4, 4, 8, 1, HAIR2);
-    // gorrita/diadema verde (sustituye lila)
-    R(2, 0, 12, 3, GREEN2);
-    R(5, -1, 6, 2, GREEN3);
-    R(6, 0, 4, 1, '#AEE8A0');
-    R(5, 6, 2, 3, EYE);
-    R(10, 6, 2, 3, EYE);
-    R(4, 9, 2, 1, BLUSH);
-    R(11, 9, 2, 1, BLUSH);
-    R(7, 10, 3, 1, '#8A4A3A');
+    RO(3, 12, 10, 7, RED);
+    R(4, 13, 8, 2, RED3);
+    R(4, 17, 8, 2, RED2);
+    R(6, 12, 4, 7, SHIRT);
+    R(7, 13, 2, 2, WHITE); // cuello claro
+    R(1, 14 + (step < 0 ? 1 : 0), 3, 5, RED2);
+    R(12, 14 + (step > 0 ? 1 : 0), 3, 5, RED2);
+    R(1, 18 + (step < 0 ? 1 : 0), 3, 2, SKIN);
+    R(12, 18 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+
+    // cabeza
+    R(1, 2, 14, 10, OUT);
+    R(2, 3, 12, 9, SKIN);
+    R(2, 4, 3, 7, HAIR);
+    R(11, 4, 3, 7, HAIR);
+    R(4, 4, 8, 2, HAIR);
+    R(5, 5, 6, 1, HAIR2);
+
+    // gorra roja tipo entrenador, con frente blanco y visera
+    R(0, 0, 16, 4, OUT);
+    R(1, 0, 14, 3, RED);
+    R(5, 0, 6, 3, WHITE);
+    R(4, 2, 8, 2, SHADE);
+    R(3, 3, 10, 2, RED2); // visera
+    R(6, 1, 4, 1, '#FFFFFF');
+
+    // ojos/cara
+    R(5, 7, 2, 3, EYE);
+    R(10, 7, 2, 3, EYE);
+    R(5, 7, 1, 1, '#FFFFFF');
+    R(10, 7, 1, 1, '#FFFFFF');
+    R(7, 10, 3, 1, MOUTH);
   } else if (dir === 3) {
-    // Espalda
-    RO(3, 20, 4, 3, BOOT);
-    RO(9, 20, 4, 3, BOOT);
-    R(5, 17, 3, 4, PANTS);
-    R(9, 17, 3, 4, PANTS);
-    RO(3, 12, 10, 7, GREEN);
-    R(4, 13, 8, 2, GREEN3);
-    R(4, 17, 8, 2, GREEN2);
-    R(5, 14, 6, 2, BEIGE);
-    R(1, 13 + (step > 0 ? 1 : 0), 3, 5, GREEN2);
-    R(12, 13 + (step < 0 ? 1 : 0), 3, 5, GREEN2);
-    R(1, 17 + (step > 0 ? 1 : 0), 3, 2, SKIN);
-    R(12, 17 + (step < 0 ? 1 : 0), 3, 2, SKIN);
+    // ESPALDA
+    RO(3, 21, 4, 3, BOOT);
+    RO(9, 21, 4, 3, BOOT);
+    R(5, 17, 3, 5, JEAN);
+    R(9, 17, 3, 5, JEAN);
 
-    R(1, 1, 14, 11, OUT);
-    R(2, 2, 12, 10, HAIR);
-    R(3, 3, 10, 2, HAIR2);
-    R(1, 4, 3, 7, HAIR);
-    R(12, 4, 3, 7, HAIR);
-    R(2, 0, 12, 3, GREEN2);
-    R(5, -1, 6, 2, GREEN3);
-    R(6, 0, 4, 1, '#AEE8A0');
+    // mochila más visible de espalda
+    RO(3, 11, 10, 10, BAG);
+    R(4, 12, 8, 8, BAG2);
+    R(5, 13, 6, 5, BAG);
+    R(7, 14, 2, 2, '#E0C080');
+    R(2, 13 + (step > 0 ? 1 : 0), 3, 6, RED2);
+    R(12, 13 + (step < 0 ? 1 : 0), 3, 6, RED2);
+    R(2, 18 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+    R(12, 18 + (step < 0 ? 1 : 0), 3, 2, SKIN);
+
+    R(1, 2, 14, 10, OUT);
+    R(2, 3, 12, 9, HAIR);
+    R(4, 4, 8, 2, HAIR2);
+
+    // gorra desde atrás
+    R(0, 0, 16, 4, OUT);
+    R(1, 0, 14, 3, RED);
+    R(3, 2, 10, 2, RED2);
+    R(5, 0, 6, 2, WHITE);
   } else {
-    // Perfil derecha / izquierda
+    // PERFIL
     const flip = dir === 2;
-    ROf(flip, 4, 20, 4, 3, BOOT);
-    ROf(flip, 9, 20, 3, 3, BOOT);
-    Rf(flip, 5, 17, 3, 4, PANTS);
-    Rf(flip, 9, 17, 3, 4, PANTS);
-    RO(flip ? 3 : 4, 12, 10, 7, GREEN);
-    Rf(flip, 5, 13, 7, 2, GREEN3);
-    Rf(flip, 5, 17, 7, 2, GREEN2);
-    Rf(flip, 6, 14, 5, 2, BEIGE);
-    Rf(flip, 11, 14 + (step > 0 ? 1 : 0), 3, 5, GREEN2);
-    Rf(flip, 11, 18 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+    ROf(flip, 4, 21, 4, 3, BOOT);
+    ROf(flip, 9, 21, 3, 3, BOOT);
+    Rf(flip, 5, 17, 3, 5, JEAN);
+    Rf(flip, 9, 17, 3, 5, JEAN2);
 
-    Rf(flip, 4, 1, 10, 11, OUT);
-    Rf(flip, 5, 2, 8, 10, SKIN);
-    Rf(flip, 4, 1, 9, 4, HAIR);
+    // mochila lateral
+    ROf(flip, 2, 12, 4, 8, BAG);
+    Rf(flip, 3, 13, 2, 6, BAG2);
+
+    ROf(flip, 5, 12, 8, 7, RED);
+    Rf(flip, 6, 13, 6, 2, RED3);
+    Rf(flip, 6, 17, 6, 2, RED2);
+    Rf(flip, 8, 13, 3, 6, SHIRT);
+    Rf(flip, 12, 14 + (step > 0 ? 1 : 0), 3, 5, RED2);
+    Rf(flip, 12, 18 + (step > 0 ? 1 : 0), 3, 2, SKIN);
+
+    // cabeza perfil
+    Rf(flip, 4, 2, 10, 10, OUT);
+    Rf(flip, 5, 3, 8, 9, SKIN);
     Rf(flip, 4, 4, 3, 7, HAIR);
-    Rf(flip, 5, 4, 7, 1, HAIR2);
-    Rf(flip, 4, 0, 10, 3, GREEN2);
-    Rf(flip, 7, -1, 5, 2, GREEN3);
-    Rf(flip, 11, 6, 2, 3, EYE);
-    Rf(flip, 13, 8, 1, 2, SKIN2); // nariz
-    Rf(flip, 10, 10, 3, 1, '#8A4A3A');
+    Rf(flip, 5, 4, 7, 2, HAIR);
+    Rf(flip, 12, 8, 1, 2, SKIN2); // nariz
+    Rf(flip, 10, 7, 2, 3, EYE);
+    Rf(flip, 10, 10, 3, 1, MOUTH);
+
+    // gorra de perfil con visera hacia donde mira
+    Rf(flip, 3, 0, 11, 4, OUT);
+    Rf(flip, 4, 0, 9, 3, RED);
+    Rf(flip, 7, 0, 5, 2, WHITE);
+    Rf(flip, 11, 2, 5, 2, RED2); // visera
+    Rf(flip, 9, 1, 2, 1, '#FFFFFF');
   }
 }
 
