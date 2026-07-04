@@ -12633,7 +12633,7 @@ function uTitle() {
       }
     } else if (G.hasSave && G.titleSel === 1) {
       G.scr = 'confirmReset';
-      G.resetSel = 0;
+      G.resetSel = 1; // en Nueva partida, la opción principal es confirmar
       G.resetFromTitle = true;
     } else {
       startNewGameFlow();
@@ -12643,79 +12643,115 @@ function uTitle() {
 
 function dTitle() {
   const f = G.tFr;
-  // Fondo estrellado
-  cx.fillStyle = '#0a0a1e';
+  // Fondo con gradiente pixel-art nocturno
+  const sky = cx.createLinearGradient(0, 0, 0, 480);
+  sky.addColorStop(0, '#07071C');
+  sky.addColorStop(0.45, '#111A3A');
+  sky.addColorStop(1, '#102B22');
+  cx.fillStyle = sky;
   cx.fillRect(0, 0, 640, 480);
-  for (let i = 0; i < 50; i++) {
-    cx.globalAlpha = Math.sin(f * 0.04 + i) * 0.5 + 0.5;
-    cx.fillStyle = '#fff';
-    cx.fillRect((i * 137 + f * 0.3) % 640, (i * 97) % 300, 2, 2);
+
+  // Estrellas y luciérnagas
+  for (let i = 0; i < 70; i++) {
+    const tw = Math.sin(f * 0.035 + i * 0.7) * 0.45 + 0.55;
+    cx.globalAlpha = tw;
+    cx.fillStyle = i % 9 === 0 ? '#FFE8A0' : '#F8F8FF';
+    cx.fillRect((i * 137 + f * 0.18) % 640, (i * 83) % 250, i % 11 === 0 ? 2 : 1, i % 11 === 0 ? 2 : 1);
   }
   cx.globalAlpha = 1;
 
-  // Montañas
-  cx.fillStyle = '#1a2a3e';
-  for (let i = 0; i < 640; i += 2)
-    cx.fillRect(i, Math.sin(i * 0.008) * 30 + 260, 2, 220);
-  cx.fillStyle = '#1a3a5e';
-  for (let i = 0; i < 640; i += 2)
-    cx.fillRect(i, Math.sin(i * 0.012 + 2) * 25 + 280, 2, 200);
+  // Luna detrás del castillo
+  cx.globalAlpha = 0.9;
+  cx.fillStyle = '#F8E8A0';
+  cx.beginPath();
+  cx.ellipse(496, 86, 38, 38, 0, 0, Math.PI * 2);
+  cx.fill();
+  cx.globalAlpha = 0.18;
+  cx.fillStyle = '#FFF8C8';
+  cx.beginPath();
+  cx.ellipse(496, 86, 58, 58, 0, 0, Math.PI * 2);
+  cx.fill();
+  cx.globalAlpha = 1;
 
-  // Suelo verde
-  cx.fillStyle = '#2d6a1e';
+  // Montañas por capas
+  cx.fillStyle = '#10182E';
+  for (let i = 0; i < 640; i += 2) cx.fillRect(i, Math.sin(i * 0.01) * 28 + 245, 2, 235);
+  cx.fillStyle = '#182545';
+  for (let i = 0; i < 640; i += 2) cx.fillRect(i, Math.sin(i * 0.014 + 2) * 24 + 270, 2, 210);
+
+  // Castillo lejano
+  cx.fillStyle = '#0A0A18';
+  px(452, 154, 88, 100, '#0A0A18');
+  px(432, 174, 28, 80, '#0A0A18');
+  px(532, 174, 28, 80, '#0A0A18');
+  px(462, 126, 18, 40, '#0A0A18');
+  px(512, 126, 18, 40, '#0A0A18');
+  px(488, 108, 18, 56, '#0A0A18');
+  px(466, 145, 10, 10, '#E8C830');
+  px(516, 145, 10, 10, '#E8C830');
+  px(492, 130, 10, 10, '#E8C830');
+  px(488, 222, 16, 32, '#1A0E16');
+
+  // Suelo y camino hacia el reino
+  cx.fillStyle = '#204A23';
   cx.fillRect(0, 310, 640, 170);
-  cx.fillStyle = '#3a7a28';
-  cx.fillRect(0, 310, 640, 4);
+  cx.fillStyle = '#2E6A2E';
+  cx.fillRect(0, 310, 640, 5);
+  cx.fillStyle = '#B8A070';
+  cx.beginPath();
+  cx.moveTo(286, 480);
+  cx.lineTo(354, 480);
+  cx.lineTo(334, 310);
+  cx.lineTo(306, 310);
+  cx.closePath();
+  cx.fill();
+  cx.fillStyle = 'rgba(255,255,255,.12)';
+  for (let y = 330; y < 480; y += 24) cx.fillRect(310 - (y - 330) * 0.07, y, 20 + (y - 330) * 0.14, 2);
 
-  // Criaturas animadas
-  dCre(40, 318, 'flameye', 3, f);
-  dCre(150, 322, 'axolotl', 3, f);
-  dCre(270, 316, 'wyvern', 3, f);
-  dCre(390, 324, 'pixie', 3, f);
-  dCre(510, 318, 'ivygoat', 3, f);
+  // Criaturas destacadas, solo iniciales al frente
+  dCre(72, 324 + Math.sin(f * 0.05) * 2, 'flameye', 5, f);
+  dCre(292, 326 + Math.sin(f * 0.06 + 2) * 2, 'axolotl', 5, f);
+  dCre(512, 324 + Math.sin(f * 0.055 + 4) * 2, 'ivygoat', 5, f);
 
-  // Título con sombra
+  // Placa principal del logo
   cx.textAlign = 'center';
+  dBoxMenu(74, 28, 492, 142, '');
   cx.fillStyle = '#000';
   cx.font = '18px "Press Start 2P"';
-  cx.fillText('CRIATURAS DEL', 322, 62);
-  cx.font = '26px "Press Start 2P"';
-  cx.fillText('REINO', 322, 95);
-
-  cx.fillStyle = '#ffd700';
+  cx.fillText('CRIATURAS DEL', 323, 82);
+  cx.font = '28px "Press Start 2P"';
+  cx.fillText('REINO', 323, 122);
+  cx.fillStyle = '#FFE070';
   cx.font = '18px "Press Start 2P"';
-  cx.fillText('CRIATURAS DEL', 320, 60);
-  cx.font = '26px "Press Start 2P"';
-  cx.fillText('REINO', 320, 93);
-
-  // Subtítulo
+  cx.fillText('CRIATURAS DEL', 320, 79);
+  cx.font = '28px "Press Start 2P"';
+  cx.fillText('REINO', 320, 119);
   cx.fillStyle = '#A0B0C0';
-  cx.font = '8px "Press Start 2P"';
-  cx.fillText('⚔️ RPG Medieval ⚔️', 320, 118);
+  cx.font = '7px "Press Start 2P"';
+  cx.fillText('Aventura de vínculos, diplomas y secretos', 320, 148);
 
-  // Versión
-  cx.fillStyle = '#505868';
-  cx.font = '6px "Press Start 2P"';
-  cx.fillText('v2.0', 320, 138);
-
-  // Opciones de inicio
-  cx.fillStyle = '#fff';
-  cx.font = '9px "Press Start 2P"';
+  // Menú de entrada
+  const boxY = G.hasSave ? 358 : 382;
+  dBoxMenu(122, boxY - 26, 396, G.hasSave ? 88 : 64, G.hasSave ? 'INICIO' : 'NUEVA AVENTURA');
   if (G.hasSave) {
     const opts = ['Continuar partida guardada', 'Nueva partida desde Aldea Pitch'];
     opts.forEach((o, i) => {
-      cx.fillStyle = G.titleSel === i ? '#ffd700' : '#A0B0C0';
-      cx.fillText(`${G.titleSel === i ? '▶ ' : '  '}${o}`, 320, 402 + i * 22);
+      cx.fillStyle = G.titleSel === i ? '#ffd700' : '#D8D8E8';
+      cx.font = '8px "Press Start 2P"';
+      cx.fillText(`${G.titleSel === i ? '▶ ' : '  '}${o}`, 320, boxY + i * 24);
     });
-  } else if (Math.sin(f * 0.1) > 0) {
-    cx.fillStyle = '#fff';
-    cx.fillText('ESPACIO para comenzar nueva partida', 320, 420);
+    cx.fillStyle = '#80889A';
+    cx.font = '5px "Press Start 2P"';
+    cx.fillText('Nueva partida borrará el guardado anterior con confirmación', 320, boxY + 48);
+  } else {
+    cx.fillStyle = Math.sin(f * 0.1) > 0 ? '#fff' : '#A0B0C0';
+    cx.font = '9px "Press Start 2P"';
+    cx.fillText('ESPACIO para comenzar', 320, boxY + 8);
   }
 
-  // Controles
   cx.fillStyle = '#606878';
   cx.font = '6px "Press Start 2P"';
-  cx.fillText('Flechas=Mover | Z=Sprint | SPACE=Acción | X=Menú', 320, 455);
+  cx.fillText('Flechas = elegir | SPACE = confirmar | X = menú en partida', 320, 460);
   cx.textAlign = 'left';
 }
 
@@ -15146,15 +15182,32 @@ function uConfirmReset() {
 }
 
 function dConfirmReset() {
-  drawMap();
-  cx.fillStyle = 'rgba(0,0,0,.7)';
-  cx.fillRect(0, 0, 640, 480);
+  if (G.resetFromTitle) {
+    // Fondo propio para evitar la sensación de pantalla negra al crear nueva partida.
+    cx.fillStyle = '#09091E';
+    cx.fillRect(0, 0, 640, 480);
+    for (let i = 0; i < 45; i++) {
+      cx.globalAlpha = Math.sin(fr * 0.04 + i) * 0.4 + 0.6;
+      cx.fillStyle = '#fff';
+      cx.fillRect((i * 97) % 640, (i * 71) % 260, 1, 1);
+    }
+    cx.globalAlpha = 1;
+    cx.textAlign = 'center';
+    cx.fillStyle = '#ffd700';
+    cx.font = '16px "Press Start 2P"';
+    cx.fillText('NUEVA PARTIDA', 320, 92);
+    cx.textAlign = 'left';
+  } else {
+    drawMap();
+    cx.fillStyle = 'rgba(0,0,0,.7)';
+    cx.fillRect(0, 0, 640, 480);
+  }
 
-  dBoxMenu(125, 150, 390, 180, '⚠️ REINICIO TOTAL');
+  dBoxMenu(125, 150, 390, 180, G.resetFromTitle ? 'CONFIRMAR NUEVA PARTIDA' : '⚠️ REINICIO TOTAL');
 
   cx.fillStyle = '#E83030';
   cx.font = '8px "Press Start 2P"';
-  cx.fillText('¿Reiniciar TODA la partida?', 145, 190);
+  cx.fillText(G.resetFromTitle ? '¿Empezar desde Aldea Pitch?' : '¿Reiniciar TODA la partida?', 145, 190);
   cx.fillStyle = '#aaa';
   cx.font = '7px "Press Start 2P"';
   cx.fillText('Borra save, equipo, diplomas y progreso.', 145, 212);
@@ -15162,10 +15215,10 @@ function dConfirmReset() {
 
   cx.fillStyle = G.resetSel === 0 ? '#ffd700' : '#888';
   cx.font = '9px "Press Start 2P"';
-  cx.fillText(`${G.resetSel === 0 ? '▶ ' : '  '}No, volver al menú`, 155, 270);
+  cx.fillText(`${G.resetSel === 0 ? '▶ ' : '  '}${G.resetFromTitle ? 'No, volver al inicio' : 'No, volver al menú'}`, 155, 270);
 
   cx.fillStyle = G.resetSel === 1 ? '#E83030' : '#888';
-  cx.fillText(`${G.resetSel === 1 ? '▶ ' : '  '}Sí, reiniciar toda la partida`, 155, 296);
+  cx.fillText(`${G.resetSel === 1 ? '▶ ' : '  '}${G.resetFromTitle ? 'Sí, empezar nueva partida' : 'Sí, reiniciar toda la partida'}`, 155, 296);
 }
 
 function resetGame(startIntro = false) {
