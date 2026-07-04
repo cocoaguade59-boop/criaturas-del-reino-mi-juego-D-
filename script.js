@@ -8349,6 +8349,17 @@ function dCre(x, y, id, lv, f) {
 // BLOQUE 7: TILES DEL MUNDO (dTileW)
 // ============================================================
 
+// Mezcla dos colores hex (#RRGGBB) en el factor t (0..1)
+function lerpColor(a, b, t) {
+  t = Math.max(0, Math.min(1, t));
+  const pa = [parseInt(a.slice(1, 3), 16), parseInt(a.slice(3, 5), 16), parseInt(a.slice(5, 7), 16)];
+  const pb = [parseInt(b.slice(1, 3), 16), parseInt(b.slice(3, 5), 16), parseInt(b.slice(5, 7), 16)];
+  const R = Math.round(pa[0] + (pb[0] - pa[0]) * t);
+  const G = Math.round(pa[1] + (pb[1] - pa[1]) * t);
+  const B = Math.round(pa[2] + (pb[2] - pa[2]) * t);
+  return 'rgb(' + R + ',' + G + ',' + B + ')';
+}
+
 function dTileW(c, r) {
   const x = c * T - cam.x,
     y = r * T - cam.y;
@@ -8357,23 +8368,30 @@ function dTileW(c, r) {
   if (t === undefined) return;
 
   switch (t) {
-    case 0: // Hierba estática vibrante
-      cx.fillStyle = (c + r) % 2 ? '#58A830' : '#48982A';
+    case 0: { // Hierba con clima progresivo (verde al sur -> nieve al norte)
+      // cold: 0 al sur (r=WR) -> 1 al norte (r=0)
+      const cold = 1 - r / WR;
+      // Mezclar el verde de la hierba hacia blanco de nieve segun la altitud
+      const baseA = lerpColor('#58A830', '#EDF5ED', cold);
+      const baseB = lerpColor('#48982A', '#DCEADC', cold);
+      cx.fillStyle = (c + r) % 2 ? baseA : baseB;
       cx.fillRect(x, y, T, T);
-      // Detalle de briznas
-      if ((c * 7 + r * 13) % 5 === 0) {
-        cx.fillStyle = '#408820';
-        cx.fillRect(x + 8, y + 14, 2, 4);
+      // Briznas de hierba (se ocultan poco a poco bajo la nieve)
+      if (cold < 0.55) {
+        cx.fillStyle = lerpColor('#408820', '#C2D4C2', cold / 0.55);
+        if ((c * 7 + r * 13) % 5 === 0) cx.fillRect(x + 8, y + 14, 2, 4);
+        if ((c * 3 + r * 11) % 7 === 0) cx.fillRect(x + 20, y + 8, 3, 2);
+        if ((c * 5 + r * 3) % 9 === 0) cx.fillRect(x + 24, y + 22, 2, 3);
       }
-      if ((c * 3 + r * 11) % 7 === 0) {
-        cx.fillStyle = '#68B838';
-        cx.fillRect(x + 20, y + 8, 3, 2);
-      }
-      if ((c * 5 + r * 3) % 9 === 0) {
-        cx.fillStyle = '#509828';
-        cx.fillRect(x + 24, y + 22, 2, 3);
+      // Parches de nieve y copos que aparecen en la zona fria
+      if (cold > 0.4) {
+        cx.fillStyle = 'rgba(255,255,255,.92)';
+        if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 5 + ((r * 7) % 22), y + 6, 2, 2);
+        if ((c * 3 + r) % 5 === 0) cx.fillRect(x + 18, y + 20, 2, 2);
+        if ((c + r) % 6 === 0) cx.fillRect(x + 12, y + 26, 3, 2);
       }
       break;
+    }
 
     case 1: // Camino de tierra con textura
       cx.fillStyle = '#C8B898';
