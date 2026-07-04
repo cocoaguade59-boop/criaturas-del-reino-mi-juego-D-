@@ -12426,40 +12426,40 @@ function resetRebattles() {
 
 const WORLD_LEVEL_ZONES = [
   // Pueblos
-  { id: 'pitch', nm: 'Aldea Pitch', rMin: 138, rMax: 149, min: 3, max: 6 },
+  { id: 'pitch', nm: 'Aldea Pitch', rMin: 138, rMax: 149, min: 2, max: 5 },
   {
     id: 'storyboard',
     nm: 'Villa Storyboard',
     rMin: 105,
     rMax: 114,
-    min: 12,
-    max: 17,
+    min: 8,
+    max: 11,
   },
-  { id: 'rodaje', nm: 'Cantera Rodaje', rMin: 77, rMax: 86, min: 19, max: 24 },
+  { id: 'rodaje', nm: 'Cantera Rodaje', rMin: 77, rMax: 86, min: 14, max: 18 },
   {
     id: 'ultimatoma',
     nm: 'Feria Última Toma',
     rMin: 47,
     rMax: 56,
-    min: 26,
-    max: 31,
+    min: 22,
+    max: 26,
   },
-  { id: 'montaje', nm: 'Prados Montaje', rMin: 17, rMax: 26, min: 33, max: 38 },
+  { id: 'montaje', nm: 'Prados Montaje', rMin: 17, rMax: 26, min: 31, max: 36 },
 
   // Rutas
-  { id: 'route1', nm: 'Ruta 1', rMin: 115, rMax: 137, min: 7, max: 12 },
-  { id: 'route2', nm: 'Ruta 2', rMin: 87, rMax: 104, min: 17, max: 19 },
-  { id: 'route3', nm: 'Ruta 3', rMin: 57, rMax: 76, min: 24, max: 26 },
-  { id: 'route4', nm: 'Ruta 4', rMin: 27, rMax: 46, min: 31, max: 33 },
-  { id: 'route5', nm: 'Ruta 5', rMin: 2, rMax: 16, min: 38, max: 40 },
+  { id: 'route1', nm: 'Ruta 1', rMin: 115, rMax: 137, min: 4, max: 7 },
+  { id: 'route2', nm: 'Ruta 2', rMin: 87, rMax: 104, min: 10, max: 14 },
+  { id: 'route3', nm: 'Ruta 3', rMin: 57, rMax: 76, min: 18, max: 22 },
+  { id: 'route4', nm: 'Ruta 4', rMin: 27, rMax: 46, min: 26, max: 31 },
+  { id: 'route5', nm: 'Ruta 5', rMin: 2, rMax: 16, min: 36, max: 40 },
 ];
 
 // Rangos especiales para mapas interiores
 const SPECIAL_MAP_LEVELS = {
-  cave1: { id: 'cave1', nm: 'Cueva Volcánica', min: 17, max: 22 },
-  cave2: { id: 'cave2', nm: 'Cueva Cristalina', min: 31, max: 36 },
-  castle: { id: 'castle', nm: 'Castillo Difusión', min: 45, max: 45 },
-  tower: { id: 'tower', nm: 'Torre P.A.', min: 45, max: 55 },
+  cave1: { id: 'cave1', nm: 'Cueva Volcánica', min: 10, max: 16 },
+  cave2: { id: 'cave2', nm: 'Cueva Cristalina', min: 26, max: 34 },
+  castle: { id: 'castle', nm: 'Castillo Difusión', min: 40, max: 45 },
+  tower: { id: 'tower', nm: 'Torre P.A.', min: 45, max: 58 },
 };
 
 function clamp(n, min, max) {
@@ -12566,7 +12566,9 @@ function scaledLv(base = 5, npc = null) {
 
   // Antes del post-game: el nivel queda dentro del rango de la zona.
   // Así una criatura muy leveleada no arrastra a todos los rivales.
+  // Los líderes quedan cerca del techo de su zona para sentirse como prueba final.
   if (!postGame) {
+    if (npc?.isLeader) return clamp(Math.max(base, avg + 1, z.max - 1), z.min, z.max);
     return clamp(Math.max(base, avg), z.min, z.max);
   }
 
@@ -16191,8 +16193,78 @@ function aiExpert(moves, attacker, defender) {
   return scored[0].mv;
 }
 
-function pCre() {
-  return G.party[G.bs.pi];
+function calcCaptureChance(enemy) {
+  const hpRatio = enemy.hp / enemy.mHp;
+  const missingHp = 1 - hpRatio;
+  let chance = 0.18 + missingHp * 0.52;
+
+  // Estados alterados hacen que el Cristal Vínculo conecte mejor.
+  const st = battleState.enemyStatus;
+  if (st === 'sleep') chance += 0.18;
+  else if (st === 'paralyze' || st === 'burn') chance += 0.1;
+  else if (st === 'confuse') chance += 0.08;
+  else if (st === 'leech' || st === 'curse') chance += 0.05;
+
+  // Un rival muy por encima del promedio del equipo se resiste más.
+  const lvDiff = enemy.lv - avgPartyLv();
+  if (lvDiff > 0) chance -= Math.min(0.18, lvDiff * 0.015);
+  if (G.party.some((c) => c.id === enemy.id) || proa.some((c) => c.id === enemy.id)) chance += 0.04;
+
+  return clamp(chance, 0.08, 0.9);
+}
+
+function startCaptureAttempt() {
+  const b = G.bs;
+  G.crv--;
+  const chance = calcCaptureChance(b.en);
+  const roll = Math.random();
+  const success = roll < chance;
+  let shakes = 0;
+  if (success) shakes = 3;
+  else if (roll < chance + 0.18) shakes = 2;
+  else if (roll < chance + 0.38) shakes = 1;
+
+  b.cap = {
+    tm: 0,
+    chance,
+    success,
+    shakes,
+    done: false,
+    crystalY: 106,
+  };
+  b.msg = '¡Lanzaste un Cristal Vínculo!';
+  b.ph = 'captureAnim';
+  b.tm = 0;
+  sfx.cap();
+}
+
+function finishCaptureAttempt() {
+  const b = G.bs;
+  if (!b.cap) return;
+  if (b.cap.success) {
+    b.msg = `¡Capturaste a ${b.en.nm}!`;
+    const nc = new Cre(b.en.id, b.en.lv);
+    nc.hp = b.en.hp;
+    if (!captureCount[b.en.id]) captureCount[b.en.id] = 0;
+    captureCount[b.en.id]++;
+    if (G.party.length >= 6) {
+      proa.push(nc);
+      b.msg += ' ¡Enviado a Proa!';
+    } else {
+      G.party.push(nc);
+    }
+    checkAllCaught();
+    b.mq = [{ a: 'end' }];
+    sfx.cap();
+  } else {
+    const shakeMsg = b.cap.shakes === 0 ? 'ni se movió' : b.cap.shakes === 1 ? 'tembló una vez' : 'tembló dos veces';
+    b.msg = `¡${b.en.nm} escapó! El cristal ${shakeMsg}.`;
+    b.mq = [{ a: 'eT' }];
+    sfx.nef();
+  }
+  b.cap.done = true;
+  b.ph = 'msg';
+  b.tm = 0;
 }
 
 function uBattle() {
@@ -16244,6 +16316,14 @@ function uBattle() {
   if (!b.fought.includes(b.pi)) b.fought.push(b.pi);
 
   switch (b.ph) {
+    // === ANIMACIÓN DE CAPTURA ===
+    case 'captureAnim':
+      {
+        const total = 48 + (b.cap?.shakes || 0) * 28 + 28;
+        if (kp(' ') || kp('Enter') || b.tm > total) finishCaptureAttempt();
+      }
+      break;
+
     // === SELECCIÓN DE ACCIÓN ===
     case 'act':
       if (kp('ArrowUp')) {
@@ -16330,34 +16410,7 @@ function uBattle() {
               break;
             }
             if (G.crv > 0) {
-              G.crv--;
-              const hr = b.en.hp / b.en.mHp;
-              const ch = Math.min(0.8, 0.5 + (0.5 - hr) * 0.6);
-              if (Math.random() < ch) {
-                sfx.cap();
-                b.msg = `¡Capturaste a ${b.en.nm}!`;
-                const nc = new Cre(b.en.id, b.en.lv);
-                nc.hp = b.en.hp;
-                // Contar captura
-                if (!captureCount[b.en.id]) captureCount[b.en.id] = 0;
-                captureCount[b.en.id]++;
-                // Equipo lleno -> Proa
-                if (G.party.length >= 6) {
-                  proa.push(nc);
-                  b.msg += ` ¡Enviado a Proa!`;
-                } else {
-                  G.party.push(nc);
-                }
-                b.ph = 'msg';
-                b.tm = 0;
-                b.mq = [{ a: 'end' }];
-                checkAllCaught();
-              } else {
-                b.msg = `¡${b.en.nm} escapó del cristal!`;
-                b.ph = 'msg';
-                b.tm = 0;
-                b.mq = [{ a: 'eT' }];
-              }
+              startCaptureAttempt();
             } else {
               b.msg = '¡Sin Cristales Vínculo!';
               b.ph = 'msg';
@@ -17745,7 +17798,47 @@ function dBattle() {
 
   // === PANEL INFERIOR SEGÚN FASE ===
 
-  if (b.ph === 'act') {
+  if (b.ph === 'captureAnim') {
+    const cap = b.cap || { tm: b.tm, shakes: 0, chance: 0 };
+    const t = b.tm;
+    let cx0 = 424;
+    let cy0 = 137;
+    if (t < 28) {
+      const k = t / 28;
+      cx0 = 120 + (424 - 120) * k;
+      cy0 = 250 + (137 - 250) * k - Math.sin(k * Math.PI) * 90;
+    } else {
+      const st = t - 28;
+      const shakeIndex = Math.floor(st / 28);
+      if (shakeIndex < cap.shakes) cx0 += Math.sin(st * 0.65) * 8;
+    }
+
+    // Cristal Vínculo animado
+    cx.save();
+    cx.translate(cx0, cy0);
+    cx.globalAlpha = 0.25 + Math.sin(fr * 0.25) * 0.08;
+    cx.fillStyle = '#B868F8';
+    cx.beginPath();
+    cx.ellipse(0, 0, 22, 18, 0, 0, Math.PI * 2);
+    cx.fill();
+    cx.globalAlpha = 1;
+    px(-8, -13, 16, 26, '#6020B0');
+    px(-6, -11, 12, 22, '#8838E0');
+    px(-3, -8, 6, 16, '#B868F8');
+    px(-1, -5, 2, 8, '#F8E8FF');
+    px(-10, -2, 20, 4, '#D0A0F8');
+    cx.restore();
+
+    dDialogBox(10, 390, 620, 78);
+    cx.fillStyle = '#000';
+    cx.font = '8px "Press Start 2P"';
+    const shakeTxt = t < 28 ? 'El cristal vuela...' : `Sacudidas: ${Math.min(cap.shakes, Math.max(0, Math.floor((t - 28) / 28)))}/3`;
+    cx.fillText('¡Cristal Vínculo!', 28, 414);
+    cx.fillText(shakeTxt, 28, 434);
+    cx.fillStyle = '#606060';
+    cx.font = '6px "Press Start 2P"';
+    cx.fillText(`Probabilidad estimada: ${Math.round((cap.chance || 0) * 100)}%`, 28, 454);
+  } else if (b.ph === 'act') {
     // Menú de acciones
     dBox(10, 370, 620, 100);
     cx.fillStyle = '#ffd700';
