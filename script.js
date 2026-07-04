@@ -4999,6 +4999,83 @@ function dNPC(x, y, id, f) {
       px(x + 14, by + 7, 4, 1, '#D0A088');
       break;
 
+    case 'oscar': // Explorador maduro, delgado, estatura promedio
+      px(x + 10, by + 26, 4, 4, '#5A3A1A');
+      px(x + 18, by + 26, 4, 4, '#5A3A1A');
+      px(x + 10, by + 21, 4, 6, '#6A7880');
+      px(x + 18, by + 21, 4, 6, '#6A7880');
+      px(x + 7, by + 10, 18, 12, '#8A6A40');
+      px(x + 9, by + 11, 14, 10, '#A08050');
+      px(x + 11, by + 12, 10, 8, '#B89060');
+      px(x + 4, by + 12, 4, 8, SK.b);
+      px(x + 24, by + 12, 4, 8, SK.b);
+      px(x + 26, by + 8, 2, 22, '#6A4828'); // bastón de explorador
+      px(x + 13, by + 8, 6, 3, SK.b);
+      px(x + 9, by + 0, 14, 10, SK.b);
+      px(x + 10, by + 1, 12, 8, SK.a);
+      px(x + 8, by - 4, 16, 5, '#7A5A30');
+      px(x + 6, by - 2, 20, 3, '#A08040'); // sombrero ala
+      px(x + 10, by - 5, 12, 3, '#907038');
+      px(x + 12, by + 4, 3, 3, '#fff');
+      px(x + 18, by + 4, 3, 3, '#fff');
+      px(x + 13, by + 5, 2, 2, '#302010');
+      px(x + 19, by + 5, 2, 2, '#302010');
+      px(x + 14, by + 8, 4, 1, '#B08060');
+      break;
+
+    case 'piero': // Explorador con cabello rubio teñido por apuesta
+      px(x + 9, by + 26, 5, 4, '#5A3818');
+      px(x + 18, by + 26, 5, 4, '#5A3818');
+      px(x + 9, by + 21, 5, 6, '#4A5F70');
+      px(x + 18, by + 21, 5, 6, '#4A5F70');
+      px(x + 5, by + 10, 22, 12, '#406850');
+      px(x + 7, by + 11, 18, 10, '#508060');
+      px(x + 9, by + 12, 14, 8, '#68A070');
+      px(x + 3, by + 12, 4, 8, SK.b);
+      px(x + 25, by + 12, 4, 8, SK.b);
+      px(x + 22, by + 13, 5, 8, '#7A5A38'); // morral
+      px(x + 13, by + 8, 6, 3, SK.b);
+      px(x + 9, by + 0, 14, 10, SK.b);
+      px(x + 10, by + 1, 12, 8, SK.a);
+      px(x + 7, by - 3, 18, 6, '#E8D050');
+      px(x + 8, by - 4, 16, 3, '#F8E870');
+      px(x + 7, by + 1, 4, 4, '#D8B840');
+      px(x + 21, by + 1, 4, 4, '#D8B840');
+      px(x + 12, by + 4, 3, 3, '#fff');
+      px(x + 18, by + 4, 3, 3, '#fff');
+      px(x + 13, by + 5, 2, 2, '#2A1810');
+      px(x + 19, by + 5, 2, 2, '#2A1810');
+      px(x + 13, by + 8, 6, 1, '#C08868');
+      break;
+
+    case 'chrys': // Productora, cabello negro largo, blanco arriba azul abajo
+      px(x + 10, by + 26, 4, 4, '#3A2A18');
+      px(x + 18, by + 26, 4, 4, '#3A2A18');
+      px(x + 8, by + 18, 16, 9, '#2858A0');
+      px(x + 7, by + 20, 18, 7, '#3868B0');
+      px(x + 5, by + 10, 22, 9, '#E8E8E8');
+      px(x + 7, by + 11, 18, 7, '#FFFFFF');
+      px(x + 10, by + 12, 12, 5, '#F8F8F8');
+      px(x + 3, by + 12, 4, 8, SK.a);
+      px(x + 25, by + 12, 4, 8, SK.a);
+      px(x + 24, by + 10, 5, 7, '#6A4A28'); // libreta de producción
+      px(x + 25, by + 11, 3, 5, '#F0E0A0');
+      px(x + 13, by + 8, 6, 3, SK.a);
+      px(x + 9, by + 0, 14, 10, SK.a);
+      px(x + 10, by + 1, 12, 8, SK.d);
+      px(x + 7, by - 2, 18, 5, '#111');
+      px(x + 6, by + 1, 4, 15, '#111');
+      px(x + 22, by + 1, 4, 15, '#111');
+      px(x + 5, by + 12, 3, 8, '#080808');
+      px(x + 24, by + 12, 3, 8, '#080808');
+      px(x + 8, by - 3, 16, 2, '#282828');
+      px(x + 11, by + 4, 4, 4, '#fff');
+      px(x + 18, by + 4, 4, 4, '#fff');
+      px(x + 13, by + 5, 2, 2, '#201010');
+      px(x + 20, by + 5, 2, 2, '#201010');
+      px(x + 13, by + 8, 6, 2, '#E08888');
+      break;
+
     // ==========================================
     // CUEVA
     // ==========================================
@@ -6095,6 +6172,17 @@ function dTrainerBig(x, y, id, f) {
       // Lágrima
       px(x + 42, by + 8, 2, 6, '#50A8F0');
       px(x + 28, by + 14, 8, 2, '#C09888');
+      break;
+
+    case 'oscar':
+    case 'piero':
+    case 'chrys':
+      // Versiones grandes reutilizando el sprite de mapa a escala limpia.
+      cx.save();
+      cx.translate(x, y + 6);
+      cx.scale(2, 2);
+      dNPC(0, 0, id, f);
+      cx.restore();
       break;
 
     case 'oloman': // Mohawk rojo, chaqueta cuero, estoperoles, piercings
@@ -10880,7 +10968,7 @@ const npcs = [
       ],
 
       [
-        'A veces pienso en el norte...',
+        'A veces pienso en los pueblos del norte...',
         'Hace mucho que no veo',
         'ciertas caras familiares.',
         'a veces me pregunto... ¿estarán bien?',
@@ -10889,7 +10977,7 @@ const npcs = [
       [
         '¿Sabes qué es lo peor?',
         'Que hay dos personas allá',
-        'en el norte... que solían',
+        'en esos pueblos... que solían',
         'hacerme reír tanto.',
         'Ahora solo me queda el techo.',
       ],
@@ -10917,7 +11005,7 @@ const npcs = [
       ],
 
       [
-        'Si vas al norte...',
+        'Si subes hacia el norte...',
         'Diles que sigo aquí.',
         'Viva, amargada, pero viva.',
         'Y con el techo goteando.',
@@ -11254,7 +11342,7 @@ const npcs = [
       ],
       [
         'Mi hermano Alejandro está',
-        'en el norte esperando.',
+        'mucho más al norte esperando.',
         'Tiene el pelo largo, no falla.',
       ],
       [
@@ -11396,7 +11484,7 @@ const npcs = [
       [
         'Extraño a dos personas...',
         'A mi novia, que está lejos.',
-        'Y a alguien del sur.',
+        'Y a alguien del sur, en Aldea Pitch.',
       ],
       [
         '¡Explora el mapa entero!',
@@ -11413,7 +11501,7 @@ const npcs = [
       ],
     ],
     postDlg: [
-      'Dicen que alguien en el sur',
+      'Dicen que alguien al sur, en Aldea Pitch,',
       'está atada a algo pesado...',
       'No sé por qué, pero',
       'siento que debería ir.',
@@ -11445,12 +11533,12 @@ const npcs = [
       [
         'Tamara adora dibujar',
         'y Andrea quiere ser profe.',
-        'Echo de menos el sur...',
+        'Echo de menos el sur del reino...',
         'Allá dejé algo importante.',
       ],
     ],
     postDlg: [
-      'El sur sigue lejos...',
+      'El sur del reino sigue lejos...',
       'Pero las estrellas son',
       'las mismas en todas partes.',
       'Eso me consuela un poco.',
@@ -11578,7 +11666,7 @@ const npcs = [
       [
         '¡Fútbol medieval! ¡GOOOL!',
         '¿Has visto a mi amigo Piero?',
-        'Está por la Ruta 3.',
+        'Está más al norte, por la Ruta 3.',
       ],
       [
         'Patear pelotas de cuero',
@@ -11594,7 +11682,7 @@ const npcs = [
     ],
     postDlg: [
       '¡Encontré a Mr. Olo-Man!',
-      '¡Está en una cueva!',
+      '¡Está en la Cueva Volcánica!',
       '¡Sigue siendo raro!',
       '¡Pero es buen tipo!',
     ],
@@ -11826,7 +11914,7 @@ const npcs = [
     y: 19,
     tp: 'davido',
     nm: 'David-O',
-    dlg: [['¡Última parada!', '¡Aprovecha antes del castillo!']],
+    dlg: [['¡Última parada!', '¡Aprovecha antes de subir al castillo!']],
     shop: true,
   },
 ]; // Fin array npcs
@@ -13003,7 +13091,7 @@ function getNPCBattleIntro(npc) {
 
 // === MUNDO PRINCIPAL ===
 function uWorld() {
-  // Guardias de ruta: bloquean la salida norte si falta el diploma del líder.
+  // Proas de ruta: bloquean la salida norte si falta el diploma del líder.
   if (!G.pl.stepTarget) {
     let dx = 0, dy = 0;
     if (kh('ArrowUp')) dy = -1;
@@ -13697,8 +13785,8 @@ function checkEdison() {
     G.talkedTo['metEdison'] = true;
   }
 
-  // Edison es el segundo paso de la llave:
-  // requiere que Gabriela ya haya recordado su tierra.
+  // Edison es el segundo paso geográfico (P2):
+  // requiere que Gabriela (P1 post-game) ya haya recordado su tierra.
   if (towerKey.gabriela && !towerKey.edison && !towerOpen) {
     towerKey.edison = true;
     aN('Edison afina la llave con música...');
@@ -13734,7 +13822,7 @@ function checkForeignKey(npc) {
 
   const flag = npc.flag;
 
-  // 1) Gabriela inicia la cadena
+  // 1) Gabriela inicia la cadena desde el sur (P1 post-game)
   if (flag === 'metGab' && !towerKey.gabriela) {
     towerKey.gabriela = true;
     G.scr = 'dialog';
@@ -13752,7 +13840,7 @@ function checkForeignKey(npc) {
     return true;
   }
 
-  // 3) Roberto va después de Edison
+  // 3) Roberto va después de Edison (P4)
   if (flag === 'metRob' && towerKey.edison && !towerKey.roberto) {
     towerKey.roberto = true;
     G.scr = 'dialog';
@@ -13770,7 +13858,7 @@ function checkForeignKey(npc) {
     return true;
   }
 
-  // 4) Ximena va después de Roberto
+  // 4) Ximena cierra la cadena al norte (P5)
   if (flag === 'metXim' && towerKey.roberto && !towerKey.ximena) {
     towerKey.ximena = true;
     G.scr = 'dialog';
@@ -15152,13 +15240,14 @@ function getStars() {
 }
 
 function getTowerProgress() {
+  // Orden geográfico Sur→Norte: Gabriela (P1) → Edison (P2) → Roberto (P4) → Ximena (P5)
   const steps = [];
+  if (towerKey.gabriela) steps.push('Gabriela ✓');
+  else steps.push('Gabriela ✗');
   if (towerKey.edison) steps.push('Edison ✓');
   else steps.push('Edison ✗');
   if (towerKey.roberto) steps.push('Roberto ✓');
   else steps.push('Roberto ✗');
-  if (towerKey.gabriela) steps.push('Gabriela ✓');
-  else steps.push('Gabriela ✗');
   if (towerKey.ximena) steps.push('Ximena ✓');
   else steps.push('Ximena ✗');
   return steps.join(' → ');
