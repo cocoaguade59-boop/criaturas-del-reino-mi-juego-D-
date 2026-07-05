@@ -2989,7 +2989,10 @@ const G = {
   nots: [],
   tFr: 0,
   titleSel: 0,
+  titleHornPlayed: false,
   hasSave: false,
+  showDex: false,
+  dexSel: 0,
   sSel: 0,
   bs: null,
   ds: null,
@@ -10992,7 +10995,8 @@ const npcs = [
     ],
     postDlg: ['¡Tu ritmo es imparable!', 'Sigue corriendo hacia el éxito!'],
     flag: 'metAlex',
-    battle: true,
+    tutorial: true,
+    battle: false,
     exterior: true,
     battleIntro: ['¡Velocidad es poder!', '¡A pelear!'],
     fixedTeam: [{ id: 'ivygoat' }, { id: 'pinzardo' }],
@@ -11028,7 +11032,8 @@ const npcs = [
       'Buen viaje, héroe.',
     ],
     flag: 'metLuis',
-    battle: true,
+    tutorial: true,
+    battle: false,
     exterior: true,
     battleIntro: ['El río de la vida...', 'también tiene batallas.'],
     fixedTeam: [{ id: 'raizan' }, { id: 'pixie' }],
@@ -12602,6 +12607,14 @@ function scaledLv(base = 5, npc = null) {
 // ============================================================
 
 // === PANTALLA DE TÍTULO ===
+function playTitleHorn() {
+  if (!sfx.on || !sfx.c) return;
+  sfx.n(392, 0.22, 'square', 0.14);
+  setTimeout(() => sfx.n(523, 0.26, 'square', 0.16), 120);
+  setTimeout(() => sfx.n(659, 0.32, 'square', 0.18), 260);
+  setTimeout(() => sfx.n(784, 0.45, 'triangle', 0.16), 420);
+}
+
 function startNewGameFlow() {
   clearAllGameSaves();
   G.hasSave = false;
@@ -12612,6 +12625,10 @@ function startNewGameFlow() {
 
 function uTitle() {
   G.tFr++;
+  if (G.tFr > 185 && !G.titleHornPlayed) {
+    playTitleHorn();
+    G.titleHornPlayed = true;
+  }
   G.hasSave = hasSaveGame();
   const optCount = G.hasSave ? 2 : 1;
   if (kp('ArrowUp') || kp('ArrowLeft')) {
@@ -12643,7 +12660,76 @@ function uTitle() {
 
 function dTitle() {
   const f = G.tFr;
-  // Fondo con gradiente pixel-art nocturno
+  const phase = f < 180 ? 'sky' : f < 240 ? 'black' : 'carousel';
+
+  if (phase === 'sky') {
+    // Animación inicial: cielo bonito, nubes suaves y profundidad pixel-art.
+    const gr = cx.createLinearGradient(0, 0, 0, 480);
+    gr.addColorStop(0, '#79C8FF');
+    gr.addColorStop(0.55, '#BEE8FF');
+    gr.addColorStop(1, '#E8F8D8');
+    cx.fillStyle = gr;
+    cx.fillRect(0, 0, 640, 480);
+
+    // Sol suave
+    cx.globalAlpha = 0.7;
+    cx.fillStyle = '#FFF0A0';
+    cx.beginPath();
+    cx.ellipse(530, 82, 42, 42, 0, 0, Math.PI * 2);
+    cx.fill();
+    cx.globalAlpha = 0.16;
+    cx.beginPath();
+    cx.ellipse(530, 82, 75, 75, 0, 0, Math.PI * 2);
+    cx.fill();
+    cx.globalAlpha = 1;
+
+    // Nubes pixeladas con pseudo 3D
+    for (let i = 0; i < 7; i++) {
+      const nx = (i * 130 - f * (0.35 + i * 0.03)) % 780 - 80;
+      const ny = 45 + (i % 3) * 48;
+      cx.fillStyle = 'rgba(120,160,210,.20)';
+      cx.fillRect(nx + 8, ny + 14, 92, 18);
+      cx.fillStyle = '#FFFFFF';
+      cx.fillRect(nx, ny + 12, 96, 16);
+      cx.fillRect(nx + 18, ny + 4, 28, 18);
+      cx.fillRect(nx + 46, ny, 34, 22);
+      cx.fillStyle = '#D8ECFF';
+      cx.fillRect(nx + 4, ny + 24, 86, 4);
+    }
+
+    // Campo 3D suavizado
+    cx.fillStyle = '#63B850';
+    cx.fillRect(0, 292, 640, 188);
+    cx.fillStyle = '#4C9C40';
+    for (let y = 310; y < 480; y += 18) cx.fillRect(0, y, 640, 2);
+    cx.fillStyle = '#C8B078';
+    cx.beginPath();
+    cx.moveTo(280, 480); cx.lineTo(360, 480); cx.lineTo(332, 292); cx.lineTo(308, 292); cx.closePath(); cx.fill();
+
+    cx.textAlign = 'center';
+    cx.fillStyle = '#1A2A4A';
+    cx.font = '12px "Press Start 2P"';
+    cx.fillText('Un nuevo día despierta en el Reino...', 320, 415);
+    cx.textAlign = 'left';
+    return;
+  }
+
+  if (phase === 'black') {
+    cx.fillStyle = '#000';
+    cx.fillRect(0, 0, 640, 480);
+    const pulse = Math.sin((f - 180) * 0.25) * 0.5 + 0.5;
+    cx.globalAlpha = pulse;
+    cx.fillStyle = '#FFD870';
+    cx.font = '18px "Press Start 2P"';
+    cx.textAlign = 'center';
+    cx.fillText('¡TA-RA-RAAA!', 320, 240);
+    cx.globalAlpha = 1;
+    cx.textAlign = 'left';
+    return;
+  }
+
+  // Carrusel principal: criaturas desfilan de derecha a izquierda y se repite.
+  const cf = f - 240;
   const sky = cx.createLinearGradient(0, 0, 0, 480);
   sky.addColorStop(0, '#07071C');
   sky.addColorStop(0.45, '#111A3A');
@@ -12651,107 +12737,66 @@ function dTitle() {
   cx.fillStyle = sky;
   cx.fillRect(0, 0, 640, 480);
 
-  // Estrellas y luciérnagas
-  for (let i = 0; i < 70; i++) {
-    const tw = Math.sin(f * 0.035 + i * 0.7) * 0.45 + 0.55;
-    cx.globalAlpha = tw;
+  for (let i = 0; i < 80; i++) {
+    cx.globalAlpha = Math.sin(f * 0.035 + i * 0.7) * 0.45 + 0.55;
     cx.fillStyle = i % 9 === 0 ? '#FFE8A0' : '#F8F8FF';
     cx.fillRect((i * 137 + f * 0.18) % 640, (i * 83) % 250, i % 11 === 0 ? 2 : 1, i % 11 === 0 ? 2 : 1);
   }
   cx.globalAlpha = 1;
 
-  // Luna detrás del castillo
-  cx.globalAlpha = 0.9;
+  // Luna, castillo y camino
+  cx.globalAlpha = 0.85;
   cx.fillStyle = '#F8E8A0';
-  cx.beginPath();
-  cx.ellipse(496, 86, 38, 38, 0, 0, Math.PI * 2);
-  cx.fill();
-  cx.globalAlpha = 0.18;
-  cx.fillStyle = '#FFF8C8';
-  cx.beginPath();
-  cx.ellipse(496, 86, 58, 58, 0, 0, Math.PI * 2);
-  cx.fill();
+  cx.beginPath(); cx.ellipse(500, 82, 36, 36, 0, 0, Math.PI * 2); cx.fill();
   cx.globalAlpha = 1;
-
-  // Montañas por capas
   cx.fillStyle = '#10182E';
   for (let i = 0; i < 640; i += 2) cx.fillRect(i, Math.sin(i * 0.01) * 28 + 245, 2, 235);
-  cx.fillStyle = '#182545';
-  for (let i = 0; i < 640; i += 2) cx.fillRect(i, Math.sin(i * 0.014 + 2) * 24 + 270, 2, 210);
+  px(452, 154, 88, 100, '#0A0A18'); px(432, 174, 28, 80, '#0A0A18'); px(532, 174, 28, 80, '#0A0A18'); px(488, 108, 18, 56, '#0A0A18');
+  px(466, 145, 10, 10, '#E8C830'); px(516, 145, 10, 10, '#E8C830'); px(492, 130, 10, 10, '#E8C830');
+  cx.fillStyle = '#204A23'; cx.fillRect(0, 310, 640, 170);
+  cx.fillStyle = '#B8A070'; cx.beginPath(); cx.moveTo(286, 480); cx.lineTo(354, 480); cx.lineTo(334, 310); cx.lineTo(306, 310); cx.closePath(); cx.fill();
 
-  // Castillo lejano
-  cx.fillStyle = '#0A0A18';
-  px(452, 154, 88, 100, '#0A0A18');
-  px(432, 174, 28, 80, '#0A0A18');
-  px(532, 174, 28, 80, '#0A0A18');
-  px(462, 126, 18, 40, '#0A0A18');
-  px(512, 126, 18, 40, '#0A0A18');
-  px(488, 108, 18, 56, '#0A0A18');
-  px(466, 145, 10, 10, '#E8C830');
-  px(516, 145, 10, 10, '#E8C830');
-  px(492, 130, 10, 10, '#E8C830');
-  px(488, 222, 16, 32, '#1A0E16');
-
-  // Suelo y camino hacia el reino
-  cx.fillStyle = '#204A23';
-  cx.fillRect(0, 310, 640, 170);
-  cx.fillStyle = '#2E6A2E';
-  cx.fillRect(0, 310, 640, 5);
-  cx.fillStyle = '#B8A070';
-  cx.beginPath();
-  cx.moveTo(286, 480);
-  cx.lineTo(354, 480);
-  cx.lineTo(334, 310);
-  cx.lineTo(306, 310);
-  cx.closePath();
-  cx.fill();
-  cx.fillStyle = 'rgba(255,255,255,.12)';
-  for (let y = 330; y < 480; y += 24) cx.fillRect(310 - (y - 330) * 0.07, y, 20 + (y - 330) * 0.14, 2);
-
-  // Criaturas destacadas, solo iniciales al frente
-  dCre(72, 324 + Math.sin(f * 0.05) * 2, 'flameye', 5, f);
-  dCre(292, 326 + Math.sin(f * 0.06 + 2) * 2, 'axolotl', 5, f);
-  dCre(512, 324 + Math.sin(f * 0.055 + 4) * 2, 'ivygoat', 5, f);
-
-  // Placa principal del logo
+  // Logo
   cx.textAlign = 'center';
-  dBoxMenu(74, 28, 492, 142, '');
-  cx.fillStyle = '#000';
-  cx.font = '18px "Press Start 2P"';
-  cx.fillText('CRIATURAS DEL', 323, 82);
-  cx.font = '28px "Press Start 2P"';
-  cx.fillText('REINO', 323, 122);
-  cx.fillStyle = '#FFE070';
-  cx.font = '18px "Press Start 2P"';
-  cx.fillText('CRIATURAS DEL', 320, 79);
-  cx.font = '28px "Press Start 2P"';
-  cx.fillText('REINO', 320, 119);
-  cx.fillStyle = '#A0B0C0';
-  cx.font = '7px "Press Start 2P"';
-  cx.fillText('Aventura de vínculos, diplomas y secretos', 320, 148);
+  dBoxMenu(74, 26, 492, 140, '');
+  cx.fillStyle = '#000'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 323, 82); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 323, 122);
+  cx.fillStyle = '#FFE070'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 320, 79); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 320, 119);
+  cx.fillStyle = '#A0B0C0'; cx.font = '7px "Press Start 2P"'; cx.fillText('Desfile de criaturas del reino', 320, 148);
+
+  const ids = Object.keys(CDB);
+  const spacing = 92;
+  const totalW = ids.length * spacing;
+  const base = 690 - (cf * 0.55 % (totalW + 760));
+  ids.forEach((id, i) => {
+    const x = base + i * spacing;
+    if (x < -80 || x > 700) return;
+    const y = 258 + Math.sin((cf + i * 18) * 0.04) * 6;
+    dShadow(x + 22, y + 45, 18, 5);
+    cx.save();
+    cx.translate(x, y);
+    cx.scale(1.35, 1.35);
+    dCre(0, 0, id, 5, f);
+    cx.restore();
+    cx.fillStyle = '#E8E8F0';
+    cx.font = '5px "Press Start 2P"';
+    cx.fillText(CDB[id].nm, x + 24, y + 64);
+  });
 
   // Menú de entrada
-  const boxY = G.hasSave ? 358 : 382;
-  dBoxMenu(122, boxY - 26, 396, G.hasSave ? 88 : 64, G.hasSave ? 'INICIO' : 'NUEVA AVENTURA');
+  dBoxMenu(122, 368, 396, G.hasSave ? 86 : 62, G.hasSave ? 'INICIO' : 'NUEVA AVENTURA');
   if (G.hasSave) {
     const opts = ['Continuar partida guardada', 'Nueva partida desde Aldea Pitch'];
     opts.forEach((o, i) => {
       cx.fillStyle = G.titleSel === i ? '#ffd700' : '#D8D8E8';
       cx.font = '8px "Press Start 2P"';
-      cx.fillText(`${G.titleSel === i ? '▶ ' : '  '}${o}`, 320, boxY + i * 24);
+      cx.fillText(`${G.titleSel === i ? '▶ ' : '  '}${o}`, 320, 396 + i * 24);
     });
-    cx.fillStyle = '#80889A';
-    cx.font = '5px "Press Start 2P"';
-    cx.fillText('Nueva partida borrará el guardado anterior con confirmación', 320, boxY + 48);
   } else {
     cx.fillStyle = Math.sin(f * 0.1) > 0 ? '#fff' : '#A0B0C0';
     cx.font = '9px "Press Start 2P"';
-    cx.fillText('ESPACIO para comenzar', 320, boxY + 8);
+    cx.fillText('ESPACIO para comenzar', 320, 405);
   }
-
-  cx.fillStyle = '#606878';
-  cx.font = '6px "Press Start 2P"';
-  cx.fillText('Flechas = elegir | SPACE = confirmar | X = menú en partida', 320, 460);
+  cx.fillStyle = '#606878'; cx.font = '6px "Press Start 2P"'; cx.fillText('Flechas = elegir | SPACE = confirmar', 320, 460);
   cx.textAlign = 'left';
 }
 
@@ -15018,13 +15063,17 @@ function uMenu() {
     uMissions();
     return;
   }
+  if (G.showDex) {
+    uDex();
+    return;
+  }
 
   if (kp('ArrowUp') || kp('ArrowLeft')) {
-    G.ms.s = (G.ms.s + 7) % 8;
+    G.ms.s = (G.ms.s + 8) % 9;
     sfx.sel();
   }
   if (kp('ArrowDown') || kp('ArrowRight')) {
-    G.ms.s = (G.ms.s + 1) % 8;
+    G.ms.s = (G.ms.s + 1) % 9;
     sfx.sel();
   }
   if (kp(' ') || kp('Enter')) {
@@ -15061,12 +15110,16 @@ function uMenu() {
         G.showMissions = true;
         break;
       case 5:
-        saveGame();
+        G.showDex = true;
+        G.dexSel = 0;
         break;
       case 6:
-        G.scr = 'world';
+        saveGame();
         break;
       case 7:
+        G.scr = 'world';
+        break;
+      case 8:
         G.scr = 'confirmReset';
         G.resetSel = 0;
         break;
@@ -15092,28 +15145,33 @@ function dMenu() {
     dMissions();
     return;
   }
+  if (G.showDex) {
+    dDex();
+    return;
+  }
 
-  dBoxMenu(16, 16, 175, 290, 'MENÚ');
+  dBoxMenu(16, 16, 190, 320, 'MENÚ');
   const opts = [
     'Poción',
     'Revivir',
     'Equipo',
     'Mapa',
     'Misiones',
+    'Criaturario',
     'Guardar',
     'Volver',
     'Reiniciar toda la partida',
   ];
   opts.forEach((o, i) => {
     cx.fillStyle = G.ms.s === i ? '#ffd700' : '#fff';
-    cx.font = i === 7 ? '6px "Press Start 2P"' : '8px "Press Start 2P"';
+    cx.font = i === 8 ? '6px "Press Start 2P"' : '8px "Press Start 2P"';
     cx.fillText(`${G.ms.s === i ? '▶ ' : '  '}${o}`, 34, 48 + i * 28);
   });
   cx.fillStyle = '#aaa';
   cx.font = '6px "Press Start 2P"';
-  cx.fillText(`🧪${G.pot} 💎${G.crv} ❤${G.rev} 💰${G.gold}`, 34, 280);
+  cx.fillText(`🧪${G.pot} 💎${G.crv} ❤${G.rev} 💰${G.gold}`, 34, 314);
 
-  dBoxMenu(210, 16, 420, 450, 'EQUIPO');
+  dBoxMenu(220, 16, 410, 450, 'EQUIPO');
   if (G.party.length === 0) {
     cx.fillStyle = '#888';
     cx.font = '8px "Press Start 2P"';
@@ -15260,6 +15318,8 @@ function resetGame(startIntro = false) {
   G.prevPos = null;
   G.showMap = false;
   G.proaOpen = false;
+  G.showDex = false;
+  G.dexSel = 0;
 
   postGame = false;
   towerOpen = false;
@@ -15328,6 +15388,75 @@ function resetGame(startIntro = false) {
     G.scr = 'intro';
     G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
   }
+}
+
+// === CRIATURARIO / CRIATURA-DEX ===
+function dexIds() {
+  return Object.keys(CDB);
+}
+function hasCapturedSpecies(id) {
+  return (captureCount[id] || 0) > 0 || G.party.some((c) => c.id === id) || proa.some((c) => c.id === id);
+}
+function uDex() {
+  const ids = dexIds();
+  const cols = 5;
+  if (kp('ArrowLeft')) { G.dexSel = (G.dexSel + ids.length - 1) % ids.length; sfx.sel(); }
+  if (kp('ArrowRight')) { G.dexSel = (G.dexSel + 1) % ids.length; sfx.sel(); }
+  if (kp('ArrowUp')) { G.dexSel = (G.dexSel + ids.length - cols) % ids.length; sfx.sel(); }
+  if (kp('ArrowDown')) { G.dexSel = (G.dexSel + cols) % ids.length; sfx.sel(); }
+  if (kp('x') || kp('Escape') || kp(' ') || kp('Enter')) G.showDex = false;
+}
+function dDex() {
+  dBoxMenu(28, 12, 584, 456, 'CRIATURARIO');
+  const ids = dexIds();
+  const cols = 5, cellW = 108, cellH = 58;
+  const startX = 48, startY = 50;
+  const pageSize = 30;
+  const page = Math.floor(G.dexSel / pageSize);
+  const start = page * pageSize;
+  const shown = ids.slice(start, start + pageSize);
+  const captured = ids.filter((id) => hasCapturedSpecies(id)).length;
+  cx.fillStyle = '#ffd700';
+  cx.font = '7px "Press Start 2P"';
+  cx.fillText(`Capturadas: ${captured}/${ids.length}`, 48, 36);
+  shown.forEach((id, idx) => {
+    const realIdx = start + idx;
+    const col = idx % cols, row = Math.floor(idx / cols);
+    const x = startX + col * cellW, y = startY + row * cellH;
+    const sel = G.dexSel === realIdx;
+    const caught = hasCapturedSpecies(id);
+    cx.fillStyle = sel ? 'rgba(255,215,0,.12)' : 'rgba(255,255,255,.03)';
+    cx.fillRect(x - 4, y - 4, cellW - 8, cellH - 6);
+    cx.strokeStyle = sel ? '#ffd700' : caught ? tCol(CDB[id].tp) : '#303040';
+    cx.lineWidth = sel ? 2 : 1;
+    cx.strokeRect(x - 4, y - 4, cellW - 8, cellH - 6);
+    cx.save();
+    if (!caught) cx.filter = 'brightness(0)';
+    dCre(x + 20, y + 2, id, 5, fr);
+    cx.restore();
+    cx.fillStyle = caught ? '#fff' : '#606070';
+    cx.font = caught ? '5px "Press Start 2P"' : '4px "Press Start 2P"';
+    cx.textAlign = 'center';
+    cx.fillText(caught ? CDB[id].nm : '?????', x + 48, y + 45);
+    cx.textAlign = 'left';
+  });
+  const cur = ids[G.dexSel];
+  if (cur) {
+    const caught = hasCapturedSpecies(cur);
+    cx.fillStyle = '#0a0a2e';
+    cx.fillRect(36, 410, 568, 42);
+    cx.strokeStyle = caught ? tCol(CDB[cur].tp) : '#555';
+    cx.strokeRect(36, 410, 568, 42);
+    cx.fillStyle = caught ? tCol(CDB[cur].tp) : '#888';
+    cx.font = '7px "Press Start 2P"';
+    cx.fillText(caught ? `${tEmo(CDB[cur].tp)} ${CDB[cur].nm} - ${tNam(CDB[cur].tp)}` : 'Silueta desconocida', 50, 428);
+    cx.fillStyle = '#aaa';
+    cx.font = '5px "Press Start 2P"';
+    cx.fillText(caught ? (CDB[cur].desc || 'Sin datos.') : 'Captura esta criatura para revelar sus datos.', 50, 444);
+  }
+  cx.fillStyle = '#606878';
+  cx.font = '5px "Press Start 2P"';
+  cx.fillText('Flechas: navegar | SPACE/X: volver', 360, 36);
 }
 
 // === PANTALLA DE MISIONES ===
