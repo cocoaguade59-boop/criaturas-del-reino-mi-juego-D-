@@ -7239,86 +7239,105 @@ function dCre(x, y, id, lv, f) {
     // EVOLUCIONES AGUA 💧
     // ==========================================
 
-    case 'ajolord': // Ajolote adolescente serio
-      px(x + 4, by + 18, 24 + sz, 14 + sz, '#2060B0');
-      px(x + 6, by + 20, 20 + sz, 10 + sz, '#2878C8');
-      px(x + 8, by + 22, 16 + sz, 6, '#3090D8');
-      px(x + 4, by + 4, 24 + sz, 16, '#2060B0');
-      px(x + 6, by + 6, 20 + sz, 12, '#2878C8');
-      px(x + 8, by + 8, 16 + sz, 8, '#3090D8');
-      px(x - 2, by + 2, 6, 4, '#F060A0');
-      px(x - 4, by + 6, 6, 4, '#F060A0');
-      px(x - 3, by + 10, 6, 4, '#F060A0');
-      px(x + sz + 28, by + 2, 6, 4, '#F060A0');
-      px(x + sz + 30, by + 6, 6, 4, '#F060A0');
-      px(x + sz + 29, by + 10, 6, 4, '#F060A0');
-      px(x + 8, by + 8, 5, 5, '#fff');
-      px(x + sz + 18, by + 8, 5, 5, '#fff');
-      px(x + 10, by + 10, 3, 3, '#0840A0');
-      px(x + sz + 20, by + 10, 3, 3, '#0840A0');
-      px(x + 10, by + 10, 1, 1, '#fff');
-      px(x + sz + 20, by + 10, 1, 1, '#fff');
-      px(x + 8, by + 7, 4, 1, '#1850A0');
-      px(x + sz + 19, by + 7, 4, 1, '#1850A0');
-      px(x + 14, by + 16, 4, 1, '#1858A0');
-      px(x - 4, by + 26, 8, 4, '#2060B0');
-      px(x - 8, by + 24, 6, 4, '#2878C8');
-      px(x - 12, by + 22, 5, 4, '#3090D8');
-      px(x + 12, by + 16, 8, 3, '#1850A0');
-      px(x + 6, by + 30 + sz, 5, 4, '#2060B0');
-      px(x + sz + 20, by + 30 + sz, 5, 4, '#2060B0');
+    case 'ajolord': // Ajolord: tamaño actual, brazos largos de adolescente
+      {
+        const arm = Math.sin(f * 0.12) * 2;
+        // cuerpo tamaño clásico/intermedio
+        px(x + 4, by + 18, 24 + sz, 14 + sz, '#2060B0');
+        px(x + 6, by + 20, 20 + sz, 10 + sz, '#2878C8');
+        px(x + 8, by + 22, 16 + sz, 6, '#3090D8');
+        // brazos más largos y visibles
+        px(x - 4, by + 22 + arm, 10, 4, '#2060B0');
+        px(x - 10, by + 21 + arm, 7, 4, '#2878C8');
+        px(x - 14, by + 20 + arm, 5, 3, '#3090D8');
+        px(x + sz + 26, by + 22 - arm, 10, 4, '#2060B0');
+        px(x + sz + 35, by + 21 - arm, 7, 4, '#2878C8');
+        px(x + sz + 41, by + 20 - arm, 5, 3, '#3090D8');
+        // cabeza seria
+        px(x + 4, by + 4, 24 + sz, 16, '#2060B0');
+        px(x + 6, by + 6, 20 + sz, 12, '#2878C8');
+        px(x + 8, by + 8, 16 + sz, 8, '#3090D8');
+        // branquias más controladas, menos bebé
+        px(x - 2, by + 2, 6, 4, '#F060A0');
+        px(x - 4, by + 6, 6, 4, '#D85090');
+        px(x - 3, by + 10, 6, 4, '#F060A0');
+        px(x + sz + 28, by + 2, 6, 4, '#F060A0');
+        px(x + sz + 30, by + 6, 6, 4, '#D85090');
+        px(x + sz + 29, by + 10, 6, 4, '#F060A0');
+        // ojos con cejas adolescentes
+        px(x + 8, by + 8, 5, 5, '#fff');
+        px(x + sz + 18, by + 8, 5, 5, '#fff');
+        px(x + 10, by + 10, 3, 3, '#0840A0');
+        px(x + sz + 20, by + 10, 3, 3, '#0840A0');
+        px(x + 8, by + 7, 5, 1, '#103C88');
+        px(x + sz + 18, by + 7, 5, 1, '#103C88');
+        px(x + 14, by + 16, 5, 1, '#1858A0');
+        // cola lateral y pies
+        px(x - 2, by + 30, 10, 4, '#2060B0');
+        px(x - 7, by + 28, 6, 4, '#2878C8');
+        px(x - 11, by + 26, 5, 4, '#3090D8');
+        px(x + 6, by + 30 + sz, 5, 4, '#2060B0');
+        px(x + sz + 20, by + 30 + sz, 5, 4, '#2060B0');
+      }
       break;
 
-    case 'glaciolote': // Ajolote de hielo ancestral
-      px(x + 2, by + 16, 28 + sz, 16 + sz, '#6098C0');
-      px(x + 4, by + 18, 24 + sz, 12 + sz, '#78B0D8');
-      px(x + 6, by + 20, 20 + sz, 8, '#90C8E8');
-      px(x + 4, by + 18, 4, 6, '#A8E0F8');
-      px(x + sz + 24, by + 20, 4, 5, '#A8E0F8');
-      px(x + 14, by + 16, 3, 3, '#C8F0F8');
-      px(x + 2, by + 2, 28 + sz, 16, '#6098C0');
-      px(x + 4, by + 4, 24 + sz, 12, '#78B0D8');
-      px(x + 6, by + 6, 20 + sz, 8, '#90C8E8');
-      px(x + 6, by - 2, 4, 6, '#A8E0F8');
-      px(x + 12, by - 4, 4, 8, '#B8E8F8');
-      px(x + sz + 22, by - 2, 4, 6, '#A8E0F8');
-      px(x + 18, by - 3, 3, 5, '#C8F0F8');
-      px(x + 13, by - 6, 2, 3, '#E8F8F8');
-      px(x + 14, by - 7, 1, 2, '#fff');
-      px(x - 4, by + 2, 6, 4, '#A8E0F8');
-      px(x - 6, by + 6, 6, 4, '#90D0F0');
-      px(x - 5, by + 10, 6, 4, '#A8E0F8');
-      px(x + sz + 30, by + 2, 6, 4, '#A8E0F8');
-      px(x + sz + 32, by + 6, 6, 4, '#90D0F0');
-      px(x + sz + 31, by + 10, 6, 4, '#A8E0F8');
-      px(x - 5, by + 3, 2, 2, '#E8F8F8');
-      px(x + sz + 33, by + 3, 2, 2, '#E8F8F8');
-      px(x + 6, by + 6, 6, 6, '#D8F0F8');
-      px(x + sz + 20, by + 6, 6, 6, '#D8F0F8');
-      px(x + 8, by + 8, 4, 4, '#2060A0');
-      px(x + sz + 22, by + 8, 4, 4, '#2060A0');
-      px(x + 8, by + 8, 2, 2, '#C8F0F8');
-      px(x + sz + 22, by + 8, 2, 2, '#C8F0F8');
-      px(x + 12, by + 16, 8, 1, '#5088B0');
-      px(x + 14, by + 17, 4, 1, '#5088B0');
-      px(x - 6, by + 26, 10, 4, '#6098C0');
-      px(x - 10, by + 24, 6, 4, '#78B0D8');
-      px(x - 14, by + 22, 5, 4, '#A8E0F8');
-      px(x - 15, by + 21, 3, 3, '#C8F0F8');
-      px(x + 4, by + 30 + sz, 6, 5, '#6098C0');
-      px(x + sz + 22, by + 30 + sz, 6, 5, '#6098C0');
-      px(x + 4, by + 30 + sz, 6, 2, '#A8E0F8');
-      px(x + sz + 22, by + 30 + sz, 6, 2, '#A8E0F8');
-      cx.globalAlpha = 0.06;
-      cx.fillStyle = '#88D0F8';
-      pixelGlow(x + 16, by + 18, 20 + sz, 16);
-      cx.globalAlpha = 1;
-      if (f % 20 < 10) {
-        cx.globalAlpha = 0.4;
-        cx.fillStyle = '#E8F8F8';
-        cx.fillRect(x + sz + 28, by + 4 + Math.sin(f * 0.06) * 3, 2, 2);
-        cx.fillRect(x - 4, by + 14 + Math.sin(f * 0.08) * 2, 2, 2);
+    case 'glaciolote': // Glaciolote: ajolote cuadrúpedo de hielo con barba
+      {
+        const ice = Math.sin(f * 0.08) * 1;
+        // cuerpo cuadrúpedo largo y bajo de hielo
+        px(x + 0, by + 20, 32 + sz, 13 + sz, '#6098C0');
+        px(x + 2, by + 22, 28 + sz, 9 + sz, '#78B0D8');
+        px(x + 5, by + 24, 22 + sz, 5, '#A8E0F8');
+        // cuatro patas
+        px(x + 3, by + 31 + sz, 5, 8, '#6098C0');
+        px(x + 11, by + 31 + sz, 5, 8, '#6098C0');
+        px(x + sz + 19, by + 31 + sz, 5, 8, '#6098C0');
+        px(x + sz + 27, by + 31 + sz, 5, 8, '#6098C0');
+        px(x + 3, by + 37 + sz, 7, 2, '#E8F8F8');
+        px(x + sz + 25, by + 37 + sz, 7, 2, '#E8F8F8');
+        // cola de hielo gruesa
+        px(x - 8, by + 25, 10, 5, '#78B0D8');
+        px(x - 14, by + 23, 7, 5, '#A8E0F8');
+        px(x - 17, by + 22, 4, 3, '#E8F8F8');
+
+        // cabeza baja, bestia ancestral cuadrúpeda
+        px(x + 3, by + 3, 27 + sz, 17, '#6098C0');
+        px(x + 5, by + 5, 23 + sz, 13, '#78B0D8');
+        px(x + 7, by + 7, 19 + sz, 9, '#A8E0F8');
+        // cristales/branquias de hielo
+        px(x + 4, by - 2, 4, 7, '#D8F8FF');
+        px(x + 10, by - 5, 4, 9, '#B8E8F8');
+        px(x + sz + 25, by - 2, 4, 7, '#D8F8FF');
+        px(x + 18, by - 4, 3, 6, '#E8F8F8');
+        px(x - 5, by + 4, 7, 4, '#A8E0F8');
+        px(x - 7, by + 8, 7, 4, '#90D0F0');
+        px(x - 6, by + 12, 7, 4, '#A8E0F8');
+        px(x + sz + 31, by + 4, 7, 4, '#A8E0F8');
+        px(x + sz + 33, by + 8, 7, 4, '#90D0F0');
+        px(x + sz + 32, by + 12, 7, 4, '#A8E0F8');
+        // ojos glaciales
+        px(x + 7, by + 7, 6, 6, '#D8F0F8');
+        px(x + sz + 20, by + 7, 6, 6, '#D8F0F8');
+        px(x + 9, by + 9, 4, 4, '#2060A0');
+        px(x + sz + 22, by + 9, 4, 4, '#2060A0');
+        px(x + 9, by + 9, 2, 2, '#C8F0F8');
+        px(x + sz + 22, by + 9, 2, 2, '#C8F0F8');
+        // barba helada cuadrada
+        px(x + 10, by + 17, 14 + sz, 4, '#E8F8F8');
+        px(x + 12, by + 20, 10 + sz, 4, '#C8F0F8');
+        px(x + 14, by + 23, 6 + sz, 3, '#A8E0F8');
+        px(x + 16, by + 26, 2 + sz, 3, '#E8F8F8');
+        // aura pixelada de frío
+        cx.globalAlpha = 0.06;
+        cx.fillStyle = '#88D0F8';
+        pixelGlow(x + 16, by + 18 + ice, 22 + sz, 16);
         cx.globalAlpha = 1;
+        if (f % 20 < 10) {
+          cx.globalAlpha = 0.5;
+          px(x + sz + 29, by + 4 + Math.sin(f * 0.06) * 3, 2, 2, '#E8F8F8');
+          px(x - 4, by + 14 + Math.sin(f * 0.08) * 2, 2, 2, '#E8F8F8');
+          cx.globalAlpha = 1;
+        }
       }
       break;
 
@@ -8414,42 +8433,46 @@ function dCre(x, y, id, lv, f) {
     // AGUA 💧 - NUEVOS (únicos)
     // ==========================================
 
-    case 'axolotl': // Ajolote bebé sonriente
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#2870C0');
-      px(x + 8, by + 22, 16 + sz, 8 + sz, '#3890D8');
-      px(x + 10, by + 24, 12 + sz, 4, '#48A0E8');
-      px(x + 4, by + 6, 24 + sz, 16, '#2870C0');
-      px(x + 6, by + 8, 20 + sz, 12, '#3890D8');
-      px(x + 8, by + 10, 16 + sz, 8, '#48A0E8');
-      px(x, by + 4, 6, 3, '#F070A0');
-      px(x - 2, by + 8, 5, 3, '#F070A0');
-      px(x - 1, by + 12, 6, 3, '#F070A0');
-      px(x + sz + 26, by + 4, 6, 3, '#F070A0');
-      px(x + sz + 28, by + 8, 5, 3, '#F070A0');
-      px(x + sz + 27, by + 12, 6, 3, '#F070A0');
-      px(x + 8, by + 10, 6, 6, '#fff');
-      px(x + sz + 18, by + 10, 6, 6, '#fff');
-      px(x + 10, by + 12, 4, 4, '#0840A0');
-      px(x + sz + 20, by + 12, 4, 4, '#0840A0');
-      px(x + 11, by + 12, 2, 2, '#fff');
-      px(x + sz + 21, by + 12, 2, 2, '#fff');
-      px(x + 12, by + 18, 3, 1, '#1858A0');
-      px(x + sz + 17, by + 18, 3, 1, '#1858A0');
-      px(x + 14, by + 19, 4 + sz, 1, '#2070B0');
-      cx.globalAlpha = 0.3;
-      px(x + 6, by + 16, 3, 2, '#F08888');
-      px(x + sz + 23, by + 16, 3, 2, '#F08888');
-      cx.globalAlpha = 1;
-      px(x - 4, by + 28, 8, 3, '#2870C0');
-      px(x - 7, by + 26, 5, 3, '#3890D8');
-      px(x - 9, by + 24, 3, 3, '#48A0E8');
-      px(x + 6, by + 30 + sz, 5, 4, '#2870C0');
-      px(x + sz + 20, by + 30 + sz, 5, 4, '#2870C0');
-      const bub = Math.sin(f * 0.08) * 4;
-      cx.globalAlpha = 0.5;
-      px(x + sz + 26, by + 8 + bub, 3, 3, '#88D8F8');
-      px(x + sz + 29, by + 4 + bub, 2, 2, '#A8E8F8');
-      cx.globalAlpha = 1;
+    case 'axolotl': // Ajolotín: cabeza grande, cuerpito bebé muy pequeño
+      {
+        const wig = Math.sin(f * 0.14) * 1;
+        // cuerpo chiquitito debajo de una cabeza grande
+        px(x + 12, by + 24, 10 + sz, 9 + sz, '#2870C0');
+        px(x + 14, by + 26, 6 + sz, 5 + sz, '#48A0E8');
+        px(x + 10, by + 31 + sz, 5, 3, '#2870C0');
+        px(x + sz + 19, by + 31 + sz, 5, 3, '#2870C0');
+        // colita bebé
+        px(x + 7, by + 27, 6, 3, '#3890D8');
+        px(x + 5, by + 26, 4, 2, '#48A0E8');
+
+        // cabeza mantiene tamaño grande y redondita en pixel-art
+        px(x + 4, by + 6, 24 + sz, 17, '#2870C0');
+        px(x + 6, by + 8, 20 + sz, 13, '#3890D8');
+        px(x + 8, by + 10, 16 + sz, 9, '#48A0E8');
+        // branquias rosadas grandes
+        px(x, by + 4 + wig, 6, 3, '#F070A0');
+        px(x - 2, by + 8 + wig, 6, 3, '#F070A0');
+        px(x, by + 12 + wig, 6, 3, '#F070A0');
+        px(x + sz + 27, by + 4 - wig, 6, 3, '#F070A0');
+        px(x + sz + 29, by + 8 - wig, 6, 3, '#F070A0');
+        px(x + sz + 27, by + 12 - wig, 6, 3, '#F070A0');
+        // ojos enormes y sonrisa bebé
+        px(x + 8, by + 10, 6, 6, '#fff');
+        px(x + sz + 18, by + 10, 6, 6, '#fff');
+        px(x + 10, by + 12, 4, 4, '#0840A0');
+        px(x + sz + 20, by + 12, 4, 4, '#0840A0');
+        px(x + 11, by + 12, 2, 2, '#fff');
+        px(x + sz + 21, by + 12, 2, 2, '#fff');
+        px(x + 12, by + 18, 3, 1, '#1858A0');
+        px(x + sz + 17, by + 18, 3, 1, '#1858A0');
+        px(x + 14, by + 19, 4 + sz, 1, '#2070B0');
+        // burbujas cuadradas
+        const bub = Math.sin(f * 0.08) * 4;
+        cx.globalAlpha = 0.5;
+        px(x + sz + 27, by + 6 + bub, 3, 3, '#88D8F8');
+        px(x + sz + 31, by + 2 + bub, 2, 2, '#A8E8F8');
+        cx.globalAlpha = 1;
+      }
       break;
 
     case 'medusync': // Medusa DJ con tentáculos-cables
