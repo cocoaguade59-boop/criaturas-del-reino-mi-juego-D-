@@ -3111,6 +3111,26 @@ function px(x, y, w, h, c) {
   cx.fillRect(x, y, w, h);
 }
 
+function pixelGlow(cx0, cy0, w, h) {
+  // Brillo/sombra 100% pixel-art: sin círculos ni elipses suaves.
+  const x = Math.round(cx0), y = Math.round(cy0);
+  const ww = Math.max(2, Math.round(w)), hh = Math.max(2, Math.round(h));
+  cx.fillRect(x - ww, y - Math.floor(hh * 0.35), ww * 2, Math.max(1, Math.floor(hh * 0.7)));
+  cx.fillRect(x - Math.floor(ww * 0.7), y - Math.floor(hh * 0.65), Math.floor(ww * 1.4), Math.max(1, Math.floor(hh * 1.3)));
+  cx.fillRect(x - Math.floor(ww * 0.35), y - hh, Math.floor(ww * 0.7), hh * 2);
+}
+
+function pixelDiamond(x, y, w, h, c) {
+  // Diamante/trapecio por franjas rectangulares, estilo pixel-art.
+  const rows = 6;
+  for (let i = 0; i < rows; i++) {
+    const t = i < rows / 2 ? i / (rows / 2) : (rows - 1 - i) / (rows / 2);
+    const rw = Math.max(2, Math.round(w * (0.25 + t * 0.75)));
+    const ry = y + Math.round((h / rows) * i);
+    px(x + Math.round((w - rw) / 2), ry, rw, Math.ceil(h / rows), c);
+  }
+}
+
 // === CAJA DORADA MEDIEVAL (HUD del mundo) ===
 function dBox(x, y, w, h, t) {
   // Sombra
@@ -3418,12 +3438,10 @@ function dArrow(x, y, color = '#ffd700') {
   cx.fillText('▼', x, y + Math.sin(fr * 0.2) * 2);
 }
 
-// === SOMBRA ELÍPTICA (para sprites) ===
+// === SOMBRA PIXELADA (para sprites) ===
 function dShadow(x, y, w = 10, h = 3) {
   cx.fillStyle = 'rgba(0,0,0,.25)';
-  cx.beginPath();
-  cx.ellipse(x, y, w, h, 0, 0, Math.PI * 2);
-  cx.fill();
+  pixelGlow(x, y, w, h);
 }
 
 
@@ -3662,9 +3680,7 @@ function dPlayerChibi00s(x, y, dir, f) {
   const MOUTH = '#8A463A';
 
   cx.fillStyle = 'rgba(0,0,0,.25)';
-  cx.beginPath();
-  cx.ellipse(x + 16, by + 35, 9, 2.8, 0, 0, Math.PI * 2);
-  cx.fill();
+  pixelGlow(x + 16, by + 35, 9, 2.8);
 
   const R = (c, r, w, h, col) => px(OX + c, OY + r, w, h, col);
   const RO = (c, r, w, h, col) => { px(OX + c - 1, OY + r - 1, w + 2, h + 2, OUT); R(c, r, w, h, col); };
@@ -3804,9 +3820,7 @@ function dPlayerGBA(x, y, dir, f) {
     const bob = moving ? Math.sin(f * 0.3) * 1.0 : 0;
     // sombra en el suelo
     cx.fillStyle = 'rgba(0,0,0,.22)';
-    cx.beginPath();
-    cx.ellipse(x + 16, y + 38, 8, 2.5, 0, 0, Math.PI * 2);
-    cx.fill();
+    pixelGlow(x + 16, y + 38, 8, 2.5);
     try {
       cx.drawImage(heroImg, col * HERO_FW, row * HERO_FH, HERO_FW, HERO_FH,
                    x + 4, Math.round(y + 7 + bob), HERO_FW, HERO_FH);
@@ -3837,9 +3851,7 @@ function dPlayerGBAFallback(x, y, dir, f) {
 
   // sombra en el suelo
   cx.fillStyle = 'rgba(0,0,0,.22)';
-  cx.beginPath();
-  cx.ellipse(x + 16, by + 39, 8, 2.5, 0, 0, Math.PI * 2);
-  cx.fill();
+  pixelGlow(x + 16, by + 39, 8, 2.5);
 
   // helpers (rectangulos alineados; sin curvas ni poligonos)
   const R = (c, r, w, h, col) => px(OX + c, OY + r, w, h, col);
@@ -6848,10 +6860,8 @@ function dCre(x, y, id, lv, f) {
     case 'pixie': // Duende ladrón de calcetines
       const phv = Math.sin(fr * 0.12) * 3;
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + phv + 25, 18 + sz, 16, 0, 0, Math.PI * 2);
       cx.fillStyle = '#F080F0';
-      cx.fill();
+      pixelGlow(x + 16, by + phv + 25, 18 + sz, 16);
       cx.globalAlpha = 1;
       px(x + 8, by + phv + 20, 16 + sz, 10 + sz, '#38A048');
       px(x + 10, by + phv + 22, 12 + sz, 6 + sz, '#48B058');
@@ -6880,10 +6890,8 @@ function dCre(x, y, id, lv, f) {
     case 'sidhe': // Hada celta cantante de ópera
       const shv = Math.sin(fr * 0.12) * 3;
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + shv + 25, 18 + sz, 16, 0, 0, Math.PI * 2);
       cx.fillStyle = '#A0E0A0';
-      cx.fill();
+      pixelGlow(x + 16, by + shv + 25, 18 + sz, 16);
       cx.globalAlpha = 1;
       px(x + 4, by + shv + 18, 24 + sz, 16 + sz, '#D838A0');
       px(x + 6, by + shv + 20, 20 + sz, 12 + sz, '#E848B0');
@@ -6922,10 +6930,8 @@ function dCre(x, y, id, lv, f) {
       const flash = Math.sin(fr * 0.2) > 0.7;
       if (flash) {
         cx.globalAlpha = 0.2;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + sfhv + 20, 22 + sz, 20, 0, 0, Math.PI * 2);
         cx.fillStyle = '#F8F8C0';
-        cx.fill();
+      pixelGlow(x + 16, by + sfhv + 20, 22 + sz, 20);
         cx.globalAlpha = 1;
       }
       cx.globalAlpha = 0.5;
@@ -6966,10 +6972,8 @@ function dCre(x, y, id, lv, f) {
     case 'serafox': // Zorro ángel - guardián celestial travieso
       const sxhv = Math.sin(fr * 0.1) * 2;
       cx.globalAlpha = 0.1 + Math.sin(fr * 0.06) * 0.05;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + sxhv + 22, 22 + sz, 20, 0, 0, Math.PI * 2);
       cx.fillStyle = '#F8E8A0';
-      cx.fill();
+      pixelGlow(x + 16, by + sxhv + 22, 22 + sz, 20);
       cx.globalAlpha = 1;
       cx.globalAlpha = 0.7;
       const awf = Math.sin(f * 0.15) * 3;
@@ -7099,10 +7103,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 8, by + 32 + sz, 5, 6, '#C89020');
       px(x + sz + 18, by + 32 + sz, 5, 6, '#C89020');
       cx.globalAlpha = 0.08;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 20, 22 + sz, 18, 0, 0, Math.PI * 2);
       cx.fillStyle = '#F84020';
-      cx.fill();
+      pixelGlow(x + 16, by + 20, 22 + sz, 18);
       cx.globalAlpha = 1;
       break;
 
@@ -7197,10 +7199,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 8, by + 32 + sz, 6, 6, '#C04010');
       px(x + sz + 18, by + 32 + sz, 6, 6, '#C04010');
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 20, 20 + sz, 16, 0, 0, Math.PI * 2);
       cx.fillStyle = '#F84020';
-      cx.fill();
+      pixelGlow(x + 16, by + 20, 20 + sz, 16);
       cx.globalAlpha = 1;
       break;
 
@@ -7310,10 +7310,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 4, by + 30 + sz, 6, 2, '#A8E0F8');
       px(x + sz + 22, by + 30 + sz, 6, 2, '#A8E0F8');
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 18, 20 + sz, 16, 0, 0, Math.PI * 2);
       cx.fillStyle = '#88D0F8';
-      cx.fill();
+      pixelGlow(x + 16, by + 18, 20 + sz, 16);
       cx.globalAlpha = 1;
       if (f % 20 < 10) {
         cx.globalAlpha = 0.4;
@@ -7328,10 +7326,8 @@ function dCre(x, y, id, lv, f) {
       {
         const mbhv2 = Math.sin(fr * 0.1) * 3;
         cx.globalAlpha = 0.08;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + mbhv2 + 20, 20 + sz, 16, 0, 0, Math.PI * 2);
         cx.fillStyle = '#3060E0';
-        cx.fill();
+      pixelGlow(x + 16, by + mbhv2 + 20, 20 + sz, 16);
         cx.globalAlpha = 1;
         px(x + 2, by + mbhv2 + 4, 28 + sz, 16, '#2058B0');
         px(x + 4, by + mbhv2 + 6, 24 + sz, 12, '#3078C8');
@@ -7450,10 +7446,8 @@ function dCre(x, y, id, lv, f) {
       {
         const chv2 = Math.sin(fr * 0.1) * 2;
         cx.globalAlpha = 0.08;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + chv2 + 20, 20 + sz, 14, 0, 0, Math.PI * 2);
         cx.fillStyle = '#3060E0';
-        cx.fill();
+      pixelGlow(x + 16, by + chv2 + 20, 20 + sz, 14);
         cx.globalAlpha = 1;
         for (let i = 0; i < 12; i++) {
           const px3 = x + 4 + Math.sin(i * 1.2 + f * 0.03) * 3 + (i % 4) * 6;
@@ -7619,10 +7613,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 6, by + 32 + sz, 8, 8, '#284818');
       px(x + sz + 18, by + 32 + sz, 8, 8, '#284818');
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 18, 22 + sz, 18, 0, 0, Math.PI * 2);
       cx.fillStyle = '#80F080';
-      cx.fill();
+      pixelGlow(x + 16, by + 18, 22 + sz, 18);
       cx.globalAlpha = 1;
       break;
 
@@ -7727,10 +7719,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 4, by + 32 + sz, 8, 8, '#283818');
       px(x + sz + 20, by + 32 + sz, 8, 8, '#283818');
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 16, 22 + sz, 18, 0, 0, Math.PI * 2);
       cx.fillStyle = '#48C030';
-      cx.fill();
+      pixelGlow(x + 16, by + 16, 22 + sz, 18);
       cx.globalAlpha = 1;
       break;
 
@@ -7806,10 +7796,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 4, by + 32 + sz, 8, 8, '#280890');
       px(x + sz + 20, by + 32 + sz, 8, 8, '#280890');
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 16, 24 + sz, 18, 0, 0, Math.PI * 2);
       cx.fillStyle = '#6030D0';
-      cx.fill();
+      pixelGlow(x + 16, by + 16, 24 + sz, 18);
       cx.globalAlpha = 1;
       break;
 
@@ -7892,10 +7880,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 8, by + 30 + sz, 5, 4, '#D89020');
       px(x + sz + 18, by + 30 + sz, 5, 4, '#D89020');
       cx.globalAlpha = 0.04;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 20, 18 + sz, 14, 0, 0, Math.PI * 2);
       cx.fillStyle = '#3060A0';
-      cx.fill();
+      pixelGlow(x + 16, by + 20, 18 + sz, 14);
       cx.globalAlpha = 1;
       break;
 
@@ -7954,10 +7940,8 @@ function dCre(x, y, id, lv, f) {
       px(x + 10, by + 18, 4, 1, '#801818');
       px(x + sz + 18, by + 18, 4, 1, '#801818');
       cx.globalAlpha = 0.06;
-      cx.beginPath();
-      cx.ellipse(x + 16, by + 20, 16 + sz, 14, 0, 0, Math.PI * 2);
       cx.fillStyle = '#F8E830';
-      cx.fill();
+      pixelGlow(x + 16, by + 20, 16 + sz, 14);
       cx.globalAlpha = 1;
       px(x + 8, by + 30 + sz, 4, 6, '#5A3818');
       px(x + sz + 18, by + 30 + sz, 4, 6, '#5A3818');
@@ -8025,10 +8009,8 @@ function dCre(x, y, id, lv, f) {
           px(x + 18, by + 18, 2, 2, '#F8A030');
         }
         cx.globalAlpha = 0.05;
-        cx.beginPath();
-        cx.ellipse(x + 17, by + 22, 34 + sz, 20, 0, 0, Math.PI * 2);
         cx.fillStyle = '#7FE080';
-        cx.fill();
+      pixelGlow(x + 17, by + 22, 34 + sz, 20);
         cx.globalAlpha = 1;
       }
       break;
@@ -8037,10 +8019,8 @@ function dCre(x, y, id, lv, f) {
       {
         const dthv2 = Math.sin(fr * 0.12) * 3;
         cx.globalAlpha = 0.06;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + dthv2 + 25, 18 + sz, 16, 0, 0, Math.PI * 2);
         cx.fillStyle = '#F080F0';
-        cx.fill();
+      pixelGlow(x + 16, by + dthv2 + 25, 18 + sz, 16);
         cx.globalAlpha = 1;
         px(x - 4, by + dthv2 + 12, 14, 16, '#8A6820');
         px(x - 2, by + dthv2 + 14, 10, 12, '#A88030');
@@ -8074,10 +8054,8 @@ function dCre(x, y, id, lv, f) {
       {
         const sahv2 = Math.sin(fr * 0.1) * 3;
         cx.globalAlpha = 0.08;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + sahv2 + 22, 20 + sz, 16, 0, 0, Math.PI * 2);
         cx.fillStyle = '#A0E0A0';
-        cx.fill();
+      pixelGlow(x + 16, by + sahv2 + 22, 20 + sz, 16);
         cx.globalAlpha = 1;
         px(x + 2, by + sahv2 + 16, 28 + sz, 18 + sz, '#C02888');
         px(x + 4, by + sahv2 + 18, 24 + sz, 14 + sz, '#D03898');
@@ -8157,10 +8135,8 @@ function dCre(x, y, id, lv, f) {
       {
         const lshv2 = Math.sin(fr * 0.1) * 2;
         cx.globalAlpha = 0.1 + Math.sin(fr * 0.06) * 0.05;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + lshv2 + 20, 20 + sz, 16, 0, 0, Math.PI * 2);
         cx.fillStyle = '#F8E8A0';
-        cx.fill();
+      pixelGlow(x + 16, by + lshv2 + 20, 20 + sz, 16);
         cx.globalAlpha = 1;
         cx.globalAlpha = 0.5;
         px(x - 6, by + lshv2 + 6, 14, 14, '#D0F0F8');
@@ -8194,36 +8170,13 @@ function dCre(x, y, id, lv, f) {
       {
         const ethv2 = Math.sin(fr * 0.08) * 2;
         cx.globalAlpha = 0.08;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + ethv2 + 20, 22 + sz, 18, 0, 0, Math.PI * 2);
         cx.fillStyle = '#C880F0';
-        cx.fill();
+      pixelGlow(x + 16, by + ethv2 + 20, 22 + sz, 18);
         cx.globalAlpha = 1;
         cx.globalAlpha = 0.15;
-        cx.beginPath();
-        cx.ellipse(
-          x + 16,
-          by + ethv2 + 16,
-          18 + sz,
-          16,
-          fr * 0.01,
-          0,
-          Math.PI * 2
-        );
-        cx.strokeStyle = '#F8E830';
-        cx.lineWidth = 1;
-        cx.stroke();
-        cx.beginPath();
-        cx.ellipse(
-          x + 16,
-          by + ethv2 + 16,
-          14 + sz,
-          12,
-          fr * 0.015,
-          0,
-          Math.PI * 2
-        );
-        cx.stroke();
+        cx.fillStyle = '#F8E830';
+        pixelGlow(x + 16, by + ethv2 + 16, 18 + sz, 16);
+        pixelGlow(x + 16, by + ethv2 + 16, 14 + sz, 12);
         cx.globalAlpha = 1;
         px(x + 2, by + ethv2 + 16, 28 + sz, 16 + sz, '#6850A0');
         px(x + 4, by + ethv2 + 18, 24 + sz, 12 + sz, '#7860B0');
@@ -8475,10 +8428,8 @@ function dCre(x, y, id, lv, f) {
       {
         const mhv = Math.sin(fr * 0.12) * 3;
         cx.globalAlpha = 0.06;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + mhv + 22, 16 + sz, 14, 0, 0, Math.PI * 2);
         cx.fillStyle = '#4080F0';
-        cx.fill();
+      pixelGlow(x + 16, by + mhv + 22, 16 + sz, 14);
         cx.globalAlpha = 1;
         px(x + 4, by + mhv + 6, 24 + sz, 14, '#3070C0');
         px(x + 6, by + mhv + 8, 20 + sz, 10, '#4090D8');
@@ -8570,17 +8521,12 @@ function dCre(x, y, id, lv, f) {
       {
         const phv2 = Math.sin(fr * 0.12) * 2;
         cx.globalAlpha = 0.2;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + phv2 + 18, 14 + sz, 12, 0, 0, Math.PI * 2);
         cx.fillStyle = '#88D8F8';
-        cx.fill();
+      pixelGlow(x + 16, by + phv2 + 18, 14 + sz, 12);
         cx.globalAlpha = 1;
         cx.globalAlpha = 0.4;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + phv2 + 18, 14 + sz, 12, 0, 0, Math.PI * 2);
-        cx.strokeStyle = '#50A8E0';
-        cx.lineWidth = 2;
-        cx.stroke();
+        cx.fillStyle = '#50A8E0';
+        pixelGlow(x + 16, by + phv2 + 18, 14 + sz, 12);
         cx.globalAlpha = 1;
         px(x + 8, by + phv2 + 10, 4, 3, 'rgba(255,255,255,.3)');
         px(x + 8, by + phv2 + 14, 16 + sz, 10, '#3088E0');
@@ -8780,10 +8726,8 @@ function dCre(x, y, id, lv, f) {
       {
         const ehv = Math.sin(fr * 0.1) * 2;
         cx.globalAlpha = 0.06;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + ehv + 22, 18 + sz, 16, 0, 0, Math.PI * 2);
         cx.fillStyle = '#D8A0F0';
-        cx.fill();
+      pixelGlow(x + 16, by + ehv + 22, 18 + sz, 16);
         cx.globalAlpha = 1;
         // Cuerpo robusto
         px(x + 4, by + ehv + 18, 24 + sz, 14 + sz, '#8870A0');
@@ -8834,10 +8778,8 @@ function dCre(x, y, id, lv, f) {
         // Aureola mística
         const eha = Math.sin(fr * 0.08) * 0.3 + 0.7;
         cx.globalAlpha = eha * 0.3;
-        cx.beginPath();
-        cx.ellipse(x + 16, by + ehv - 2, 12 + sz, 4, 0, 0, Math.PI * 2);
         cx.fillStyle = '#F8E868';
-        cx.fill();
+      pixelGlow(x + 16, by + ehv - 2, 12 + sz, 4);
         cx.globalAlpha = 1;
         // Patas
         px(x + 6, by + ehv + 30 + sz, 5, 5, '#8870A0');
@@ -9205,11 +9147,11 @@ function dTileW(c, r) {
       cx.globalAlpha = 0.78 + Math.sin(fr * 0.1) * 0.22;
       cx.fillStyle = '#7A2FD0'; cx.fillRect(x + 11, y + 6, 10, 18);
       cx.fillStyle = '#5E1FA8';
-      cx.beginPath(); cx.moveTo(x + 11, y + 6); cx.lineTo(x + 8, y + 12); cx.lineTo(x + 11, y + 24); cx.closePath(); cx.fill();
+      pixelDiamond(x + 7, y + 6, 8, 18, cx.fillStyle);
       cx.fillStyle = '#9A4FE0';
-      cx.beginPath(); cx.moveTo(x + 21, y + 6); cx.lineTo(x + 24, y + 12); cx.lineTo(x + 21, y + 24); cx.closePath(); cx.fill();
+      pixelDiamond(x + 17, y + 6, 8, 18, cx.fillStyle);
       cx.fillStyle = '#B56CF0';
-      cx.beginPath(); cx.moveTo(x + 16, y - 2); cx.lineTo(x + 11, y + 6); cx.lineTo(x + 21, y + 6); cx.closePath(); cx.fill();
+      pixelDiamond(x + 11, y - 2, 10, 10, cx.fillStyle);
       cx.fillStyle = '#E6B8FF'; cx.fillRect(x + 14, y + 9, 3, 12);
       cx.globalAlpha = 1;
       if (Math.floor(fr / 22) % 2 === 0) {
@@ -9424,10 +9366,8 @@ function dTileW(c, r) {
           cx.fillStyle = '#F8D080';
           cx.fillRect(x + 15, y + 2 + flk, 2, 2);
           cx.globalAlpha = 0.06;
-          cx.beginPath();
-          cx.ellipse(x + 16, y + 10, 10, 8, 0, 0, Math.PI * 2);
           cx.fillStyle = '#F8A050';
-          cx.fill();
+      pixelGlow(x + 16, y + 10, 10, 8);
           cx.globalAlpha = 1;
         }
 
@@ -9664,10 +9604,8 @@ function dTileC(c, r, map) {
           cx.fillRect(x + 15, y + 1 + flk, 2, 2);
           // Halo de luz
           cx.globalAlpha = 0.06;
-          cx.beginPath();
-          cx.ellipse(x + 16, y + 10, 14, 12, 0, 0, Math.PI * 2);
           cx.fillStyle = '#F8A050';
-          cx.fill();
+      pixelGlow(x + 16, y + 10, 14, 12);
           cx.globalAlpha = 1;
           // Chispas
           if (fr % 30 < 15) {
@@ -9758,10 +9696,8 @@ function dTileC(c, r, map) {
 
         // Halo de color
         cx.globalAlpha = 0.04;
-        cx.beginPath();
-        cx.ellipse(x + 16, y + 16, 14, 12, 0, 0, Math.PI * 2);
         cx.fillStyle = gc;
-        cx.fill();
+      pixelGlow(x + 16, y + 16, 14, 12);
         cx.globalAlpha = 1;
       }
       break;
@@ -9980,10 +9916,8 @@ function dTileC(c, r, map) {
 
         // Halo bioluminiscente sutil
         cx.globalAlpha = 0.03;
-        cx.beginPath();
-        cx.ellipse(x + 16, y + 12, 12, 10, 0, 0, Math.PI * 2);
         cx.fillStyle = '#50F8A0';
-        cx.fill();
+      pixelGlow(x + 16, y + 12, 12, 10);
         cx.globalAlpha = 1;
       }
       break;
@@ -10094,10 +10028,8 @@ function dTileC(c, r, map) {
 
         // Aura mágica
         cx.globalAlpha = 0.06 + Math.sin(fr * 0.08) * 0.03;
-        cx.beginPath();
-        cx.ellipse(x + 16, y + 14, 16, 14, 0, 0, Math.PI * 2);
         cx.fillStyle = '#A050F0';
-        cx.fill();
+      pixelGlow(x + 16, y + 14, 16, 14);
         cx.globalAlpha = 1;
 
         // Destellos
@@ -10181,10 +10113,8 @@ function dTileC(c, r, map) {
         cx.fillStyle = '#F8D080';
         cx.fillRect(x + 15, y + flk, 2, 2);
         cx.globalAlpha = 0.06;
-        cx.beginPath();
-        cx.ellipse(x + 16, y + 8, 12, 10, 0, 0, Math.PI * 2);
         cx.fillStyle = '#F8A050';
-        cx.fill();
+      pixelGlow(x + 16, y + 8, 12, 10);
         cx.globalAlpha = 1;
       }
       if ((c * 7 + r * 2) % 13 === 0) {
@@ -12706,13 +12636,9 @@ function dTitle() {
     // Sol suave
     cx.globalAlpha = 0.7;
     cx.fillStyle = '#FFF0A0';
-    cx.beginPath();
-    cx.ellipse(530, 82, 42, 42, 0, 0, Math.PI * 2);
-    cx.fill();
+    pixelGlow(530, 82, 42, 42);
     cx.globalAlpha = 0.16;
-    cx.beginPath();
-    cx.ellipse(530, 82, 75, 75, 0, 0, Math.PI * 2);
-    cx.fill();
+    pixelGlow(530, 82, 75, 75);
     cx.globalAlpha = 1;
 
     // Nubes pixeladas con pseudo 3D
@@ -12735,8 +12661,11 @@ function dTitle() {
     cx.fillStyle = '#4C9C40';
     for (let y = 310; y < 480; y += 18) cx.fillRect(0, y, 640, 2);
     cx.fillStyle = '#C8B078';
-    cx.beginPath();
-    cx.moveTo(280, 480); cx.lineTo(360, 480); cx.lineTo(332, 292); cx.lineTo(308, 292); cx.closePath(); cx.fill();
+    for (let yy = 292; yy < 480; yy += 8) {
+      const k = (yy - 292) / 188;
+      const ww = 24 + k * 80;
+      cx.fillRect(320 - ww / 2, yy, ww, 8);
+    }
 
     cx.textAlign = 'center';
     cx.fillStyle = '#1A2A4A';
@@ -12779,14 +12708,19 @@ function dTitle() {
   // Luna, castillo y camino
   cx.globalAlpha = 0.85;
   cx.fillStyle = '#F8E8A0';
-  cx.beginPath(); cx.ellipse(500, 82, 36, 36, 0, 0, Math.PI * 2); cx.fill();
+  pixelGlow(500, 82, 36, 36);
   cx.globalAlpha = 1;
   cx.fillStyle = '#10182E';
   for (let i = 0; i < 640; i += 2) cx.fillRect(i, Math.sin(i * 0.01) * 28 + 245, 2, 235);
   px(452, 154, 88, 100, '#0A0A18'); px(432, 174, 28, 80, '#0A0A18'); px(532, 174, 28, 80, '#0A0A18'); px(488, 108, 18, 56, '#0A0A18');
   px(466, 145, 10, 10, '#E8C830'); px(516, 145, 10, 10, '#E8C830'); px(492, 130, 10, 10, '#E8C830');
   cx.fillStyle = '#204A23'; cx.fillRect(0, 310, 640, 170);
-  cx.fillStyle = '#B8A070'; cx.beginPath(); cx.moveTo(286, 480); cx.lineTo(354, 480); cx.lineTo(334, 310); cx.lineTo(306, 310); cx.closePath(); cx.fill();
+  cx.fillStyle = '#B8A070';
+  for (let yy = 310; yy < 480; yy += 8) {
+    const k = (yy - 310) / 170;
+    const ww = 28 + k * 68;
+    cx.fillRect(320 - ww / 2, yy, ww, 8);
+  }
 
   // Logo
   cx.textAlign = 'center';
@@ -18098,9 +18032,7 @@ function dBattle() {
     cx.translate(cx0, cy0);
     cx.globalAlpha = 0.25 + Math.sin(fr * 0.25) * 0.08;
     cx.fillStyle = '#B868F8';
-    cx.beginPath();
-    cx.ellipse(0, 0, 22, 18, 0, 0, Math.PI * 2);
-    cx.fill();
+    pixelGlow(0, 0, 22, 18);
     cx.globalAlpha = 1;
     px(-8, -13, 16, 26, '#6020B0');
     px(-6, -11, 12, 22, '#8838E0');
