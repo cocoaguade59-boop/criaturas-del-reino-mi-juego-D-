@@ -9325,6 +9325,122 @@ function dTileW(c, r) {
       break;
     }
 
+
+    case 14: { // Arco/cartel de entrada de pueblo
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 4, y + 8, 4, 22);
+      cx.fillRect(x + 24, y + 8, 4, 22);
+      cx.fillStyle = '#8A5A28';
+      cx.fillRect(x + 3, y + 6, 26, 7);
+      cx.fillStyle = '#C09048';
+      cx.fillRect(x + 5, y + 7, 22, 4);
+      cx.fillStyle = '#E8C830';
+      cx.fillRect(x + 9, y + 8, 3, 2);
+      cx.fillRect(x + 15, y + 8, 3, 2);
+      cx.fillRect(x + 21, y + 8, 3, 2);
+      if (snow > 0.2) {
+        cx.fillStyle = 'rgba(255,255,255,.65)';
+        cx.fillRect(x + 3, y + 5, 26, 2);
+      }
+      break;
+    }
+
+    case 15: { // Farol / antorcha de pueblo
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#4A3018';
+      cx.fillRect(x + 14, y + 9, 4, 20);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 12, y + 7, 8, 4);
+      cx.fillStyle = '#F8D860';
+      cx.fillRect(x + 13, y + 3, 6, 6);
+      cx.fillStyle = '#F8A030';
+      cx.fillRect(x + 14, y + 4, 4, 4);
+      cx.globalAlpha = 0.18;
+      cx.fillStyle = '#F8E8A0';
+      pixelGlow(x + 16, y + 7, 12, 8);
+      cx.globalAlpha = 1;
+      break;
+    }
+
+    case 16: { // Banco / descanso
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 5, y + 17, 22, 4);
+      cx.fillRect(x + 7, y + 12, 18, 4);
+      cx.fillStyle = '#8A5A28';
+      cx.fillRect(x + 6, y + 13, 20, 2);
+      cx.fillRect(x + 4, y + 21, 4, 8);
+      cx.fillRect(x + 24, y + 21, 4, 8);
+      break;
+    }
+
+    case 17: { // Mural / panel artístico de Storyboard
+      cx.fillStyle = '#C8B898';
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#D8C8A8';
+      cx.fillRect(x + 2, y + 2, 28, 28);
+      cx.fillStyle = '#1A1A2E';
+      cx.fillRect(x + 5, y + 5, 22, 18);
+      cx.fillStyle = '#F8F8E8';
+      cx.fillRect(x + 7, y + 7, 18, 14);
+      cx.fillStyle = '#E83030';
+      cx.fillRect(x + 9, y + 10, 5, 5);
+      cx.fillStyle = '#3888E0';
+      cx.fillRect(x + 17, y + 9, 5, 6);
+      cx.fillStyle = '#48A038';
+      cx.fillRect(x + 13, y + 16, 8, 3);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 8, y + 24, 16, 3);
+      break;
+    }
+
+    case 18: { // Set de rodaje / claqueta-cámara simbólica
+      cx.fillStyle = '#A89878';
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#8A8070';
+      cx.fillRect(x + 2, y + 2, 28, 28);
+      // trípode/cámara
+      cx.fillStyle = '#202020';
+      cx.fillRect(x + 8, y + 11, 14, 8);
+      cx.fillStyle = '#303030';
+      cx.fillRect(x + 10, y + 13, 10, 4);
+      cx.fillStyle = '#C8C8C8';
+      cx.fillRect(x + 20, y + 13, 5, 4);
+      cx.fillStyle = '#5A3818';
+      cx.fillRect(x + 14, y + 19, 3, 9);
+      cx.fillRect(x + 9, y + 26, 13, 2);
+      // claqueta arriba
+      cx.fillStyle = '#F8F8F8';
+      cx.fillRect(x + 6, y + 5, 20, 5);
+      cx.fillStyle = '#202020';
+      cx.fillRect(x + 6, y + 5, 4, 2);
+      cx.fillRect(x + 14, y + 5, 4, 2);
+      cx.fillRect(x + 22, y + 5, 4, 2);
+      break;
+    }
+
+    case 19: { // Suelo de cantera / piedra tallada
+      cx.fillStyle = '#8A8172';
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#9A9182';
+      if ((c + r) % 2 === 0) cx.fillRect(x + 1, y + 1, 14, 14);
+      else cx.fillRect(x + 17, y + 1, 14, 14);
+      cx.fillStyle = '#746C60';
+      cx.fillRect(x, y + 15, T, 1);
+      cx.fillRect(x + 15, y, 1, T);
+      cx.fillStyle = '#B0A898';
+      if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 7, y + 7, 5, 2);
+      if ((c * 2 + r) % 5 === 0) cx.fillRect(x + 19, y + 22, 6, 2);
+      break;
+    }
+
     case 9: // Entrada de cueva
       cx.fillStyle = '#48982A';
       cx.fillRect(x, y, T, T);
@@ -10636,6 +10752,82 @@ function buildVillage(sx, sy, id) {
   for (let c = sx - 2; c < sx + 10; c++) {
     if (sy - 2 >= 2 && c >= 2 && c < WC - 2 && wMap[sy - 2][c] === 1)
       if (Math.random() < 0.3) wMap[sy - 2][c] = 6;
+  }
+
+  // Entradas/salidas: arco norte y salida sur clara para todos los pueblos.
+  const archX = sx + 4;
+  if (sy - 3 >= 2 && archX >= 2 && archX < WC - 2) wMap[sy - 3][archX] = 14;
+  if (sy + 8 < WR - 2 && archX >= 2 && archX < WC - 2) wMap[sy + 8][archX] = 14;
+  for (let rr = sy - 3; rr <= sy + 8; rr++) {
+    if (rr >= 2 && rr < WR - 2) {
+      if (wMap[rr][archX] !== 14) wMap[rr][archX] = 1;
+      if (archX + 1 < WC - 2 && wMap[rr][archX + 1] !== 14) wMap[rr][archX + 1] = 1;
+    }
+  }
+
+  // Identidad visual por pueblo: forma + decoración.
+  if (id === 'storyboard') {
+    // Paneles de storyboard y mural abierto.
+    for (let r = sy - 1; r <= sy + 7; r++)
+      for (let c = sx - 1; c <= sx + 9; c++)
+        if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && wMap[r][c] === 1 && (r + c) % 4 === 0) wMap[r][c] = 17;
+    wMap[sy + 3][sx + 4] = 17;
+    wMap[sy + 3][sx + 5] = 17;
+    wMap[sy + 6][sx + 3] = 16;
+    wMap[sy + 6][sx + 5] = 16;
+    wMap[sy - 1][sx + 2] = 15;
+    wMap[sy - 1][sx + 7] = 15;
+  }
+
+  if (id === 'rodaje') {
+    // Cantera Rodaje: área irregular de piedra, rocas y set simbólico de rodaje.
+    for (let r = sy - 4; r <= sy + 10; r++) {
+      for (let c = sx - 4; c <= sx + 12; c++) {
+        if (r < 2 || r >= WR - 2 || c < 2 || c >= WC - 2) continue;
+        const edge = r === sy - 4 || r === sy + 10 || c === sx - 4 || c === sx + 12;
+        const t = wMap[r][c];
+        if (edge && t !== 4 && t !== 11 && t !== 12) wMap[r][c] = Math.random() < 0.65 ? 7 : 19;
+        else if (t !== 4 && t !== 11 && t !== 12) wMap[r][c] = 19;
+      }
+    }
+    // Caminos internos tallados en la cantera para no bloquear NPCs.
+    for (let c = sx - 3; c <= sx + 11; c++) wMap[sy + 3][c] = 1;
+    for (let r = sy - 3; r <= sy + 9; r++) wMap[r][sx + 4] = 1;
+    // Set de rodaje simbólico y luces.
+    wMap[sy + 2][sx + 4] = 18;
+    wMap[sy + 4][sx + 6] = 18;
+    wMap[sy + 1][sx + 2] = 15;
+    wMap[sy + 1][sx + 8] = 15;
+    wMap[sy + 6][sx + 2] = 16;
+    wMap[sy + 6][sx + 7] = 16;
+    // Reubicar visualmente algunos edificios como casetas de producción.
+    for (const [bc, br] of [[sx, sy], [sx + 6, sy], [sx, sy + 5], [sx + 6, sy + 5]]) {
+      if (wMap[br]?.[bc] !== undefined) wMap[br][bc] = 4;
+      if (wMap[br]?.[bc + 1] !== undefined) wMap[br][bc + 1] = 4;
+      if (wMap[br + 1]?.[bc] !== undefined) wMap[br + 1][bc] = 4;
+      if (wMap[br + 1]?.[bc + 1] !== undefined) wMap[br + 1][bc + 1] = 4;
+    }
+  }
+
+  if (id === 'ultimatoma') {
+    // Feria: plaza más abierta, faroles y bancas.
+    for (let r = sy + 1; r <= sy + 6; r++)
+      for (let c = sx; c <= sx + 7; c++)
+        if (wMap[r]?.[c] === 1 || wMap[r]?.[c] === 0) wMap[r][c] = (r === sy + 3 || c === sx + 4) ? 1 : 6;
+    wMap[sy + 2][sx + 2] = 15;
+    wMap[sy + 2][sx + 7] = 15;
+    wMap[sy + 6][sx + 2] = 16;
+    wMap[sy + 6][sx + 6] = 16;
+  }
+
+  if (id === 'montaje') {
+    // Pueblo final: mirador frío hacia castillo, faroles y bancos.
+    for (let c = sx - 1; c <= sx + 9; c++) if (wMap[sy - 1]?.[c] !== undefined) wMap[sy - 1][c] = 19;
+    wMap[sy - 2][sx + 4] = 14;
+    wMap[sy + 1][sx + 2] = 15;
+    wMap[sy + 1][sx + 7] = 15;
+    wMap[sy + 6][sx + 3] = 16;
+    wMap[sy + 6][sx + 6] = 16;
   }
 
   // Aldea Pitch recibe una primera zona más clara y acogedora para tutorial.
