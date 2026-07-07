@@ -10410,7 +10410,7 @@ function genWorld() {
   // Inicializar mapa con hierba y hierba alta aleatoria
   for (let r = 0; r < WR; r++) {
     wMap[r] = [];
-    for (let c = 0; c < WC; c++) wMap[r][c] = Math.random() < 0.05 ? 5 : 0;
+    for (let c = 0; c < WC; c++) wMap[r][c] = Math.random() < 0.08 ? 5 : 0;
   }
 
   // Bordes de árboles
@@ -13637,7 +13637,7 @@ function uWorld() {
     const tile = wMap[tr]?.[tc];
 
     // Encuentros en hierba alta
-    if (tile === 5 && Math.random() < 0.0165) {
+    if (tile === 5 && Math.random() < 0.018975) {
       startWild();
     }
 
