@@ -8316,33 +8316,33 @@ function dCre(x, y, id, lv, f) {
         px(x + 13, by + 22, 4, 15, CREAM); // panza clara lateral
 
         // Pechera de manzana roja justo bajo la cabeza.
-        px(x + 7, by + 16, 27 + sz, 17 + sz, RED1);
-        px(x + 9, by + 15, 23 + sz, 17 + sz, RED2);
-        px(x + 12, by + 17, 16 + sz, 12 + sz, RED3);
-        px(x + 14, by + 16, 5, 3, '#FF8A78'); // brillo
-        px(x + 25, by + 20, 3, 2, '#FFB0A0');
+        px(x + 10, by + 17, 21 + sz, 15 + sz, RED1);
+        px(x + 12, by + 16, 17 + sz, 15 + sz, RED2);
+        px(x + 14, by + 18, 12 + sz, 10 + sz, RED3);
+        px(x + 15, by + 17, 4, 2, '#FF8A78'); // brillo
+        px(x + 25, by + 20, 2, 2, '#FFB0A0');
         // semillas/ranuras de la pechera
-        px(x + 15, by + 22, 4, 5, '#A85A38');
-        px(x + 23, by + 21, 4, 5, '#A85A38');
-        px(x + 14, by + 28, 4, 4, '#A85A38');
-        px(x + 21, by + 29, 4, 4, '#A85A38');
+        px(x + 16, by + 22, 3, 4, '#A85A38');
+        px(x + 23, by + 21, 3, 4, '#A85A38');
+        px(x + 15, by + 27, 3, 3, '#A85A38');
+        px(x + 21, by + 27, 3, 3, '#A85A38');
 
         // Brazos en forma de hojas, saliendo de la manzana.
         cx.globalAlpha = 0.98;
         // brazo-hoja izquierdo tipo escudo/hoja redonda
-        px(x - 10, by + 18 + leaf, 16, 7, G3);
-        px(x - 15, by + 22 + leaf, 21, 7, G2);
-        px(x - 13, by + 29 + leaf, 17, 5, '#94D860');
-        px(x - 3, by + 22 + leaf, 5, 10, '#6FA840');
+        px(x - 7, by + 19 + leaf, 12, 5, G3);
+        px(x - 11, by + 23 + leaf, 16, 5, G2);
+        px(x - 9, by + 28 + leaf, 12, 4, '#94D860');
+        px(x - 1, by + 23 + leaf, 3, 8, '#6FA840');
         // brazo-hoja derecho largo tipo espada
-        px(x + sz + 29, by + 14 - leaf, 23, 5, G3);
-        px(x + sz + 28, by + 19 - leaf, 29, 6, G2);
-        px(x + sz + 36, by + 25 - leaf, 19, 5, '#94D860');
-        px(x + sz + 53, by + 16 - leaf, 8, 4, G3);
-        px(x + sz + 29, by + 20 - leaf, 10, 3, '#B08858');
+        px(x + sz + 28, by + 15 - leaf, 19, 4, G3);
+        px(x + sz + 28, by + 20 - leaf, 23, 4, G2);
+        px(x + sz + 35, by + 24 - leaf, 14, 4, '#94D860');
+        px(x + sz + 48, by + 16 - leaf, 6, 3, G3);
+        px(x + sz + 29, by + 20 - leaf, 7, 2, '#B08858');
         // hojita secundaria derecha baja
-        px(x + sz + 33, by + 29 + leaf, 18, 6, G3);
-        px(x + sz + 36, by + 35 + leaf, 14, 5, '#94D860');
+        px(x + sz + 32, by + 29 + leaf, 14, 4, G3);
+        px(x + sz + 35, by + 34 + leaf, 10, 4, '#94D860');
         cx.globalAlpha = 1;
 
         // Cabeza verde arriba, con ojos saltones amarillos y pupilas negras.
@@ -8368,8 +8368,8 @@ function dCre(x, y, id, lv, f) {
         px(x + 14, by + 12 + sway, 5, 1, '#1F5018');
 
         // Unión/cinturón bajo la pechera.
-        px(x + 14, by + 32 + sz, 12, 3, '#5A3818');
-        px(x + 17, by + 32 + sz, 5, 3, '#C8A830');
+        px(x + 15, by + 30 + sz, 9, 3, '#5A3818');
+        px(x + 17, by + 30 + sz, 4, 3, '#C8A830');
         // Aura vegetal mínima.
         cx.globalAlpha = 0.05;
         cx.fillStyle = '#B8E880';
@@ -16573,6 +16573,7 @@ function dexIds() {
   return ordered;
 }
 function hasCapturedSpecies(id) {
+  if (G.supervisor) return true;
   return (captureCount[id] || 0) > 0 || G.party.some((c) => c.id === id) || proa.some((c) => c.id === id);
 }
 function uDex() {
