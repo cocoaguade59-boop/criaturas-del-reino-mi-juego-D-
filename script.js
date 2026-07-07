@@ -9087,27 +9087,42 @@ function dTileW(c, r) {
       }
       break;
     }
-    case 3: { // Pino estilo GBA (nieve segun altura)
+    case 3: { // Árbol del mundo: patrón base del personal, adaptado al clima
       const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor((c + r) % 2 ? '#4A9828' : '#3E8822', '#DCE8DC', snow);
+      // Suelo bajo el árbol: verde al sur, nevado/frío al norte
+      const groundA = lerpColor('#58A830', '#F2F8F4', snow);
+      const groundB = lerpColor('#48982A', '#DCE8E2', snow);
+      cx.fillStyle = (c + r) % 2 ? groundA : groundB;
       cx.fillRect(x, y, T, T);
-      cx.fillStyle = '#5A3818'; cx.fillRect(x + 13, y + 21, 6, 11);
-      cx.fillStyle = '#6A4820'; cx.fillRect(x + 13, y + 21, 2, 11);
-      const L = '#1E6E22', LL = '#339A36', LD = '#14521A';
-      cx.fillStyle = LD; cx.fillRect(x + 2, y + 16, 28, 9);
-      cx.fillStyle = L;  cx.fillRect(x + 3, y + 17, 26, 7);
-      cx.fillStyle = LL; cx.fillRect(x + 6, y + 18, 14, 2);
-      cx.fillStyle = LD; cx.fillRect(x + 6, y + 9, 20, 9);
-      cx.fillStyle = L;  cx.fillRect(x + 7, y + 10, 18, 7);
-      cx.fillStyle = LL; cx.fillRect(x + 10, y + 11, 10, 2);
-      cx.fillStyle = LD; cx.fillRect(x + 10, y + 2, 12, 9);
-      cx.fillStyle = L;  cx.fillRect(x + 11, y + 3, 10, 7);
-      cx.fillStyle = LL; cx.fillRect(x + 13, y + 4, 6, 2);
-      if (snow > 0.12) {
-        cx.fillStyle = 'rgba(255,255,255,' + (0.55 + snow * 0.45).toFixed(2) + ')';
-        cx.fillRect(x + 10, y + 1, 12, 3);
+      cx.fillStyle = lerpColor('#3F8C24', '#C8D8CC', snow);
+      if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 5, y + 7, 3, 2);
+      if ((c * 7 + r) % 5 === 0) cx.fillRect(x + 22, y + 24, 3, 2);
+
+      // Mismo patrón visual que los árboles del personal de ruta
+      dShadow(x + 16, y + 29, 12, 4);
+      const trunk = lerpColor('#6A4828', '#6B5A4E', snow);
+      const trunkL = lerpColor('#7A5630', '#827064', snow);
+      px(x + 13, y + 18, 7, 12, trunk);
+      px(x + 11, y + 22, 11, 8, trunkL);
+
+      const dark = lerpColor('#185C2A', '#AFC4B8', snow);
+      const mid = lerpColor('#20743A', '#CBDCD2', snow);
+      const light = lerpColor('#2B8A45', '#E3EEE8', snow);
+      const hi = lerpColor('#45A85A', '#FFFFFF', snow);
+      // copa en tres masas rectangulares, no pino triangular
+      px(x + 6, y + 7, 20, 14, dark);
+      px(x + 3, y + 13, 26, 12, mid);
+      px(x + 8, y + 3, 16, 10, light);
+      px(x + 10, y + 9, 8, 5, hi);
+      px(x + 22, y + 16, 4, 4, lerpColor('#145020', '#9FB6AA', snow));
+
+      // nieve acumulada en la parte alta si está al norte
+      if (snow > 0.18) {
+        cx.fillStyle = 'rgba(255,255,255,' + (0.55 + snow * 0.4).toFixed(2) + ')';
+        cx.fillRect(x + 8, y + 3, 16, 3);
         cx.fillRect(x + 6, y + 8, 20, 2);
-        cx.fillRect(x + 2, y + 15, 28, 2);
+        cx.fillRect(x + 3, y + 13, 26, 2);
+        cx.fillRect(x + 10, y + 9, 8, 2);
       }
       break;
     }
@@ -13622,7 +13637,7 @@ function uWorld() {
     const tile = wMap[tr]?.[tc];
 
     // Encuentros en hierba alta
-    if (tile === 5 && Math.random() < 0.015) {
+    if (tile === 5 && Math.random() < 0.0165) {
       startWild();
     }
 
@@ -13633,7 +13648,7 @@ function uWorld() {
         for (let dc = -1; dc <= 1; dc++) {
           if (wMap[tr + dr]?.[tc + dc] === 2) nearWater = true;
         }
-      if (nearWater && Math.random() < 0.008) startWild('water');
+      if (nearWater && Math.random() < 0.0088) startWild('water');
     }
 
     // Cristal Vínculo
