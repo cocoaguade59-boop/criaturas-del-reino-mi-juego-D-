@@ -13771,8 +13771,23 @@ function uStarter() {
   if (kp(' ') || kp('Enter')) {
     const ids = ['flameye', 'axolotl', 'gorilan'];
     const c = new Cre(ids[G.sSel], 5);
-    G.party.push(c);
+    G.party = [c];
+    proa = [];
     sfx.cap();
+    G.curMap = 'world';
+    G.pl.x = 20;
+    G.pl.y = 145;
+    G.pl.d = 3;
+    G.pl.stepTarget = null;
+    G.pl.moving = false;
+    updateCamera(WC, WR);
+    // Evita que el SPACE usado para confirmar dispare otra acción en el primer frame del mundo.
+    G.keys[' '] = false;
+    G.keys['Enter'] = false;
+    G.held[' '] = false;
+    G.held['Enter'] = false;
+    G.kcd[' '] = false;
+    G.kcd['Enter'] = false;
     G.scr = 'world';
     aN(`¡${c.nm} se unió a tu equipo!`);
   }
