@@ -10406,11 +10406,42 @@ function addClearing(cx0, cy0, rad = 3) {
     }
   }
 }
+
+
+function addTallGrassPatch(x0, y0, w, h, density = 0.75) {
+  // Parche rectangular irregular de hierba alta, sin tocar caminos ni edificios.
+  for (let r = y0; r < y0 + h && r < WR - 2; r++) {
+    for (let c = x0; c < x0 + w && c < WC - 2; c++) {
+      if (r < 2 || c < 2) continue;
+      if (wMap[r][c] !== 0) continue;
+      const edge = r === y0 || r === y0 + h - 1 || c === x0 || c === x0 + w - 1;
+      const localDensity = edge ? density * 0.45 : density;
+      if (Math.random() < localDensity) wMap[r][c] = 5;
+    }
+  }
+}
+
+function addWorldTallGrassPatches() {
+  // Más hierba alta cerca de rutas y zonas de exploración para que los encuentros
+  // no dependan solo de puntitos dispersos del generador inicial.
+  [
+    { x: 23, y: 124, w: 10, h: 8, d: 0.72 }, // Ruta 1
+    { x: 38, y: 118, w: 10, h: 8, d: 0.72 },
+    { x: 18, y: 93, w: 12, h: 8, d: 0.76 },  // Ruta 2 / Cueva Volcánica
+    { x: 52, y: 91, w: 10, h: 8, d: 0.76 },
+    { x: 57, y: 68, w: 12, h: 9, d: 0.78 },  // Ruta 3
+    { x: 31, y: 58, w: 11, h: 8, d: 0.78 },
+    { x: 34, y: 36, w: 12, h: 8, d: 0.8 },   // Ruta 4
+    { x: 58, y: 34, w: 11, h: 8, d: 0.8 },
+    { x: 35, y: 12, w: 10, h: 8, d: 0.82 },  // Ruta 5 norte
+    { x: 47, y: 8, w: 10, h: 7, d: 0.82 },
+  ].forEach((p) => addTallGrassPatch(p.x, p.y, p.w, p.h, p.d));
+}
 function genWorld() {
   // Inicializar mapa con hierba y hierba alta aleatoria
   for (let r = 0; r < WR; r++) {
     wMap[r] = [];
-    for (let c = 0; c < WC; c++) wMap[r][c] = Math.random() < 0.08 ? 5 : 0;
+    for (let c = 0; c < WC; c++) wMap[r][c] = Math.random() < 0.14 ? 5 : 0;
   }
 
   // Bordes de árboles
@@ -10495,6 +10526,9 @@ function genWorld() {
   placeCave(72, 38);
   buildCastleExt(37, 7);
   buildTower(33, 8);
+
+  // Parches adicionales: más zonas reales de hierba alta en el mapa exterior.
+  addWorldTallGrassPatches();
 
   let cv2 = 0;
   while (cv2 < 45) {
