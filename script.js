@@ -12632,6 +12632,13 @@ function startNewGameFlow() {
   clearAllGameSaves();
   G.hasSave = false;
   G.sSel = 0;
+  // El protagonista inicia centrado en Aldea Pitch mirando a Alessandro.
+  G.curMap = 'world';
+  G.pl.x = 20;
+  G.pl.y = 145;
+  G.pl.d = 3;
+  G.pl.stepTarget = null;
+  G.pl.moving = false;
   G.scr = 'intro';
   G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
 }
@@ -12773,12 +12780,22 @@ function dTitle() {
     cx.fillRect(320 - ww / 2, yy, ww, 8);
   }
 
-  // Logo
+  // Logo sin recuadro negro: placa clara de pixel-art con relieve
   cx.textAlign = 'center';
-  dBoxMenu(74, 26, 492, 140, '');
-  cx.fillStyle = '#000'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 323, 82); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 323, 122);
-  cx.fillStyle = '#FFE070'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 320, 79); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 320, 119);
-  cx.fillStyle = '#A0B0C0'; cx.font = '7px "Press Start 2P"'; cx.fillText('Desfile de criaturas del reino', 320, 148);
+  cx.fillStyle = 'rgba(255,232,160,.18)';
+  cx.fillRect(88, 34, 464, 118);
+  cx.fillStyle = 'rgba(255,255,255,.20)';
+  cx.fillRect(96, 40, 448, 4);
+  cx.fillRect(96, 44, 4, 96);
+  cx.fillStyle = 'rgba(80,48,20,.28)';
+  cx.fillRect(96, 140, 448, 5);
+  cx.fillRect(540, 44, 5, 96);
+  px(88, 34, 14, 14, '#C8A830');
+  px(538, 34, 14, 14, '#C8A830');
+  px(88, 138, 14, 14, '#C8A830');
+  px(538, 138, 14, 14, '#C8A830');
+  cx.fillStyle = '#000'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 323, 84); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 323, 124);
+  cx.fillStyle = '#FFE070'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 320, 81); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 320, 121);
 
   const ids = Object.keys(CDB);
   const spacing = 92;
@@ -12833,8 +12850,8 @@ function uIntro() {
   updateCamera(WC, WR);
   if (it.phase === 0) {
     it.y += 0.045;
-    if (it.y >= 143.55 || kp(' ') || kp('Enter')) {
-      it.y = 143.55;
+    if (it.y >= 144 || kp(' ') || kp('Enter')) {
+      it.y = 144;
       it.phase = 1;
       it.tm = 0;
     }
@@ -12869,7 +12886,7 @@ function uIntro() {
 function dIntro() {
   updateCamera(WC, WR);
   drawMap();
-  const it = G.intro || { y: 143.55, phase: 1, li: 0, ci: 0, full: false };
+  const it = G.intro || { y: 144, phase: 1, li: 0, ci: 0, full: false };
   const ax = 20 * T - cam.x,
     ay = it.y * T - cam.y;
   dNPC(ax, ay - 8, 'alessandro', fr);
@@ -15402,6 +15419,7 @@ function resetGame(startIntro = false) {
   aN('¡Partida reiniciada!');
   sfx.sel();
   if (startIntro) {
+    G.pl.d = 3;
     G.scr = 'intro';
     G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
   }
