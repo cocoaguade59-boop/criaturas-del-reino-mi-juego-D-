@@ -8296,89 +8296,84 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'hydrapom': // Knightapple: caballero manzana con hojas-espada
+    case 'hydrapom': // Knightapple: serpiente verde erguida con pechera de manzana y brazos-hoja
       {
         const sway = Math.sin(f * 0.1) * 2;
         const leaf = Math.sin(f * 0.12) * 2;
+        const G1 = '#4E9A1E', G2 = '#78C840', G3 = '#B8E880';
         const RED1 = '#B82020', RED2 = '#D83030', RED3 = '#F05040';
-        const GREEN1 = '#4E9A1E', GREEN2 = '#78C840', GREEN3 = '#B8E880';
-        const CREAM = '#F0E6C8', CREAM2 = '#D8C8A8';
+        const CREAM = '#F0E6C8';
 
-        // Cola/cuerpo inferior serpentino, como tallo enrollado.
-        px(x + 10, by + 34, 24 + sz, 7, '#5BAA24');
-        px(x + 6, by + 37, 22 + sz, 7, GREEN1);
-        px(x + 2, by + 40, 18 + sz, 6, '#6FC838');
-        px(x + sz + 25, by + 37, 12, 8, '#E8E8D8');
-        px(x + sz + 31, by + 33, 10, 9, '#8CCF52');
-        px(x + sz + 34, by + 30, 7, 7, GREEN1);
-        // Panza clara del tallo/serpiente
-        px(x + 8, by + 36, 10 + sz, 5, CREAM);
-        px(x + 5, by + 40, 9 + sz, 4, CREAM);
+        // Cuerpo serpentino delgado, erguido, con base enrollada.
+        px(x + 12, by + 32, 24 + sz, 7, G1);
+        px(x + 8, by + 36, 22 + sz, 7, G2);
+        px(x + 2, by + 39, 22 + sz, 6, '#6FC838');
+        px(x + sz + 29, by + 36, 13, 8, '#E8E8D8');
+        px(x + sz + 35, by + 32, 9, 8, G2);
+        // Tramo vertical del cuello/cuerpo, muy delgado.
+        px(x + 16, by + 14, 7, 23, G1);
+        px(x + 18, by + 13, 3, 24, G3);
+        px(x + 13, by + 22, 4, 15, CREAM); // panza clara lateral
 
-        // Cuello largo tipo serpiente/tallo, crema con borde verde.
-        px(x + 14, by + 18, 8, 21, GREEN1);
-        px(x + 12, by + 18, 6, 20, CREAM);
-        px(x + 14, by + 18, 3, 20, CREAM2);
-        px(x + 18, by + 16, 6, 8, GREEN2);
-        px(x + 15, by + 14, 8, 6, '#6FC838');
+        // Pechera de manzana roja justo bajo la cabeza.
+        px(x + 7, by + 16, 27 + sz, 17 + sz, RED1);
+        px(x + 9, by + 15, 23 + sz, 17 + sz, RED2);
+        px(x + 12, by + 17, 16 + sz, 12 + sz, RED3);
+        px(x + 14, by + 16, 5, 3, '#FF8A78'); // brillo
+        px(x + 25, by + 20, 3, 2, '#FFB0A0');
+        // semillas/ranuras de la pechera
+        px(x + 15, by + 22, 4, 5, '#A85A38');
+        px(x + 23, by + 21, 4, 5, '#A85A38');
+        px(x + 14, by + 28, 4, 4, '#A85A38');
+        px(x + 21, by + 29, 4, 4, '#A85A38');
 
-        // Manzana-armadura roja: torso principal brillante.
-        px(x + 5, by + 14, 29 + sz, 20 + sz, RED1);
-        px(x + 7, by + 12, 25 + sz, 21 + sz, RED2);
-        px(x + 10, by + 14, 18 + sz, 16 + sz, RED3);
-        px(x + 12, by + 13, 6, 3, '#FF8A78'); // brillo pixelado
-        px(x + 24, by + 17, 3, 2, '#FFB0A0');
-        // Ranuras/semillas de armadura en el pecho de manzana.
-        px(x + 14, by + 20, 4, 6, '#A85A38');
-        px(x + 22, by + 19, 4, 6, '#A85A38');
-        px(x + 13, by + 27, 4, 5, '#A85A38');
-        px(x + 20, by + 28, 4, 5, '#A85A38');
-
-        // Hoja-escudo izquierda, redondeada por bloques.
-        cx.globalAlpha = 0.96;
-        px(x - 10, by + 16 + leaf, 16, 8, GREEN3);
-        px(x - 14, by + 20 + leaf, 20, 7, GREEN2);
-        px(x - 12, by + 27 + leaf, 16, 5, '#94D860');
-        px(x - 4, by + 20 + leaf, 4, 11, '#6FA840');
-        // Hoja-espada derecha superior, larga y puntiaguda en diagonal pixelada.
-        px(x + sz + 29, by + 7 - leaf, 22, 5, GREEN3);
-        px(x + sz + 27, by + 12 - leaf, 28, 6, GREEN2);
-        px(x + sz + 35, by + 18 - leaf, 18, 5, '#94D860');
-        px(x + sz + 50, by + 9 - leaf, 8, 4, GREEN3);
-        px(x + sz + 29, by + 13 - leaf, 10, 3, '#B08858');
-        // Hoja-escudo derecha inferior.
-        px(x + sz + 34, by + 22 + leaf, 18, 7, GREEN3);
-        px(x + sz + 31, by + 29 + leaf, 22, 7, GREEN2);
-        px(x + sz + 35, by + 36 + leaf, 15, 5, '#94D860');
+        // Brazos en forma de hojas, saliendo de la manzana.
+        cx.globalAlpha = 0.98;
+        // brazo-hoja izquierdo tipo escudo/hoja redonda
+        px(x - 10, by + 18 + leaf, 16, 7, G3);
+        px(x - 15, by + 22 + leaf, 21, 7, G2);
+        px(x - 13, by + 29 + leaf, 17, 5, '#94D860');
+        px(x - 3, by + 22 + leaf, 5, 10, '#6FA840');
+        // brazo-hoja derecho largo tipo espada
+        px(x + sz + 29, by + 14 - leaf, 23, 5, G3);
+        px(x + sz + 28, by + 19 - leaf, 29, 6, G2);
+        px(x + sz + 36, by + 25 - leaf, 19, 5, '#94D860');
+        px(x + sz + 53, by + 16 - leaf, 8, 4, G3);
+        px(x + sz + 29, by + 20 - leaf, 10, 3, '#B08858');
+        // hojita secundaria derecha baja
+        px(x + sz + 33, by + 29 + leaf, 18, 6, G3);
+        px(x + sz + 36, by + 35 + leaf, 14, 5, '#94D860');
         cx.globalAlpha = 1;
 
-        // Cabeza verde tipo casco de caballero/serpiente.
-        px(x + 11, by + 1 + sway, 18 + sz, 10, GREEN1);
-        px(x + 13, by + 3 + sway, 14 + sz, 7, GREEN2);
-        px(x + 15, by + 5 + sway, 10 + sz, 4, GREEN3);
-        // Visera/rostro crema oculto bajo el casco.
-        px(x + 12, by + 10 + sway, 16 + sz, 8, CREAM);
-        px(x + 14, by + 11 + sway, 12 + sz, 5, '#FFF0D8');
-        px(x + 12, by + 8 + sway, 5, 4, '#88C840');
-        px(x + sz + 24, by + 8 + sway, 5, 4, '#88C840');
-        // Cresta/hojas del casco.
-        px(x + 16, by - 4 + sway, 5, 6, GREEN2);
-        px(x + 22, by - 7 + sway, 10, 5, GREEN3);
-        px(x + 29, by - 8 + sway, 6, 3, GREEN3);
-        px(x + 24, by - 4 + sway, 4, 2, '#2F7A24');
-        // Ojos/visor.
-        px(x + 13, by + 11 + sway, 5, 4, '#E8E8D8');
-        px(x + sz + 22, by + 11 + sway, 5, 4, '#E8E8D8');
-        px(x + 15, by + 12 + sway, 2, 2, '#1A2010');
-        px(x + sz + 23, by + 12 + sway, 2, 2, '#1A2010');
+        // Cabeza verde arriba, con ojos saltones amarillos y pupilas negras.
+        px(x + 10, by + 1 + sway, 22 + sz, 12, G1);
+        px(x + 12, by + 3 + sway, 18 + sz, 8, G2);
+        px(x + 14, by + 5 + sway, 14 + sz, 5, G3);
+        // Hocico/mandíbula verde más oscuro, como serpiente.
+        px(x + 9, by + 9 + sway, 12, 7, '#3F8418');
+        px(x + 11, by + 11 + sway, 9, 4, '#5CA828');
+        // Ojos saltones amarillos
+        px(x + 12, by - 2 + sway, 7, 6, '#E8D840');
+        px(x + sz + 23, by - 2 + sway, 7, 6, '#E8D840');
+        px(x + 14, by + 0 + sway, 3, 3, '#1A2010');
+        px(x + sz + 25, by + 0 + sway, 3, 3, '#1A2010');
+        px(x + 15, by + 0 + sway, 1, 1, '#F8F8C0');
+        px(x + sz + 26, by + 0 + sway, 1, 1, '#F8F8C0');
+        // Cresta/hojas de la cabeza
+        px(x + 17, by - 7 + sway, 6, 6, G2);
+        px(x + 24, by - 9 + sway, 10, 5, G3);
+        px(x + 31, by - 10 + sway, 6, 3, G3);
+        px(x + 26, by - 6 + sway, 4, 2, '#2F7A24');
+        // Boca simple
+        px(x + 14, by + 12 + sway, 5, 1, '#1F5018');
 
-        // Detalles de caballero: cinturón/tallo bajo la manzana.
+        // Unión/cinturón bajo la pechera.
         px(x + 14, by + 32 + sz, 12, 3, '#5A3818');
         px(x + 17, by + 32 + sz, 5, 3, '#C8A830');
-        // Aura verde/roja pixelada muy sutil.
+        // Aura vegetal mínima.
         cx.globalAlpha = 0.05;
         cx.fillStyle = '#B8E880';
-        pixelGlow(x + 20, by + 22, 30 + sz, 18);
+        pixelGlow(x + 20, by + 22, 28 + sz, 16);
         cx.globalAlpha = 1;
       }
       break;
