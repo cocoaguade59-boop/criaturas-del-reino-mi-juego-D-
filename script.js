@@ -7032,80 +7032,109 @@ function dCre(x, y, id, lv, f) {
     // EVOLUCIONES FUEGO 🔥
     // ==========================================
 
-    case 'flamcrest': // Pavo real joven con plumas más grandes
-      px(x + 6, by + 20, 20 + sz, 14 + sz, '#B82818');
-      px(x + 8, by + 22, 16 + sz, 10 + sz, '#D83828');
-      px(x + 10, by + 24, 12 + sz, 6, '#E84838');
-      px(x - 4, by + 18, 10, 8, '#D02818');
-      px(x - 2, by + 16, 8, 6, '#E83828');
-      px(x - 6, by + 20, 6, 4, '#C02010');
-      px(x - 3, by + 17, 3, 3, '#F8A030');
-      px(x - 2, by + 18, 1, 1, '#2040A0');
-      px(x + sz + 24, by + 18, 10, 8, '#D02818');
-      px(x + sz + 26, by + 16, 8, 6, '#E83828');
-      px(x + sz + 30, by + 17, 3, 3, '#F8A030');
-      px(x + sz + 31, by + 18, 1, 1, '#2040A0');
-      px(x + sz + 24, by + 16, 8, 6, '#A82010');
-      px(x, by + 16, 8, 6, '#A82010');
-      px(x + 6, by + 4, 20 + sz, 16, '#B82818');
-      px(x + 8, by + 6, 16 + sz, 12, '#D83828');
-      px(x + 10, by - 4, 4, 10, '#E82020');
-      px(x + 15, by - 6, 4, 12, '#F83828');
-      px(x + 20, by - 3, 4, 9, '#E82020');
-      px(x + 11, by - 2, 3, 6, '#F8A030');
-      px(x + 16, by - 4, 3, 8, '#F8C040');
-      px(x + 21, by - 1, 3, 5, '#F8A030');
-      px(x + 8, by + 10, 6, 5, '#fff');
-      px(x + sz + 18, by + 10, 6, 5, '#fff');
-      px(x + 10, by + 12, 4, 3, '#C82020');
-      px(x + sz + 20, by + 12, 4, 3, '#C82020');
-      px(x + 10, by + 12, 2, 1, '#fff');
-      px(x + sz + 20, by + 12, 2, 1, '#fff');
-      px(x + 14, by + 18, 4, 2, '#F0C030');
-      px(x + 8, by + 32 + sz, 5, 5, '#C89020');
-      px(x + sz + 18, by + 32 + sz, 5, 5, '#C89020');
+    case 'flamcrest': // Flamcrest: adolescente alto, cuello largo y abanico naciente
+      {
+        const sway = Math.sin(f * 0.12) * 2;
+        // cola/abanico vertical detrás: cambia drásticamente la silueta
+        px(x - 8, by + 10 + sway, 6, 24, '#8A1810');
+        px(x - 2, by + 6 + sway, 6, 30, '#B82818');
+        px(x + 4, by + 3 + sway, 6, 33, '#D83828');
+        px(x + 10, by + 1 + sway, 6, 35, '#E84838');
+        px(x + 16, by + 1 - sway, 6, 35, '#E84838');
+        px(x + 22, by + 3 - sway, 6, 33, '#D83828');
+        px(x + 28, by + 6 - sway, 6, 30, '#B82818');
+        px(x + 34, by + 10 - sway, 6, 24, '#8A1810');
+        // ojos de pluma del abanico
+        for (let i = 0; i < 5; i++) {
+          const fx = x + 2 + i * 7;
+          const fy = by + 8 + Math.abs(i - 2) * 2;
+          px(fx, fy, 4, 4, '#F8A030');
+          px(fx + 1, fy + 1, 2, 2, '#2040A0');
+        }
+        // cuerpo más delgado y erguido
+        px(x + 10, by + 23, 14 + sz, 13 + sz, '#B82818');
+        px(x + 12, by + 25, 10 + sz, 9 + sz, '#D83828');
+        px(x + 14, by + 27, 6 + sz, 5, '#F06838');
+        // cuello largo
+        px(x + 15, by + 11, 5 + sz, 14, '#B82818');
+        px(x + 17, by + 10, 2 + sz, 14, '#E84838');
+        // cabeza pequeña altiva
+        px(x + 10, by + 4, 15 + sz, 10, '#B82818');
+        px(x + 12, by + 6, 11 + sz, 6, '#D83828');
+        // cresta grande
+        px(x + 10, by - 5, 3, 9, '#E82020');
+        px(x + 15, by - 8, 4, 12, '#F83828');
+        px(x + 21, by - 5, 3, 9, '#E82020');
+        px(x + 16, by - 6, 2, 7, '#F8C040');
+        // ojos serios
+        px(x + 12, by + 7, 4, 4, '#fff');
+        px(x + sz + 20, by + 7, 4, 4, '#fff');
+        px(x + 14, by + 9, 2, 2, '#801010');
+        px(x + sz + 21, by + 9, 2, 2, '#801010');
+        px(x + 15, by + 14, 5, 2, '#F0C030');
+        // patas largas
+        px(x + 12, by + 35 + sz, 4, 8, '#C89020');
+        px(x + sz + 21, by + 35 + sz, 4, 8, '#C89020');
+        px(x + 10, by + 42 + sz, 7, 2, '#A87018');
+        px(x + sz + 20, by + 42 + sz, 7, 2, '#A87018');
+      }
       break;
 
-    case 'inferpavo': // Pavo real majestuoso en llamas completas
-      px(x + 4, by + 18, 24 + sz, 16 + sz, '#A02010');
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#C02818');
-      px(x + 8, by + 22, 16 + sz, 8, '#D83828');
-      for (let i = 0; i < 7; i++) {
-        const angle = Math.sin(f * 0.1 + i * 0.8) * 2;
-        const fx2 = x - 10 + i * 6;
-        const fy = by + 8 + Math.abs(i - 3) * 2 + angle;
-        px(fx2, fy, 4, 12, '#D02818');
-        px(fx2 + 1, fy + 1, 2, 8, '#E83828');
-        px(fx2 + 1, fy + 2, 2, 3, '#F8A030');
-        px(fx2 + 1, fy + 3, 1, 1, '#2040A0');
+    case 'inferpavo': // Inferpavo: rey-fénix con abanico enorme de fuego
+      {
+        const wave = Math.sin(f * 0.1) * 2;
+        // abanico gigantesco, ocupa casi todo el sprite y cambia la silueta final
+        const tailCols = ['#6A1008','#8A1810','#B82018','#D83828','#F04830','#D83828','#B82018','#8A1810','#6A1008'];
+        for (let i = 0; i < 9; i++) {
+          const fx = x - 18 + i * 7;
+          const h = 24 + (4 - Math.abs(i - 4)) * 5;
+          const fy = by + 8 - (4 - Math.abs(i - 4)) * 2 + Math.sin(f * 0.08 + i) * 2;
+          px(fx, fy, 6, h, tailCols[i]);
+          px(fx + 1, fy + 2, 4, Math.max(8, h - 8), i === 4 ? '#F86040' : '#E84030');
+          px(fx + 1, fy + 5, 4, 4, '#F8C040');
+          px(fx + 2, fy + 6, 2, 2, '#2040A0');
+        }
+        // corona/base dorada del abanico
+        px(x + 2, by + 32, 30 + sz, 5, '#C8A830');
+        px(x + 6, by + 33, 22 + sz, 2, '#F8E060');
+        // cuerpo regio más compacto delante del abanico
+        px(x + 7, by + 22, 20 + sz, 17 + sz, '#A02010');
+        px(x + 9, by + 24, 16 + sz, 13 + sz, '#C02818');
+        px(x + 12, by + 26, 10 + sz, 8, '#F04830');
+        // alas laterales de fuego
+        px(x - 8, by + 20 + wave, 14, 12, '#A02010');
+        px(x - 12, by + 24 + wave, 10, 8, '#E84020');
+        px(x + sz + 27, by + 20 - wave, 14, 12, '#A02010');
+        px(x + sz + 35, by + 24 - wave, 10, 8, '#E84020');
+        // cuello y cabeza coronada
+        px(x + 14, by + 10, 6 + sz, 14, '#A02010');
+        px(x + 16, by + 9, 3 + sz, 14, '#E84020');
+        px(x + 8, by + 0, 20 + sz, 13, '#A02010');
+        px(x + 10, by + 2, 16 + sz, 9, '#C02818');
+        px(x + 13, by + 4, 10 + sz, 5, '#F04830');
+        // corona/cresta real
+        px(x + 8, by - 8, 4, 9, '#E82020');
+        px(x + 14, by - 12, 5, 13, '#F83020');
+        px(x + 22, by - 8, 4, 9, '#E82020');
+        px(x + 15, by - 10, 3, 8, '#F8E060');
+        px(x + 10, by - 6, 2, 4, '#F8C040');
+        px(x + 23, by - 6, 2, 4, '#F8C040');
+        // mirada real
+        px(x + 11, by + 4, 6, 5, '#F8C030');
+        px(x + sz + 20, by + 4, 6, 5, '#F8C030');
+        px(x + 13, by + 6, 3, 3, '#801010');
+        px(x + sz + 22, by + 6, 3, 3, '#801010');
+        px(x + 14, by + 12, 7, 2, '#E8A020');
+        // patas fuertes
+        px(x + 10, by + 38 + sz, 5, 7, '#C89020');
+        px(x + sz + 21, by + 38 + sz, 5, 7, '#C89020');
+        px(x + 8, by + 44 + sz, 8, 2, '#A87018');
+        px(x + sz + 20, by + 44 + sz, 8, 2, '#A87018');
+        cx.globalAlpha = 0.08;
+        cx.fillStyle = '#F84020';
+        pixelGlow(x + 16, by + 22, 34 + sz, 22);
+        cx.globalAlpha = 1;
       }
-      px(x + 4, by + 16, 24 + sz, 4, '#C8A830');
-      const iwf2 = Math.sin(f * 0.15) * 3;
-      px(x - 4, by + 14 + iwf2, 10, 10, '#A02010');
-      px(x + sz + 26, by + 14 - iwf2, 10, 10, '#A02010');
-      px(x - 2, by + 16 + iwf2, 6, 6, '#C82818');
-      px(x + sz + 28, by + 16 - iwf2, 6, 6, '#C82818');
-      px(x + 6, by + 2, 20 + sz, 14, '#A02010');
-      px(x + 8, by + 4, 16 + sz, 10, '#C02818');
-      px(x + 8, by - 6, 4, 8, '#E82020');
-      px(x + 13, by - 8, 6, 10, '#F83020');
-      px(x + 20, by - 6, 4, 8, '#E82020');
-      px(x + 9, by - 4, 3, 4, '#F8C040');
-      px(x + 14, by - 6, 4, 6, '#F8E060');
-      px(x + 21, by - 4, 3, 4, '#F8C040');
-      px(x + 8, by + 6, 6, 5, '#F8C030');
-      px(x + sz + 18, by + 6, 6, 5, '#F8C030');
-      px(x + 10, by + 8, 3, 3, '#801010');
-      px(x + sz + 20, by + 8, 3, 3, '#801010');
-      px(x + 10, by + 8, 1, 1, '#F8E868');
-      px(x + sz + 20, by + 8, 1, 1, '#F8E868');
-      px(x + 14, by + 14, 4, 2, '#E8A020');
-      px(x + 8, by + 32 + sz, 5, 6, '#C89020');
-      px(x + sz + 18, by + 32 + sz, 5, 6, '#C89020');
-      cx.globalAlpha = 0.08;
-      cx.fillStyle = '#F84020';
-      pixelGlow(x + 16, by + 20, 22 + sz, 18);
-      cx.globalAlpha = 1;
       break;
 
     case 'flamencero': // Flamingo con capa de fuego
@@ -7385,32 +7414,56 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'pinzamestre': // Cangrejo estilista de lujo
-      px(x + 2, by + 20, 28 + sz, 12 + sz, '#B83818');
-      px(x + 4, by + 22, 24 + sz, 8 + sz, '#D04828');
-      px(x + 12, by + 22, 8 + sz, 4, '#C8A830');
-      px(x + 14, by + 23, 4, 2, '#E8C840');
-      px(x + 4, by + 18, 24 + sz, 4, '#4030A0');
-      px(x + 6, by + 16, 20 + sz, 4, '#5040B0');
-      px(x + 6, by + 12, 4, 8, '#B83818');
-      px(x + sz + 22, by + 12, 4, 8, '#B83818');
-      px(x + 5, by + 10, 6, 4, '#fff');
-      px(x + sz + 21, by + 10, 6, 4, '#fff');
-      px(x + 7, by + 12, 3, 2, '#181818');
-      px(x + sz + 23, by + 12, 3, 2, '#181818');
-      px(x + sz + 20, by + 10, 7, 5, '#C8A830');
-      px(x + sz + 21, by + 11, 5, 3, '#D8E8F0');
-      px(x - 6, by + 16, 10, 6, '#C8A830');
-      px(x - 8, by + 14, 4, 4, '#D8B840');
-      px(x - 8, by + 20, 4, 4, '#D8B840');
-      px(x + sz + 28, by + 16, 10, 6, '#C8A830');
-      px(x + sz + 32, by + 14, 4, 4, '#D8B840');
-      px(x + sz + 32, by + 20, 4, 4, '#D8B840');
-      px(x + 14, by + 28, 4, 2, '#A03818');
-      px(x + 6, by + 30 + sz, 4, 4, '#B83818');
-      px(x + 12, by + 30 + sz, 4, 4, '#B83818');
-      px(x + 18, by + 30 + sz, 4, 4, '#B83818');
-      px(x + sz + 22, by + 30 + sz, 4, 4, '#B83818');
+    case 'pinzamestre': // Pinzamestre: cangrejo estilista con pinzas gigantes
+      {
+        const snap = Math.sin(f * 0.16) * 2;
+        // cuerpo más pequeño para que las pinzas dominen la silueta
+        px(x + 6, by + 22, 24 + sz, 12 + sz, '#B83818');
+        px(x + 8, by + 24, 20 + sz, 8 + sz, '#D04828');
+        px(x + 12, by + 25, 12 + sz, 4, '#F07040');
+        // banda/sombrero de estilista
+        px(x + 5, by + 18, 26 + sz, 4, '#4030A0');
+        px(x + 7, by + 16, 22 + sz, 4, '#5040B0');
+        px(x + 14, by + 17, 8, 2, '#E8C840');
+        // ojos
+        px(x + 7, by + 10, 6, 5, '#fff');
+        px(x + sz + 23, by + 10, 6, 5, '#fff');
+        px(x + 9, by + 12, 3, 2, '#181818');
+        px(x + sz + 25, by + 12, 3, 2, '#181818');
+        // monóculo/lente estilista
+        px(x + sz + 24, by + 9, 7, 6, '#C8A830');
+        px(x + sz + 25, by + 10, 5, 4, '#D8E8F0');
+        // brazos largos hacia pinzas enormes
+        px(x - 10, by + 21 + snap, 16, 5, '#A03018');
+        px(x + sz + 30, by + 21 - snap, 16, 5, '#A03018');
+        // pinza izquierda enorme tipo tijera
+        px(x - 28, by + 12 + snap, 20, 12, '#C8A830');
+        px(x - 30, by + 9 + snap, 12, 8, '#D8B840');
+        px(x - 30, by + 22 + snap, 12, 8, '#D8B840');
+        px(x - 27, by + 11 + snap, 6, 4, '#F0D860');
+        px(x - 27, by + 24 + snap, 6, 4, '#F0D860');
+        px(x - 18, by + 17 + snap, 10, 3, '#8A6018');
+        // pinza derecha enorme tipo tijera
+        px(x + sz + 44, by + 12 - snap, 20, 12, '#C8A830');
+        px(x + sz + 56, by + 9 - snap, 12, 8, '#D8B840');
+        px(x + sz + 56, by + 22 - snap, 12, 8, '#D8B840');
+        px(x + sz + 59, by + 11 - snap, 6, 4, '#F0D860');
+        px(x + sz + 59, by + 24 - snap, 6, 4, '#F0D860');
+        px(x + sz + 44, by + 17 - snap, 10, 3, '#8A6018');
+        // peine y tijeras como accesorios
+        px(x - 24, by + 5 + snap, 12, 2, '#F0F0F0');
+        px(x - 24, by + 7 + snap, 2, 3, '#F0F0F0');
+        px(x - 20, by + 7 + snap, 2, 3, '#F0F0F0');
+        px(x - 16, by + 7 + snap, 2, 3, '#F0F0F0');
+        px(x + sz + 54, by + 5 - snap, 10, 2, '#E8E8E8');
+        px(x + sz + 58, by + 3 - snap, 2, 6, '#E8E8E8');
+        // patas múltiples
+        px(x + 6, by + 31 + sz, 4, 4, '#B83818');
+        px(x + 12, by + 32 + sz, 4, 4, '#B83818');
+        px(x + 20, by + 32 + sz, 4, 4, '#B83818');
+        px(x + sz + 27, by + 31 + sz, 4, 4, '#B83818');
+        px(x + 14, by + 29, 6, 2, '#A03818');
+      }
       break;
 
     case 'pinguchef': // Pingüino chef
@@ -8314,46 +8367,39 @@ function dCre(x, y, id, lv, f) {
     // FUEGO 🔥 - NUEVOS (únicos)
     // ==========================================
 
-    case 'flameye': // Pavo real bebé vanidoso con plumas de fuego
-      px(x + 8, by + 22, 16 + sz, 12 + sz, '#C83020');
-      px(x + 10, by + 24, 12 + sz, 8 + sz, '#E04830');
-      px(x + 12, by + 26, 8 + sz, 4, '#F06838');
-      px(x + 2, by + 24, 6, 3, '#E83020');
-      px(x + 4, by + 22, 4, 4, '#F04830');
-      px(x, by + 26, 4, 2, '#D02818');
-      px(x + 1, by + 22, 2, 2, '#F8A030');
-      const fef = Math.sin(f * 0.25) * 2;
-      px(x + sz + 22, by + 20 + fef, 6, 5, '#B82818');
-      px(x + 2, by + 20 - fef, 6, 5, '#B82818');
-      px(x + 8, by + 8, 16 + sz, 14, '#C83020');
-      px(x + 10, by + 10, 12 + sz, 10, '#E04830');
-      px(x + 12, by + 2, 3, 8, '#E82020');
-      px(x + 16, by + 0, 3, 10, '#F83828');
-      px(x + 20, by + 3, 3, 7, '#E82020');
-      px(x + 13, by + 3, 2, 4, '#F8A030');
-      px(x + 17, by + 1, 2, 6, '#F8C040');
-      px(x + 21, by + 4, 2, 3, '#F8A030');
-      px(x + 10, by + 12, 5, 5, '#fff');
-      px(x + sz + 18, by + 12, 5, 5, '#fff');
-      px(x + 12, by + 14, 3, 3, '#C82020');
-      px(x + sz + 20, by + 14, 3, 3, '#C82020');
-      px(x + 12, by + 14, 1, 1, '#fff');
-      px(x + sz + 20, by + 14, 1, 1, '#fff');
-      px(x + 10, by + 12, 1, 1, '#1A1A1A');
-      px(x + sz + 22, by + 12, 1, 1, '#1A1A1A');
-      px(x + 14, by + 19, 4, 2, '#F0C030');
-      px(x + 15, by + 20, 2, 1, '#D8A020');
-      cx.globalAlpha = 0.3;
-      px(x + 9, by + 16, 2, 2, '#F8A060');
-      px(x + sz + 22, by + 16, 2, 2, '#F8A060');
-      cx.globalAlpha = 1;
-      px(x + 10, by + 32 + sz, 4, 4, '#C89020');
-      px(x + 18, by + 32 + sz, 4, 4, '#C89020');
-      px(x + 9, by + 34 + sz, 5, 2, '#A87018');
-      px(x + 17, by + 34 + sz, 5, 2, '#A87018');
-      if (f % 20 < 10) {
-        px(x + 4, by + 20, 2, 2, '#F8C060');
-        px(x + sz + 24, by + 18, 2, 2, '#F8C060');
+    case 'flameye': // Flameye: polluelo de pavo real de fuego, compacto y cabezón
+      {
+        const hop = Math.sin(f * 0.2) * 1;
+        // cuerpo de polluelo: bolita pixelada baja
+        px(x + 10, by + hop + 24, 14 + sz, 10 + sz, '#C83020');
+        px(x + 12, by + hop + 26, 10 + sz, 6 + sz, '#E04830');
+        px(x + 14, by + hop + 28, 6 + sz, 3, '#F07838');
+        // alitas mini
+        px(x + 6, by + hop + 25, 6, 4, '#A82018');
+        px(x + sz + 23, by + hop + 25, 6, 4, '#A82018');
+        px(x + 4, by + hop + 27, 4, 2, '#F8A030');
+        px(x + sz + 27, by + hop + 27, 4, 2, '#F8A030');
+        // cabeza grande, distinta del cuerpo
+        px(x + 6, by + hop + 8, 22 + sz, 16, '#C83020');
+        px(x + 8, by + hop + 10, 18 + sz, 12, '#E04830');
+        px(x + 11, by + hop + 12, 12 + sz, 8, '#F06838');
+        // cresta de fueguito, pequeña
+        px(x + 13, by + hop + 3, 3, 6, '#E82020');
+        px(x + 17, by + hop + 1, 3, 8, '#F83828');
+        px(x + 21, by + hop + 4, 3, 5, '#E82020');
+        px(x + 14, by + hop + 4, 2, 3, '#F8A030');
+        px(x + 18, by + hop + 2, 2, 5, '#F8C040');
+        // ojos vanidosos
+        px(x + 10, by + hop + 13, 5, 5, '#fff');
+        px(x + sz + 20, by + hop + 13, 5, 5, '#fff');
+        px(x + 12, by + hop + 15, 3, 3, '#801010');
+        px(x + sz + 22, by + hop + 15, 3, 3, '#801010');
+        px(x + 11, by + hop + 13, 1, 1, '#1A1A1A');
+        px(x + sz + 24, by + hop + 13, 1, 1, '#1A1A1A');
+        px(x + 15, by + hop + 20, 5, 2, '#F0C030');
+        // patitas cortas
+        px(x + 12, by + hop + 33 + sz, 4, 4, '#C89020');
+        px(x + 20, by + hop + 33 + sz, 4, 4, '#C89020');
       }
       break;
 
