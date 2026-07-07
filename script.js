@@ -7051,46 +7051,51 @@ function dCre(x, y, id, lv, f) {
     // EVOLUCIONES FUEGO 🔥
     // ==========================================
 
-    case 'flamcrest': // Flamcrest: adolescente alto, cuello largo y abanico naciente
+    case 'flamcrest': // Flamcrest: adolescente de cuello corto con abanico controlado
       {
         const sway = Math.sin(f * 0.12) * 2;
-        // cola/abanico vertical detrás: cambia drásticamente la silueta
-        px(x - 8, by + 10 + sway, 6, 24, '#8A1810');
-        px(x - 2, by + 6 + sway, 6, 30, '#B82818');
-        px(x + 4, by + 3 + sway, 6, 33, '#D83828');
-        px(x + 10, by + 1 + sway, 6, 35, '#E84838');
-        px(x + 16, by + 1 - sway, 6, 35, '#E84838');
-        px(x + 22, by + 3 - sway, 6, 33, '#D83828');
-        px(x + 28, by + 6 - sway, 6, 30, '#B82818');
-        px(x + 34, by + 10 - sway, 6, 24, '#8A1810');
-        // ojos de pluma del abanico
-        for (let i = 0; i < 5; i++) {
-          const fx = x + 2 + i * 7;
-          const fy = by + 8 + Math.abs(i - 2) * 2;
+        // cola/abanico intermedio: menos plumas, no tan final como Inferpavo
+        const tail = [
+          [-4, 10 + sway, '#8A1810'],
+          [3, 6 + sway, '#B82818'],
+          [10, 4 + sway, '#D83828'],
+          [17, 4 - sway, '#D83828'],
+          [24, 6 - sway, '#B82818'],
+          [31, 10 - sway, '#8A1810'],
+        ];
+        tail.forEach((t, i) => {
+          const h = i === 2 || i === 3 ? 27 : i === 1 || i === 4 ? 24 : 19;
+          px(x + t[0], by + t[1], 6, h, t[2]);
+          px(x + t[0] + 1, by + t[1] + 2, 4, Math.max(8, h - 8), i === 2 || i === 3 ? '#E84838' : '#E83828');
+        });
+        // ojos de pluma reducidos
+        for (let i = 0; i < 3; i++) {
+          const fx = x + 7 + i * 9;
+          const fy = by + 10 + Math.abs(i - 1) * 2;
           px(fx, fy, 4, 4, '#F8A030');
           px(fx + 1, fy + 1, 2, 2, '#2040A0');
         }
-        // cuerpo más delgado y erguido
+        // cuerpo erguido pero juvenil
         px(x + 10, by + 23, 14 + sz, 13 + sz, '#B82818');
         px(x + 12, by + 25, 10 + sz, 9 + sz, '#D83828');
         px(x + 14, by + 27, 6 + sz, 5, '#F06838');
-        // cuello largo
-        px(x + 15, by + 11, 5 + sz, 14, '#B82818');
-        px(x + 17, by + 10, 2 + sz, 14, '#E84838');
-        // cabeza pequeña altiva
-        px(x + 10, by + 4, 15 + sz, 10, '#B82818');
-        px(x + 12, by + 6, 11 + sz, 6, '#D83828');
-        // cresta grande
-        px(x + 10, by - 5, 3, 9, '#E82020');
-        px(x + 15, by - 8, 4, 12, '#F83828');
-        px(x + 21, by - 5, 3, 9, '#E82020');
-        px(x + 16, by - 6, 2, 7, '#F8C040');
+        // cuello más corto
+        px(x + 15, by + 14, 5 + sz, 10, '#B82818');
+        px(x + 17, by + 13, 2 + sz, 10, '#E84838');
+        // cabeza altiva, más cerca del cuerpo
+        px(x + 10, by + 7, 15 + sz, 10, '#B82818');
+        px(x + 12, by + 9, 11 + sz, 6, '#D83828');
+        // cresta mediana
+        px(x + 10, by - 1, 3, 8, '#E82020');
+        px(x + 15, by - 4, 4, 11, '#F83828');
+        px(x + 21, by - 1, 3, 8, '#E82020');
+        px(x + 16, by - 2, 2, 6, '#F8C040');
         // ojos serios
-        px(x + 12, by + 7, 4, 4, '#fff');
-        px(x + sz + 20, by + 7, 4, 4, '#fff');
-        px(x + 14, by + 9, 2, 2, '#801010');
-        px(x + sz + 21, by + 9, 2, 2, '#801010');
-        px(x + 15, by + 14, 5, 2, '#F0C030');
+        px(x + 12, by + 10, 4, 4, '#fff');
+        px(x + sz + 20, by + 10, 4, 4, '#fff');
+        px(x + 14, by + 12, 2, 2, '#801010');
+        px(x + sz + 21, by + 12, 2, 2, '#801010');
+        px(x + 15, by + 17, 5, 2, '#F0C030');
         // patas largas
         px(x + 12, by + 35 + sz, 4, 8, '#C89020');
         px(x + sz + 21, by + 35 + sz, 4, 8, '#C89020');
@@ -7286,40 +7291,55 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'infernotoro': // Toro chef en llamas
-      px(x + 2, by + 16, 28 + sz, 18 + sz, '#901808');
-      px(x + 4, by + 18, 24 + sz, 14 + sz, '#B02818');
-      px(x + 8, by + 18, 16 + sz, 12, '#D8C8A0');
-      px(x + 10, by + 20, 12 + sz, 8, '#E0D0B0');
-      px(x + 10, by + 22, 3, 3, '#A08060');
-      px(x + 18, by + 24, 3, 2, '#B09070');
-      const itf2 = Math.sin(f * 0.2) * 2;
-      px(x + 6, by + 28 + itf2, 4, 4, '#E84020');
-      px(x + sz + 22, by + 26 + itf2, 4, 4, '#F86040');
-      px(x + 4, by + 2, 24 + sz, 16, '#901808');
-      px(x + 6, by + 4, 20 + sz, 12, '#B02818');
-      px(x + 2, by + 0, 5, 8, '#E8D8C0');
-      px(x + sz + 25, by + 0, 5, 8, '#E8D8C0');
-      px(x + 1, by - 2, 4, 4, '#E84020');
-      px(x + sz + 27, by - 2, 4, 4, '#E84020');
-      px(x + 8, by + 6, 6, 5, '#F8C030');
-      px(x + sz + 18, by + 6, 6, 5, '#F8C030');
-      px(x + 10, by + 8, 3, 3, '#601010');
-      px(x + sz + 20, by + 8, 3, 3, '#601010');
-      px(x + 12, by + 14, 8, 4, '#B02818');
-      if (f % 16 < 8) {
-        px(x + 14, by + 12, 2, 2, '#C8C8C8');
+    case 'infernotoro': // Infernotoro: toro cuadrúpedo negro con cuernos y cola de fuego
+      {
+        const flame = Math.sin(f * 0.18) * 2;
+        // cuerpo cuadrúpedo negro, ancho y bajo
+        px(x + 1, by + 20, 31 + sz, 16 + sz, '#101010');
+        px(x + 3, by + 22, 27 + sz, 12 + sz, '#181818');
+        px(x + 7, by + 24, 19 + sz, 7, '#242020');
+        // lomo ardiente tenue
+        px(x + 8, by + 18, 18 + sz, 4, '#501010');
+        px(x + 12, by + 17, 10 + sz, 3, '#A82010');
+        // cuatro patas fuertes
+        px(x + 4, by + 33 + sz, 5, 9, '#101010');
+        px(x + 12, by + 34 + sz, 5, 8, '#101010');
+        px(x + sz + 22, by + 34 + sz, 5, 8, '#101010');
+        px(x + sz + 30, by + 33 + sz, 5, 9, '#101010');
+        px(x + 3, by + 41 + sz, 7, 2, '#050505');
+        px(x + sz + 29, by + 41 + sz, 7, 2, '#050505');
+        // cabeza poderosa al frente
+        px(x + 21, by + 8, 15 + sz, 14, '#101010');
+        px(x + 23, by + 10, 11 + sz, 10, '#201818');
+        px(x + 28, by + 16, 8, 5, '#0A0A0A'); // hocico oscuro
+        px(x + 30, by + 18, 2, 2, '#C8A080');
+        px(x + 34, by + 18, 2, 2, '#C8A080');
+        // cuernos grandes de fuego
+        px(x + 16, by + 3, 8, 5, '#E84020');
+        px(x + 13, by + 0, 6, 4, '#F8A030');
+        px(x + 11, by - 2, 4, 3, '#F8E060');
+        px(x + sz + 34, by + 3, 8, 5, '#E84020');
+        px(x + sz + 40, by + 0, 6, 4, '#F8A030');
+        px(x + sz + 45, by - 2, 4, 3, '#F8E060');
+        // ojos encendidos
+        px(x + 25, by + 11, 4, 4, '#F8C030');
+        px(x + sz + 33, by + 11, 4, 4, '#F8C030');
+        px(x + 27, by + 13, 2, 2, '#601010');
+        px(x + sz + 35, by + 13, 2, 2, '#601010');
+        // cola con punta de llama
+        px(x - 7, by + 22, 10, 3, '#101010');
+        px(x - 12, by + 18 + flame, 6, 6, '#E84020');
+        px(x - 14, by + 15 + flame, 4, 5, '#F8A030');
+        px(x - 15, by + 13 + flame, 2, 3, '#F8E060');
+        // delantal quemado mínimo para mantener idea chef
+        px(x + 12, by + 25, 10, 6, '#D8C8A0');
+        px(x + 14, by + 26, 6, 3, '#E0D0B0');
+        cx.globalAlpha = 0.08;
+        cx.fillStyle = '#F84020';
+        pixelGlow(x + 18, by + 24, 26 + sz, 16);
+        cx.globalAlpha = 1;
       }
-      px(x + sz + 24, by + 20, 8, 2, '#484848');
-      px(x + sz + 26, by + 18, 4, 3, '#585858');
-      px(x + sz + 27, by + 16, 3, 3, '#E84020');
-      px(x + 6, by + 32 + sz, 6, 6, '#901808');
-      px(x + sz + 20, by + 32 + sz, 6, 6, '#901808');
       break;
-
-    // ==========================================
-    // EVOLUCIONES AGUA 💧
-    // ==========================================
 
     case 'ajolord': // Ajolord: adolescente con brazos gruesos y caídos
       {
@@ -8129,32 +8149,45 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'crisalmanza': // Capullo de cáscara de manzana
-      px(x + 4, by + 10, 24 + sz, 22 + sz, '#A02818');
-      px(x + 6, by + 12, 20 + sz, 18 + sz, '#B83020');
-      px(x + 8, by + 14, 16 + sz, 14, '#C83828');
-      px(x + 10, by + 16, 4, 4, '#D04838');
-      px(x + 18, by + 20, 3, 3, '#D04838');
+    case 'crisalmanza': // Crisálmanza: dragón manzana intermedio dentro de cáscara espiral
       {
-        const cgl2 = Math.sin(fr * 0.1) * 0.3 + 0.7;
-        cx.globalAlpha = cgl2;
-        px(x + 12, by + 18, 1, 6, '#F8E830');
-        px(x + 16, by + 14, 1, 8, '#F8E830');
-        px(x + 20, by + 16, 1, 6, '#F0D020');
+        const pulse = Math.sin(fr * 0.1) * 0.3 + 0.7;
+        // silueta: capullo vertical de cáscara, con serpiente verde asomándose
+        px(x + 8, by + 9, 18 + sz, 25 + sz, '#8A2018');
+        px(x + 10, by + 11, 14 + sz, 21 + sz, '#A02818');
+        px(x + 12, by + 13, 10 + sz, 17, '#B83020');
+        // bandas de cáscara en espiral
+        px(x + 7, by + 12, 18 + sz, 4, '#C83828');
+        px(x + 11, by + 18, 17 + sz, 4, '#D04838');
+        px(x + 6, by + 24, 20 + sz, 4, '#C83828');
+        px(x + 10, by + 30, 16 + sz, 4, '#A02818');
+        // grietas luminosas internas
+        cx.globalAlpha = pulse;
+        px(x + 14, by + 15, 2, 13, '#F8E830');
+        px(x + 19, by + 12, 2, 9, '#F0D020');
+        px(x + 11, by + 27, 2, 6, '#F8E830');
+        cx.globalAlpha = 1;
+        // serpiente verde/cabeza de dragón asomando arriba
+        px(x + 12, by + 2, 12 + sz, 9, '#48A030');
+        px(x + 14, by + 4, 8 + sz, 5, '#68C050');
+        px(x + 10, by + 6, 5, 3, '#2F7A30');
+        px(x + sz + 22, by + 6, 5, 3, '#2F7A30');
+        px(x + 14, by + 5, 3, 3, '#F8C030');
+        px(x + sz + 19, by + 5, 3, 3, '#F8C030');
+        px(x + 15, by + 6, 1, 1, '#801010');
+        px(x + sz + 20, by + 6, 1, 1, '#801010');
+        // hojitas/cuernos
+        px(x + 11, by - 1, 5, 4, '#58B838');
+        px(x + sz + 20, by - 1, 5, 4, '#58B838');
+        // base raicillas / patitas incompletas
+        px(x + 8, by + 33 + sz, 4, 6, '#5A3818');
+        px(x + sz + 21, by + 33 + sz, 4, 6, '#5A3818');
+        px(x + 13, by + 35 + sz, 8, 4, '#5A3818');
+        cx.globalAlpha = 0.06;
+        cx.fillStyle = '#F8E830';
+        pixelGlow(x + 16, by + 21, 18 + sz, 18);
         cx.globalAlpha = 1;
       }
-      px(x + 8, by + 8, 4, 4, '#48A030');
-      px(x + sz + 20, by + 8, 4, 4, '#48A030');
-      px(x + 14, by + 6, 4, 4, '#58B838');
-      px(x + 10, by + 18, 4, 1, '#801818');
-      px(x + sz + 18, by + 18, 4, 1, '#801818');
-      cx.globalAlpha = 0.06;
-      cx.fillStyle = '#F8E830';
-      pixelGlow(x + 16, by + 20, 16 + sz, 14);
-      cx.globalAlpha = 1;
-      px(x + 8, by + 30 + sz, 4, 6, '#5A3818');
-      px(x + sz + 18, by + 30 + sz, 4, 6, '#5A3818');
-      px(x + 12, by + 32 + sz, 4, 4, '#5A3818');
       break;
 
     case 'hydrapom': // Hydrapom: tres serpientes verdes enrolladas, panza y alas rojas
