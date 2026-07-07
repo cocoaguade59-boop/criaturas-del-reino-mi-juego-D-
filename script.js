@@ -13387,7 +13387,7 @@ function startNewGameFlow() {
 
 function uTitle() {
   G.tFr++;
-  if (G.tFr > 185 && !G.titleHornPlayed) {
+  if (G.tFr > 182 && !G.titleHornPlayed) {
     playTitleHorn();
     G.titleHornPlayed = true;
   }
@@ -13422,7 +13422,7 @@ function uTitle() {
 
 function dTitle() {
   const f = G.tFr;
-  const phase = f < 180 ? 'sky' : f < 240 ? 'black' : 'carousel';
+  const phase = f < 180 ? 'sky' : f < 220 ? 'fanfare' : 'carousel';
 
   if (phase === 'sky') {
     // Animación inicial: cielo bonito, nubes suaves y profundidad pixel-art.
@@ -13475,22 +13475,35 @@ function dTitle() {
     return;
   }
 
-  if (phase === 'black') {
-    cx.fillStyle = '#000';
+  if (phase === 'fanfare') {
+    // Fanfarria sin pantalla negra: cortina nocturna pixelada sobre el cielo.
+    const k = (f - 180) / 40;
+    cx.fillStyle = '#0A0A24';
     cx.fillRect(0, 0, 640, 480);
-    const pulse = Math.sin((f - 180) * 0.25) * 0.5 + 0.5;
-    cx.globalAlpha = pulse;
+    for (let yy = 0; yy < 480; yy += 16) {
+      cx.fillStyle = yy % 32 === 0 ? '#101848' : '#080818';
+      cx.fillRect(0, yy, 640, 8);
+    }
+    cx.textAlign = 'center';
     cx.fillStyle = '#FFD870';
     cx.font = '18px "Press Start 2P"';
-    cx.textAlign = 'center';
-    cx.fillText('¡TA-RA-RAAA!', 320, 240);
-    cx.globalAlpha = 1;
+    cx.fillText('¡TA-RA-RAAA!', 320, 225);
+    cx.fillStyle = '#A0B0C0';
+    cx.font = '7px "Press Start 2P"';
+    cx.fillText('El desfile del reino comienza...', 320, 255);
+    // Destellos cuadrados de trompeta
+    cx.fillStyle = '#FFE890';
+    for (let i = 0; i < 10; i++) {
+      const sx = 120 + i * 44;
+      const sy = 295 + ((i * 17 + f) % 28);
+      cx.fillRect(sx, sy, 4, 4);
+    }
     cx.textAlign = 'left';
     return;
   }
 
   // Carrusel principal: criaturas desfilan de derecha a izquierda y se repite.
-  const cf = f - 240;
+  const cf = f - 220;
   const sky = cx.createLinearGradient(0, 0, 0, 480);
   sky.addColorStop(0, '#07071C');
   sky.addColorStop(0.45, '#111A3A');
