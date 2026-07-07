@@ -9433,12 +9433,154 @@ function dTileW(c, r) {
       break;
     }
 
-    case 18: { // Set de rodaje / claqueta-cámara simbólica
+    case 18: { // Puesto / carpa de feria o vendedor
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      // mesa
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 4, y + 20, 24, 5);
+      cx.fillStyle = '#8A5A28';
+      cx.fillRect(x + 6, y + 21, 20, 3);
+      cx.fillStyle = '#4A3018';
+      cx.fillRect(x + 6, y + 25, 4, 7);
+      cx.fillRect(x + 22, y + 25, 4, 7);
+      // toldo rayado
+      cx.fillStyle = '#C83030';
+      cx.fillRect(x + 3, y + 8, 26, 6);
+      cx.fillStyle = '#F8F0E0';
+      cx.fillRect(x + 8, y + 8, 5, 6);
+      cx.fillRect(x + 18, y + 8, 5, 6);
+      cx.fillStyle = '#A02020';
+      cx.fillRect(x + 3, y + 14, 26, 3);
+      // objetos en venta
+      cx.fillStyle = '#E8C830';
+      cx.fillRect(x + 8, y + 17, 4, 3);
+      cx.fillStyle = '#70B8F8';
+      cx.fillRect(x + 15, y + 17, 4, 3);
+      cx.fillStyle = '#48A038';
+      cx.fillRect(x + 22, y + 17, 4, 3);
+      break;
+    }
+
+    case 19: { // Estatua (Rey o criatura según zona)
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      // pedestal
+      cx.fillStyle = '#686878';
+      cx.fillRect(x + 6, y + 24, 20, 6);
+      cx.fillStyle = '#808090';
+      cx.fillRect(x + 8, y + 21, 16, 4);
+      // cuerpo estatua
+      cx.fillStyle = '#9090A0';
+      cx.fillRect(x + 12, y + 9, 8, 12);
+      cx.fillStyle = '#A8A8B8';
+      cx.fillRect(x + 13, y + 6, 6, 5);
+      // corona/cuernos según paridad
+      cx.fillStyle = '#C8A830';
+      if ((c + r) % 2 === 0) {
+        cx.fillRect(x + 11, y + 3, 10, 3);
+        cx.fillRect(x + 13, y + 1, 2, 3);
+        cx.fillRect(x + 18, y + 1, 2, 3);
+      } else {
+        cx.fillRect(x + 9, y + 5, 5, 3);
+        cx.fillRect(x + 19, y + 5, 5, 3);
+      }
+      cx.fillStyle = '#707080';
+      cx.fillRect(x + 10, y + 13, 4, 8);
+      cx.fillRect(x + 18, y + 13, 4, 8);
+      if (snow > 0.25) {
+        cx.fillStyle = 'rgba(255,255,255,.7)';
+        cx.fillRect(x + 8, y + 20, 16, 2);
+        cx.fillRect(x + 12, y + 5, 8, 2);
+      }
+      break;
+    }
+
+    case 20: { // Cerca de madera
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 2, y + 13, 28, 4);
+      cx.fillRect(x + 2, y + 22, 28, 4);
+      cx.fillStyle = '#8A5A28';
+      cx.fillRect(x + 5, y + 9, 4, 21);
+      cx.fillRect(x + 22, y + 9, 4, 21);
+      break;
+    }
+
+    case 21: { // Cajas de madera
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#8A5A28';
+      cx.fillRect(x + 5, y + 15, 10, 10);
+      cx.fillRect(x + 17, y + 11, 10, 14);
+      cx.fillStyle = '#A07038';
+      cx.fillRect(x + 6, y + 16, 8, 2);
+      cx.fillRect(x + 18, y + 12, 8, 2);
+      cx.fillStyle = '#5A3818';
+      cx.fillRect(x + 9, y + 15, 2, 10);
+      cx.fillRect(x + 21, y + 11, 2, 14);
+      break;
+    }
+
+    case 22: { // Pozo de pueblo
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#6E6E6E';
+      cx.fillRect(x + 7, y + 17, 18, 10);
+      cx.fillStyle = '#8A8A8A';
+      cx.fillRect(x + 9, y + 15, 14, 4);
+      cx.fillStyle = '#202838';
+      cx.fillRect(x + 10, y + 18, 12, 5);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 8, y + 8, 3, 10);
+      cx.fillRect(x + 21, y + 8, 3, 10);
+      cx.fillRect(x + 8, y + 7, 16, 3);
+      cx.fillStyle = '#C8A830';
+      cx.fillRect(x + 15, y + 10, 2, 5);
+      break;
+    }
+
+    case 23: { // Muñeco de entrenamiento
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      cx.fillStyle = '#6A4828';
+      cx.fillRect(x + 14, y + 8, 4, 20);
+      cx.fillRect(x + 8, y + 14, 16, 4);
+      cx.fillStyle = '#C8B080';
+      cx.fillRect(x + 10, y + 6, 12, 8);
+      cx.fillStyle = '#E83030';
+      cx.fillRect(x + 12, y + 9, 3, 3);
+      cx.fillRect(x + 17, y + 9, 3, 3);
+      cx.fillStyle = '#4A3018';
+      cx.fillRect(x + 10, y + 28, 12, 3);
+      break;
+    }
+
+    case 24: { // Huellas de criaturas
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      const col = snow > 0.35 ? '#A8B8B0' : '#2E6A20';
+      cx.fillStyle = col;
+      [[7,8],[12,13],[18,18],[23,23],[10,24],[20,8]].forEach(([a,b]) => {
+        cx.fillRect(x + a, y + b, 3, 2);
+        cx.fillRect(x + a + 1, y + b - 2, 1, 1);
+      });
+      break;
+    }
+
+    case 25: { // Set de rodaje / claqueta-cámara simbólica
       cx.fillStyle = '#A89878';
       cx.fillRect(x, y, T, T);
       cx.fillStyle = '#8A8070';
       cx.fillRect(x + 2, y + 2, 28, 28);
-      // trípode/cámara
       cx.fillStyle = '#202020';
       cx.fillRect(x + 8, y + 11, 14, 8);
       cx.fillStyle = '#303030';
@@ -9448,7 +9590,6 @@ function dTileW(c, r) {
       cx.fillStyle = '#5A3818';
       cx.fillRect(x + 14, y + 19, 3, 9);
       cx.fillRect(x + 9, y + 26, 13, 2);
-      // claqueta arriba
       cx.fillStyle = '#F8F8F8';
       cx.fillRect(x + 6, y + 5, 20, 5);
       cx.fillStyle = '#202020';
@@ -9458,7 +9599,7 @@ function dTileW(c, r) {
       break;
     }
 
-    case 19: { // Suelo de cantera / piedra tallada
+    case 26: { // Suelo de cantera / piedra tallada
       cx.fillStyle = '#8A8172';
       cx.fillRect(x, y, T, T);
       cx.fillStyle = '#9A9182';
@@ -10653,6 +10794,21 @@ function addWorldTallGrassPatches() {
     { x: 47, y: 8, w: 10, h: 7, d: 0.82 },
   ].forEach((p) => addTallGrassPatch(p.x, p.y, p.w, p.h, p.d));
 }
+
+
+function addRouteDecorations() {
+  // Bancos, faroles, estatuas y cercas en rutas principales para que el mapa no se sienta vacío.
+  const decos = [
+    [18, 132, 15], [30, 130, 16], [22, 124, 20], [28, 124, 20],
+    [38, 116, 15], [48, 115, 16], [14, 101, 19], [17, 98, 15],
+    [61, 88, 15], [63, 82, 16], [55, 78, 20], [58, 78, 20],
+    [31, 65, 15], [34, 65, 16], [65, 42, 19], [68, 42, 15],
+    [43, 28, 15], [46, 28, 16], [39, 12, 19], [50, 8, 15],
+  ];
+  decos.forEach(([c, r, t]) => {
+    if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && (wMap[r][c] === 0 || wMap[r][c] === 1 || wMap[r][c] === 5)) wMap[r][c] = t;
+  });
+}
 function genWorld() {
   // Inicializar mapa con hierba y hierba alta aleatoria
   for (let r = 0; r < WR; r++) {
@@ -10745,6 +10901,8 @@ function genWorld() {
 
   // Parches adicionales: más zonas reales de hierba alta en el mapa exterior.
   addWorldTallGrassPatches();
+  // Bancos, faroles, estatuas y cercas en rutas.
+  addRouteDecorations();
 
   let cv2 = 0;
   while (cv2 < 45) {
@@ -10805,6 +10963,7 @@ function buildVillage(sx, sy, id) {
         if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && wMap[r][c] === 1 && (r + c) % 4 === 0) wMap[r][c] = 17;
     wMap[sy + 3][sx + 4] = 17;
     wMap[sy + 3][sx + 5] = 17;
+    wMap[sy + 4][sx + 4] = 19; // estatua de criatura pintora
     wMap[sy + 6][sx + 3] = 16;
     wMap[sy + 6][sx + 5] = 16;
     wMap[sy - 1][sx + 2] = 15;
@@ -10818,16 +10977,16 @@ function buildVillage(sx, sy, id) {
         if (r < 2 || r >= WR - 2 || c < 2 || c >= WC - 2) continue;
         const edge = r === sy - 4 || r === sy + 10 || c === sx - 4 || c === sx + 12;
         const t = wMap[r][c];
-        if (edge && t !== 4 && t !== 11 && t !== 12) wMap[r][c] = Math.random() < 0.65 ? 7 : 19;
-        else if (t !== 4 && t !== 11 && t !== 12) wMap[r][c] = 19;
+        if (edge && t !== 4 && t !== 11 && t !== 12) wMap[r][c] = Math.random() < 0.65 ? 7 : 26;
+        else if (t !== 4 && t !== 11 && t !== 12) wMap[r][c] = 26;
       }
     }
     // Caminos internos tallados en la cantera para no bloquear NPCs.
     for (let c = sx - 3; c <= sx + 11; c++) wMap[sy + 3][c] = 1;
     for (let r = sy - 3; r <= sy + 9; r++) wMap[r][sx + 4] = 1;
     // Set de rodaje simbólico y luces.
-    wMap[sy + 2][sx + 4] = 18;
-    wMap[sy + 4][sx + 6] = 18;
+    wMap[sy + 2][sx + 4] = 25;
+    wMap[sy + 4][sx + 6] = 25;
     wMap[sy + 1][sx + 2] = 15;
     wMap[sy + 1][sx + 8] = 15;
     wMap[sy + 6][sx + 2] = 16;
@@ -10848,18 +11007,24 @@ function buildVillage(sx, sy, id) {
         if (wMap[r]?.[c] === 1 || wMap[r]?.[c] === 0) wMap[r][c] = (r === sy + 3 || c === sx + 4) ? 1 : 6;
     wMap[sy + 2][sx + 2] = 15;
     wMap[sy + 2][sx + 7] = 15;
+    wMap[sy + 3][sx + 4] = 18;
+    wMap[sy + 3][sx + 5] = 18;
     wMap[sy + 6][sx + 2] = 16;
     wMap[sy + 6][sx + 6] = 16;
+    wMap[sy + 4][sx + 4] = 19;
   }
 
   if (id === 'montaje') {
     // Pueblo final: mirador frío hacia castillo, faroles y bancos.
-    for (let c = sx - 1; c <= sx + 9; c++) if (wMap[sy - 1]?.[c] !== undefined) wMap[sy - 1][c] = 19;
+    for (let c = sx - 1; c <= sx + 9; c++) if (wMap[sy - 1]?.[c] !== undefined) wMap[sy - 1][c] = 26;
     wMap[sy - 2][sx + 4] = 14;
     wMap[sy + 1][sx + 2] = 15;
     wMap[sy + 1][sx + 7] = 15;
     wMap[sy + 6][sx + 3] = 16;
     wMap[sy + 6][sx + 6] = 16;
+    wMap[sy + 3][sx + 8] = 19; // estatua/mirador del pueblo final
+    wMap[sy + 2][sx + 1] = 20;
+    wMap[sy + 2][sx + 9] = 20;
   }
 
   // Aldea Pitch recibe una primera zona más clara y acogedora para tutorial.
@@ -10885,6 +11050,20 @@ function buildVillage(sx, sy, id) {
         wMap[r][sx + 2] = 1;
         wMap[r][sx + 3] = 1;
       }
+    // Plaza central, zona tutorial y elementos únicos visibles.
+    wMap[sy + 3][sx + 4] = 22; // pozo de plaza
+    wMap[sy + 2][sx + 1] = 21; // cajas
+    wMap[sy + 6][sx + 7] = 21;
+    wMap[sy + 1][sx + 3] = 23; // muñecos de entrenamiento
+    wMap[sy + 1][sx + 5] = 23;
+    wMap[sy + 4][sx + 2] = 24; // huellas cerca del jugador
+    wMap[sy + 5][sx + 4] = 24;
+    wMap[sy + 6][sx + 5] = 24;
+    // cerca baja para encuadrar zona de entrenamiento sin encerrar al jugador
+    wMap[sy][sx + 2] = 20;
+    wMap[sy][sx + 6] = 20;
+    wMap[sy + 1][sx + 7] = 20;
+    wMap[sy + 2][sx + 7] = 20;
   }
 }
 
@@ -11233,6 +11412,8 @@ function solidW(c, r) {
   // Torre cerrada es sólida
   if (t === 2 || t === 3 || t === 7) return true;
   if (t === 4) return true;
+  // Decoración sólida del mundo: puestos, estatuas, cercas, cajas, pozos, muñecos y cámara/set.
+  if ([18, 19, 20, 21, 22, 23, 25].includes(t)) return true;
   if (t === 13) return true;
   if (t === 9) return true;
   if (t === 12 && !towerOpen) return true;
