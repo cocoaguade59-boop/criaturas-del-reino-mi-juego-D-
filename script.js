@@ -3465,10 +3465,11 @@ function dRouteProa(x, y, f) {
   px(x + 10, by + 26, 4, 4, '#4A3018');
   px(x + 18, by + 26, 4, 4, '#4A3018');
   px(x + 8, by + 18, 16, 9, '#2858A0');
-  px(x + 6, by + 10, 20, 10, '#E8E8E8');
-  px(x + 8, by + 12, 16, 7, '#F8F8F8');
-  px(x + 13, by + 12, 6, 6, '#C83030');
-  px(x + 15, by + 10, 2, 10, '#C83030');
+  // Uniforme del personal: polo negro con flecha amarilla pequeña
+  px(x + 6, by + 10, 20, 10, '#101010');
+  px(x + 8, by + 12, 16, 7, '#1A1A1A');
+  px(x + 13, by + 13, 6, 2, '#FFD830');
+  px(x + 17, by + 11, 3, 6, '#FFD830');
   px(x + 4, by + 12, 4, 8, SK.a);
   px(x + 24, by + 12, 4, 8, SK.a);
   px(x + 13, by + 8, 6, 3, SK.a);
@@ -7615,80 +7616,112 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'gorilirico': // Gorila bardo con pluma y libro
-      px(x + 2, by + 16, 28 + sz, 18 + sz, '#305820');
-      px(x + 4, by + 18, 24 + sz, 14 + sz, '#407028');
-      px(x + 10, by + 20, 12 + sz, 10, '#488030');
-      px(x - 2, by + 14, 8, 16, '#305820');
-      px(x + sz + 26, by + 14, 8, 16, '#305820');
-      px(x, by + 16, 4, 12, '#407028');
-      px(x + sz + 28, by + 16, 4, 12, '#407028');
-      px(x - 4, by + 26, 6, 4, '#305820');
-      px(x + sz + 30, by + 26, 6, 4, '#305820');
-      px(x - 2, by + 14, 4, 14, '#6830A0');
-      px(x + sz + 30, by + 14, 4, 14, '#6830A0');
-      px(x - 6, by + 22, 8, 6, '#8A2020');
-      px(x - 5, by + 23, 6, 4, '#F0E0C0');
-      px(x + sz + 32, by + 18, 2, 12, '#E8D8C0');
-      px(x + sz + 32, by + 16, 4, 4, '#F0E8D0');
-      px(x + 4, by + 2, 24 + sz, 16, '#305820');
-      px(x + 6, by + 4, 20 + sz, 12, '#407028');
-      px(x + 10, by + 0, 12 + sz, 6, '#204818');
-      px(x + 12, by - 1, 8 + sz, 4, '#308028');
-      px(x + 8, by + 0, 16 + sz, 3, '#C8A830');
-      px(x + 10, by - 1, 2, 2, '#48A030');
-      px(x + sz + 20, by - 1, 2, 2, '#48A030');
-      px(x + 8, by + 6, 5, 5, '#fff');
-      px(x + sz + 18, by + 6, 5, 5, '#fff');
-      px(x + 10, by + 8, 3, 3, '#2A3818');
-      px(x + sz + 20, by + 8, 3, 3, '#2A3818');
-      px(x + 12, by + 14, 8, 4, '#2A4018');
-      px(x + 14, by + 16, 4, 2, '#3A5028');
-      px(x + 6, by + 32 + sz, 6, 6, '#305820');
-      px(x + sz + 20, by + 32 + sz, 6, 6, '#305820');
+    case 'gorilirico': // Gorilírico: bardo erguido con laúd y capa
+      {
+        const strum = Math.sin(f * 0.15) * 2;
+        // postura erguida, más alta y delgada que Gorilán
+        px(x + 9, by + 19, 18 + sz, 20 + sz, '#305820');
+        px(x + 11, by + 21, 14 + sz, 16 + sz, '#407028');
+        px(x + 13, by + 23, 10 + sz, 10, '#508038');
+        // capa morada de bardo
+        px(x + 6, by + 20, 5, 18, '#4A2870');
+        px(x + sz + 26, by + 20, 5, 18, '#4A2870');
+        px(x + 7, by + 22, 3, 14, '#6830A0');
+        px(x + sz + 27, by + 22, 3, 14, '#6830A0');
+        // piernas firmes
+        px(x + 9, by + 36 + sz, 6, 8, '#305820');
+        px(x + sz + 21, by + 36 + sz, 6, 8, '#305820');
+        px(x + 7, by + 43 + sz, 8, 2, '#203818');
+        px(x + sz + 21, by + 43 + sz, 8, 2, '#203818');
+        // laúd/libro musical al frente: silueta nueva
+        px(x - 7, by + 24 + strum, 10, 10, '#8A5020');
+        px(x - 5, by + 26 + strum, 6, 6, '#C08038');
+        px(x + 1, by + 22 + strum, 10, 2, '#E8D8C0');
+        px(x + 5, by + 20 + strum, 2, 8, '#E8D8C0');
+        px(x - 2, by + 26 + strum, 2, 2, '#4A2810');
+        // brazo tocando
+        px(x + 1, by + 20 + strum, 8, 4, '#305820');
+        px(x + sz + 25, by + 20 - strum, 8, 5, '#305820');
+        px(x + sz + 31, by + 18 - strum, 3, 10, '#407028');
+        // cabeza con boina, más adulta
+        px(x + 5, by + 2, 26 + sz, 17, '#305820');
+        px(x + 7, by + 4, 22 + sz, 13, '#407028');
+        px(x + 11, by + 7, 14 + sz, 8, '#5C9440');
+        px(x + 4, by - 2, 28 + sz, 5, '#C8A830');
+        px(x + 7, by - 4, 22 + sz, 3, '#D8B840');
+        px(x + sz + 25, by - 8, 2, 8, '#E8D8C0');
+        px(x + sz + 26, by - 10, 5, 4, '#F0E8D0');
+        // ojos confiados
+        px(x + 9, by + 8, 5, 5, '#fff');
+        px(x + sz + 21, by + 8, 5, 5, '#fff');
+        px(x + 11, by + 10, 3, 3, '#2A3818');
+        px(x + sz + 23, by + 10, 3, 3, '#2A3818');
+        px(x + 13, by + 16, 8, 3, '#2A4018');
+      }
       break;
 
-    case 'gorilegend': // Gorila leyenda literaria
-      px(x, by + 14, 32 + sz, 20 + sz, '#284818');
-      px(x + 2, by + 16, 28 + sz, 16 + sz, '#386028');
-      px(x + 10, by + 18, 12 + sz, 12, '#408030');
-      px(x + 6, by + 16, 20 + sz, 10, '#5A3818');
-      px(x + 8, by + 18, 16 + sz, 6, '#6A4828');
-      const grgl = Math.sin(fr * 0.08) * 0.3 + 0.7;
-      cx.globalAlpha = grgl;
-      px(x + 10, by + 18, 2, 2, '#F8E830');
-      px(x + 16, by + 20, 2, 2, '#F8E830');
-      px(x + 22, by + 18, 2, 2, '#F8E830');
-      cx.globalAlpha = 1;
-      px(x - 6, by + 12, 10, 18, '#284818');
-      px(x + sz + 28, by + 12, 10, 18, '#284818');
-      px(x - 4, by + 14, 6, 14, '#386028');
-      px(x + sz + 30, by + 14, 6, 14, '#386028');
-      cx.globalAlpha = 0.8;
-      px(x - 8, by + 20, 6, 8, '#6A2020');
-      px(x - 7, by + 21, 4, 6, '#F0E0C0');
-      cx.globalAlpha = 1;
-      px(x + sz + 34, by + 14, 2, 14, '#F8E830');
-      px(x + sz + 34, by + 12, 4, 4, '#F8F0E0');
-      px(x + 2, by, 28 + sz, 16, '#284818');
-      px(x + 4, by + 2, 24 + sz, 12, '#386028');
-      px(x + 6, by - 4, 20 + sz, 5, '#C8A830');
-      px(x + 8, by - 5, 16 + sz, 3, '#D8B840');
-      px(x + 12, by - 6, 8 + sz, 3, '#E8C840');
-      px(x + 6, by + 4, 6, 6, '#fff');
-      px(x + sz + 20, by + 4, 6, 6, '#fff');
-      px(x + 8, by + 6, 4, 4, '#1A3010');
-      px(x + sz + 22, by + 6, 4, 4, '#1A3010');
-      px(x + 8, by + 6, 2, 2, '#C8A830');
-      px(x + sz + 22, by + 6, 2, 2, '#C8A830');
-      px(x + 12, by + 12, 8, 4, '#1A3010');
-      px(x + 14, by + 14, 4, 2, '#284818');
-      px(x + 6, by + 32 + sz, 8, 8, '#284818');
-      px(x + sz + 18, by + 32 + sz, 8, 8, '#284818');
-      cx.globalAlpha = 0.06;
-      cx.fillStyle = '#80F080';
-      pixelGlow(x + 16, by + 18, 22 + sz, 18);
-      cx.globalAlpha = 1;
+    case 'gorilegend': // Gorilegend: gigante legendario con pergaminos flotantes
+      {
+        const aura = Math.sin(f * 0.08) * 2;
+        // cuerpo enorme tipo estatua: mucho más grande/ancho que etapas previas
+        px(x - 2, by + 15, 36 + sz, 24 + sz, '#284818');
+        px(x + 0, by + 17, 32 + sz, 20 + sz, '#386028');
+        px(x + 7, by + 20, 18 + sz, 14, '#4A8030');
+        px(x + 10, by + 22, 12 + sz, 8, '#609840');
+        // hombreras/masa superior enorme
+        px(x - 6, by + 13, 12, 20, '#284818');
+        px(x + sz + 29, by + 13, 12, 20, '#284818');
+        px(x - 4, by + 15, 8, 16, '#386028');
+        px(x + sz + 31, by + 15, 8, 16, '#386028');
+        // brazos largos de gorila apoyados al piso
+        px(x - 10, by + 22, 10, 21, '#284818');
+        px(x + sz + 37, by + 22, 10, 21, '#284818');
+        px(x - 12, by + 40, 12, 5, '#203818');
+        px(x + sz + 37, by + 40, 12, 5, '#203818');
+        // piernas pesadas
+        px(x + 4, by + 36 + sz, 8, 9, '#284818');
+        px(x + sz + 23, by + 36 + sz, 8, 9, '#284818');
+        px(x + 2, by + 44 + sz, 12, 3, '#203818');
+        px(x + sz + 22, by + 44 + sz, 12, 3, '#203818');
+        // pecho como libro dorado/legendario
+        px(x + 6, by + 18, 22 + sz, 10, '#5A3818');
+        px(x + 8, by + 20, 18 + sz, 6, '#6A4828');
+        px(x + 13, by + 20, 2, 6, '#F8E830');
+        px(x + 20, by + 21, 2, 5, '#F8E830');
+        px(x + 25, by + 20, 2, 6, '#F8E830');
+        // cabeza grande con corona de laureles
+        px(x + 2, by - 1, 30 + sz, 18, '#284818');
+        px(x + 4, by + 1, 26 + sz, 14, '#386028');
+        px(x + 8, by + 4, 18 + sz, 9, '#5C9440');
+        px(x + 3, by - 7, 28 + sz, 5, '#C8A830');
+        px(x + 6, by - 9, 22 + sz, 3, '#D8B840');
+        px(x + 11, by - 11, 12 + sz, 3, '#E8C840');
+        px(x + 4, by - 5, 3, 3, '#48A030');
+        px(x + sz + 29, by - 5, 3, 3, '#48A030');
+        // ojos dorados sabios
+        px(x + 6, by + 5, 7, 6, '#fff');
+        px(x + sz + 23, by + 5, 7, 6, '#fff');
+        px(x + 8, by + 7, 4, 4, '#1A3010');
+        px(x + sz + 25, by + 7, 4, 4, '#1A3010');
+        px(x + 8, by + 7, 2, 2, '#C8A830');
+        px(x + sz + 25, by + 7, 2, 2, '#C8A830');
+        px(x + 12, by + 13, 10, 4, '#1A3010');
+        px(x + 14, by + 15, 6, 2, '#284818');
+        // pergaminos flotantes a los lados
+        cx.globalAlpha = 0.85;
+        px(x - 18, by + 17 + aura, 10, 13, '#F0E0C0');
+        px(x - 17, by + 18 + aura, 8, 2, '#B09070');
+        px(x - 17, by + 23 + aura, 8, 2, '#B09070');
+        px(x + sz + 46, by + 13 - aura, 10, 15, '#F0E0C0');
+        px(x + sz + 47, by + 15 - aura, 8, 2, '#B09070');
+        px(x + sz + 47, by + 21 - aura, 8, 2, '#B09070');
+        cx.globalAlpha = 1;
+        // aura pixelada sutil
+        cx.globalAlpha = 0.06;
+        cx.fillStyle = '#80F080';
+        pixelGlow(x + 16, by + 20, 28 + sz, 20);
+        cx.globalAlpha = 1;
+      }
       break;
 
     case 'mantisdanza': // Mantis con tutú elaborado
@@ -8657,36 +8690,41 @@ function dCre(x, y, id, lv, f) {
     // PLANTA 🌿 - NUEVOS (únicos)
     // ==========================================
 
-    case 'gorilan': // Gorila poeta con pluma y libro
-      px(x + 4, by + 18, 24 + sz, 16 + sz, '#386028');
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#487830');
-      px(x + 10, by + 22, 12 + sz, 8, '#508838');
-      px(x + 12, by + 24, 8 + sz, 4, '#609840');
-      px(x, by + 16, 6, 14, '#386028');
-      px(x + sz + 26, by + 16, 6, 14, '#386028');
-      px(x + 2, by + 18, 2, 10, '#487830');
-      px(x + sz + 28, by + 18, 2, 10, '#487830');
-      px(x - 2, by + 28, 6, 4, '#386028');
-      px(x + sz + 28, by + 28, 6, 4, '#386028');
-      px(x + sz + 30, by + 22, 2, 10, '#E8D8C0');
-      px(x + sz + 30, by + 20, 3, 4, '#F0E8D0');
-      px(x - 4, by + 24, 6, 6, '#8A2020');
-      px(x - 3, by + 25, 4, 4, '#F0E0C0');
-      px(x + 4, by + 4, 24 + sz, 14, '#386028');
-      px(x + 6, by + 6, 20 + sz, 10, '#487830');
-      px(x + 10, by + 0, 12 + sz, 6, '#2A5020');
-      px(x + 12, by - 1, 8 + sz, 4, '#389028');
-      px(x + 8, by + 8, 5, 5, '#fff');
-      px(x + sz + 18, by + 8, 5, 5, '#fff');
-      px(x + 10, by + 10, 3, 3, '#2A3818');
-      px(x + sz + 20, by + 10, 3, 3, '#2A3818');
-      px(x + 10, by + 10, 1, 1, '#fff');
-      px(x + sz + 20, by + 10, 1, 1, '#fff');
-      px(x + 12, by + 14, 8, 4, '#2A4018');
-      px(x + 14, by + 16, 4, 2, '#3A5028');
-      px(x + 14, by + 18, 4, 1, '#2A4018');
-      px(x + 6, by + 32 + sz, 6, 6, '#386028');
-      px(x + sz + 20, by + 32 + sz, 6, 6, '#386028');
+    case 'gorilan': // Gorilán: poeta joven sentado, pequeño y tímido
+      {
+        const sway = Math.sin(f * 0.12) * 1;
+        // Postura sentada, baja y ancha: etapa bebé/joven
+        px(x + 7, by + 24, 22 + sz, 12 + sz, '#386028');
+        px(x + 9, by + 26, 18 + sz, 8 + sz, '#487830');
+        px(x + 12, by + 28, 12 + sz, 4, '#609840');
+        // piernas dobladas
+        px(x + 2, by + 32 + sz, 10, 6, '#2A5020');
+        px(x + sz + 24, by + 32 + sz, 10, 6, '#2A5020');
+        px(x + 1, by + 36 + sz, 8, 3, '#203818');
+        px(x + sz + 27, by + 36 + sz, 8, 3, '#203818');
+        // brazos cortos abrazando librito
+        px(x + 3, by + 22, 8, 6, '#386028');
+        px(x + sz + 25, by + 22, 8, 6, '#386028');
+        px(x + 10, by + 25, 14, 8, '#8A2020');
+        px(x + 11, by + 26, 12, 6, '#F0E0C0');
+        px(x + 16, by + 26, 1, 6, '#B09070');
+        // cabeza grande y tímida
+        px(x + 6, by + 5 + sway, 24 + sz, 17, '#386028');
+        px(x + 8, by + 7 + sway, 20 + sz, 13, '#487830');
+        px(x + 11, by + 10 + sway, 14 + sz, 8, '#5C9440');
+        px(x + 9, by + 2 + sway, 18 + sz, 5, '#2A5020');
+        px(x + 11, by + 0 + sway, 12 + sz, 4, '#389028');
+        // pluma pequeña detrás de la cabeza
+        px(x + sz + 27, by + 4 + sway, 2, 10, '#E8D8C0');
+        px(x + sz + 28, by + 2 + sway, 4, 4, '#F0E8D0');
+        px(x + sz + 29, by + 1 + sway, 2, 2, '#48A030');
+        // ojos inocentes
+        px(x + 10, by + 11 + sway, 5, 5, '#fff');
+        px(x + sz + 20, by + 11 + sway, 5, 5, '#fff');
+        px(x + 12, by + 13 + sway, 3, 3, '#2A3818');
+        px(x + sz + 22, by + 13 + sway, 3, 3, '#2A3818');
+        px(x + 14, by + 18 + sway, 6, 2, '#2A4018');
+      }
       break;
 
     case 'orquidea': // Mantis religiosa bailarina de ballet
