@@ -7316,32 +7316,32 @@ function dCre(x, y, id, lv, f) {
     // EVOLUCIONES AGUA 💧
     // ==========================================
 
-    case 'ajolord': // Ajolord: tamaño actual, brazos largos de adolescente
+    case 'ajolord': // Ajolord: adolescente con brazos gruesos y caídos
       {
-        const arm = Math.sin(f * 0.12) * 2;
-        // cuerpo tamaño clásico/intermedio
+        const droop = Math.sin(f * 0.1) * 1;
+        // cuerpo tamaño intermedio
         px(x + 4, by + 18, 24 + sz, 14 + sz, '#2060B0');
         px(x + 6, by + 20, 20 + sz, 10 + sz, '#2878C8');
         px(x + 8, by + 22, 16 + sz, 6, '#3090D8');
-        // brazos más largos y visibles
-        px(x - 4, by + 22 + arm, 10, 4, '#2060B0');
-        px(x - 10, by + 21 + arm, 7, 4, '#2878C8');
-        px(x - 14, by + 20 + arm, 5, 3, '#3090D8');
-        px(x + sz + 26, by + 22 - arm, 10, 4, '#2060B0');
-        px(x + sz + 35, by + 21 - arm, 7, 4, '#2878C8');
-        px(x + sz + 41, by + 20 - arm, 5, 3, '#3090D8');
+        // brazos gruesos, largos y caídos como adolescente pesado
+        px(x - 2, by + 20 + droop, 9, 14, '#1858A8');
+        px(x - 5, by + 29 + droop, 8, 6, '#2068B8');
+        px(x - 8, by + 33 + droop, 7, 4, '#3090D8');
+        px(x + sz + 26, by + 20 - droop, 9, 14, '#1858A8');
+        px(x + sz + 32, by + 29 - droop, 8, 6, '#2068B8');
+        px(x + sz + 38, by + 33 - droop, 7, 4, '#3090D8');
         // cabeza seria
         px(x + 4, by + 4, 24 + sz, 16, '#2060B0');
         px(x + 6, by + 6, 20 + sz, 12, '#2878C8');
         px(x + 8, by + 8, 16 + sz, 8, '#3090D8');
-        // branquias más controladas, menos bebé
+        // branquias intermedias
         px(x - 2, by + 2, 6, 4, '#F060A0');
         px(x - 4, by + 6, 6, 4, '#D85090');
         px(x - 3, by + 10, 6, 4, '#F060A0');
         px(x + sz + 28, by + 2, 6, 4, '#F060A0');
         px(x + sz + 30, by + 6, 6, 4, '#D85090');
         px(x + sz + 29, by + 10, 6, 4, '#F060A0');
-        // ojos con cejas adolescentes
+        // ojos con cejas, más serio pero no feo
         px(x + 8, by + 8, 5, 5, '#fff');
         px(x + sz + 18, by + 8, 5, 5, '#fff');
         px(x + 10, by + 10, 3, 3, '#0840A0');
@@ -7358,61 +7358,77 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'glaciolote': // Glaciolote: ajolote cuadrúpedo de hielo con barba
+    case 'glaciolote': // Glaciolote: bestia cuadrúpeda imponente de hielo con barba
       {
-        const ice = Math.sin(f * 0.08) * 1;
-        // cuerpo cuadrúpedo largo y bajo de hielo
-        px(x + 0, by + 20, 32 + sz, 13 + sz, '#6098C0');
-        px(x + 2, by + 22, 28 + sz, 9 + sz, '#78B0D8');
-        px(x + 5, by + 24, 22 + sz, 5, '#A8E0F8');
-        // cuatro patas
-        px(x + 3, by + 31 + sz, 5, 8, '#6098C0');
-        px(x + 11, by + 31 + sz, 5, 8, '#6098C0');
-        px(x + sz + 19, by + 31 + sz, 5, 8, '#6098C0');
-        px(x + sz + 27, by + 31 + sz, 5, 8, '#6098C0');
-        px(x + 3, by + 37 + sz, 7, 2, '#E8F8F8');
-        px(x + sz + 25, by + 37 + sz, 7, 2, '#E8F8F8');
-        // cola de hielo gruesa
-        px(x - 8, by + 25, 10, 5, '#78B0D8');
-        px(x - 14, by + 23, 7, 5, '#A8E0F8');
-        px(x - 17, by + 22, 4, 3, '#E8F8F8');
-
-        // cabeza baja, bestia ancestral cuadrúpeda
-        px(x + 3, by + 3, 27 + sz, 17, '#6098C0');
-        px(x + 5, by + 5, 23 + sz, 13, '#78B0D8');
-        px(x + 7, by + 7, 19 + sz, 9, '#A8E0F8');
-        // cristales/branquias de hielo
-        px(x + 4, by - 2, 4, 7, '#D8F8FF');
-        px(x + 10, by - 5, 4, 9, '#B8E8F8');
-        px(x + sz + 25, by - 2, 4, 7, '#D8F8FF');
-        px(x + 18, by - 4, 3, 6, '#E8F8F8');
-        px(x - 5, by + 4, 7, 4, '#A8E0F8');
-        px(x - 7, by + 8, 7, 4, '#90D0F0');
-        px(x - 6, by + 12, 7, 4, '#A8E0F8');
-        px(x + sz + 31, by + 4, 7, 4, '#A8E0F8');
-        px(x + sz + 33, by + 8, 7, 4, '#90D0F0');
-        px(x + sz + 32, by + 12, 7, 4, '#A8E0F8');
-        // ojos glaciales
-        px(x + 7, by + 7, 6, 6, '#D8F0F8');
-        px(x + sz + 20, by + 7, 6, 6, '#D8F0F8');
-        px(x + 9, by + 9, 4, 4, '#2060A0');
-        px(x + sz + 22, by + 9, 4, 4, '#2060A0');
-        px(x + 9, by + 9, 2, 2, '#C8F0F8');
-        px(x + sz + 22, by + 9, 2, 2, '#C8F0F8');
-        // barba helada cuadrada
-        px(x + 10, by + 17, 14 + sz, 4, '#E8F8F8');
-        px(x + 12, by + 20, 10 + sz, 4, '#C8F0F8');
-        px(x + 14, by + 23, 6 + sz, 3, '#A8E0F8');
-        px(x + 16, by + 26, 2 + sz, 3, '#E8F8F8');
-        // aura pixelada de frío
-        cx.globalAlpha = 0.06;
+        const frost = Math.sin(f * 0.08) * 1;
+        // aura fría pixelada detrás para presencia
+        cx.globalAlpha = 0.08;
         cx.fillStyle = '#88D0F8';
-        pixelGlow(x + 16, by + 18 + ice, 22 + sz, 16);
+        pixelGlow(x + 16, by + 20 + frost, 30 + sz, 22);
         cx.globalAlpha = 1;
+
+        // torso grande y bajo de bestia, mucho más imponente
+        px(x - 3, by + 18, 39 + sz, 16 + sz, '#4F86B0');
+        px(x + 0, by + 20, 33 + sz, 12 + sz, '#6FA8D0');
+        px(x + 4, by + 22, 26 + sz, 7, '#A8E0F8');
+        px(x + 8, by + 24, 18 + sz, 3, '#E8F8F8');
+        // lomo con placas de hielo
+        px(x + 1, by + 13, 6, 7, '#C8F0F8');
+        px(x + 9, by + 10, 6, 10, '#E8F8F8');
+        px(x + 18, by + 11, 6, 9, '#C8F0F8');
+        px(x + sz + 28, by + 14, 6, 6, '#B8E8F8');
+
+        // cuatro patas gruesas de criatura pesada
+        px(x + 0, by + 31 + sz, 7, 10, '#4F86B0');
+        px(x + 10, by + 32 + sz, 7, 10, '#4F86B0');
+        px(x + sz + 22, by + 32 + sz, 7, 10, '#4F86B0');
+        px(x + sz + 32, by + 31 + sz, 7, 10, '#4F86B0');
+        px(x - 1, by + 39 + sz, 10, 3, '#E8F8F8');
+        px(x + 9, by + 40 + sz, 10, 3, '#E8F8F8');
+        px(x + sz + 21, by + 40 + sz, 10, 3, '#E8F8F8');
+        px(x + sz + 31, by + 39 + sz, 10, 3, '#E8F8F8');
+
+        // cola pesada de hielo
+        px(x - 13, by + 25, 12, 6, '#6FA8D0');
+        px(x - 20, by + 22, 8, 6, '#A8E0F8');
+        px(x - 24, by + 20, 5, 4, '#E8F8F8');
+
+        // cabeza más grande, baja y amenazante
+        px(x + 2, by + 1, 31 + sz, 18, '#4F86B0');
+        px(x + 4, by + 3, 27 + sz, 14, '#6FA8D0');
+        px(x + 7, by + 5, 21 + sz, 9, '#A8E0F8');
+        // branquias/cristales laterales grandes
+        px(x - 7, by + 3, 8, 5, '#C8F0F8');
+        px(x - 10, by + 8, 8, 5, '#90D0F0');
+        px(x - 8, by + 13, 8, 5, '#C8F0F8');
+        px(x + sz + 34, by + 3, 8, 5, '#C8F0F8');
+        px(x + sz + 36, by + 8, 8, 5, '#90D0F0');
+        px(x + sz + 35, by + 13, 8, 5, '#C8F0F8');
+        // corona de hielo superior
+        px(x + 5, by - 5, 5, 7, '#D8F8FF');
+        px(x + 13, by - 9, 5, 11, '#E8F8F8');
+        px(x + 23, by - 6, 5, 8, '#C8F0F8');
+        px(x + 16, by - 12, 3, 5, '#FFFFFF');
+        // ojos intensos
+        px(x + 7, by + 7, 7, 6, '#D8F0F8');
+        px(x + sz + 22, by + 7, 7, 6, '#D8F0F8');
+        px(x + 9, by + 9, 4, 4, '#103C88');
+        px(x + sz + 24, by + 9, 4, 4, '#103C88');
+        px(x + 7, by + 6, 7, 1, '#305878');
+        px(x + sz + 22, by + 6, 7, 1, '#305878');
+
+        // barba helada más grande e imponente
+        px(x + 8, by + 17, 20 + sz, 5, '#E8F8F8');
+        px(x + 10, by + 21, 16 + sz, 5, '#C8F0F8');
+        px(x + 12, by + 25, 12 + sz, 4, '#A8E0F8');
+        px(x + 15, by + 29, 6 + sz, 4, '#E8F8F8');
+        px(x + 17, by + 33, 2 + sz, 3, '#FFFFFF');
+        // boca seria bajo la barba
+        px(x + 13, by + 16, 9, 1, '#5088B0');
         if (f % 20 < 10) {
-          cx.globalAlpha = 0.5;
-          px(x + sz + 29, by + 4 + Math.sin(f * 0.06) * 3, 2, 2, '#E8F8F8');
-          px(x - 4, by + 14 + Math.sin(f * 0.08) * 2, 2, 2, '#E8F8F8');
+          cx.globalAlpha = 0.55;
+          px(x + sz + 33, by + 2 + Math.sin(f * 0.06) * 3, 2, 2, '#E8F8F8');
+          px(x - 4, by + 15 + Math.sin(f * 0.08) * 2, 2, 2, '#E8F8F8');
           cx.globalAlpha = 1;
         }
       }
@@ -8483,33 +8499,37 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'salamandro': // Salamandro: larvita alquimista torpe arrastrando poción
+    case 'salamandro': // Salamandro: larvita alquimista torpe, cara más tierna
       {
         const wob = Math.sin(f * 0.18) * 1;
-        // cuerpo bajo, casi reptando: etapa inicial con silueta horizontal
+        // cuerpo bajo, casi reptando: aprendiz torpe
         px(x + 5, by + 27 + wob, 24 + sz, 8 + sz, '#E86020');
         px(x + 7, by + 29 + wob, 20 + sz, 5 + sz, '#F07830');
-        px(x + 2, by + 30 + wob, 8, 4, '#D85018'); // cola
+        px(x + 2, by + 30 + wob, 8, 4, '#D85018');
         px(x - 1, by + 31 + wob, 4, 3, '#F89040');
-        // cabeza grande al frente
-        px(x + 18, by + 16 + wob, 15 + sz, 12, '#E86020');
-        px(x + 20, by + 18 + wob, 11 + sz, 8, '#F89040');
-        // gorrito/pañuelo morado torpe
-        px(x + 17, by + 12 + wob, 14 + sz, 5, '#4030A0');
-        px(x + 19, by + 10 + wob, 10 + sz, 4, '#5040B0');
-        px(x + 28, by + 9 + wob, 3, 3, '#F8E830');
-        // ojos preocupados
-        px(x + 21, by + 20 + wob, 5, 5, '#fff');
-        px(x + sz + 28, by + 20 + wob, 4, 4, '#fff');
-        px(x + 23, by + 22 + wob, 3, 3, '#181818');
-        px(x + sz + 29, by + 21 + wob, 2, 2, '#181818');
-        px(x + 22, by + 18 + wob, 4, 1, '#C04818');
-        px(x + 29, by + 18 + wob, 4, 1, '#C04818');
-        px(x + 25, by + 27 + wob, 4, 2, '#C04818');
         // patitas cortas
         px(x + 8, by + 34 + sz + wob, 5, 3, '#C04818');
         px(x + 22, by + 34 + sz + wob, 5, 3, '#C04818');
-        // poción caída, para reforzar torpeza
+
+        // cabeza grande y amable al frente
+        px(x + 17, by + 15 + wob, 17 + sz, 13, '#E86020');
+        px(x + 19, by + 17 + wob, 13 + sz, 9, '#F89040');
+        px(x + 21, by + 19 + wob, 9 + sz, 5, '#FFA050');
+        // gorrito/pañuelo morado torpe
+        px(x + 17, by + 11 + wob, 15 + sz, 5, '#4030A0');
+        px(x + 19, by + 9 + wob, 11 + sz, 4, '#5040B0');
+        px(x + 27, by + 8 + wob, 4, 3, '#F8E830');
+        // cara nueva: ojos curiosos, no cejas feas
+        px(x + 20, by + 19 + wob, 5, 5, '#fff');
+        px(x + sz + 28, by + 19 + wob, 5, 5, '#fff');
+        px(x + 22, by + 21 + wob, 3, 3, '#181818');
+        px(x + sz + 30, by + 21 + wob, 3, 3, '#181818');
+        px(x + 23, by + 21 + wob, 1, 1, '#fff');
+        px(x + sz + 31, by + 21 + wob, 1, 1, '#fff');
+        // sonrisa pequeña y mejilla de torpeza
+        px(x + 25, by + 26 + wob, 5, 1, '#A83818');
+        px(x + 18, by + 24 + wob, 2, 2, '#F8B070');
+        // poción caída
         px(x + 2, by + 21 + wob, 6, 7, '#484848');
         px(x + 3, by + 20 + wob, 4, 2, '#606060');
         px(x + 3, by + 24 + wob, 4, 3, '#40E040');
