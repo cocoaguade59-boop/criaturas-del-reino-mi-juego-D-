@@ -13343,9 +13343,11 @@ function showRouteBlockedDialog(gate) {
   const mission = LEADER_MISSIONS[gate.leader];
   G.scr = 'dialog';
   G.ds = {
-    npc: { nm: 'Proa de Ruta' },
+    npc: { nm: 'Personal' },
     dlgArr: [
-      `Soy el Proa asignado a ${gate.place}.`,
+      'Soy parte del personal de',
+      'la comunidad univ...ficada',
+      `asignado a ${gate.place}.`,
       'Los árboles cierran los bordes:',
       'solo este camino queda abierto.',
       `Para pasar, vence a ${mission.leaderNm}`,
