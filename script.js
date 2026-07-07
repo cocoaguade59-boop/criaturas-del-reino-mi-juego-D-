@@ -13310,6 +13310,14 @@ function routeGateAt(c, r) {
   return ROUTE_GATES.find((g) => r === g.y && Math.abs(c - g.x) <= Math.floor(g.w / 2));
 }
 
+
+function routeProgressGate(fromX, fromY, toX, toY) {
+  // Bloqueo real de progreso: no importa si el jugador intenta rodear al Proa,
+  // cruzar el límite norte del tramo requiere el diploma correspondiente.
+  if (toY >= fromY) return null;
+  return ROUTE_GATES.find((g) => fromY > g.y && toY <= g.y && !canPassRoute(g.from)) || null;
+}
+
 function routeGateBlocks(c, r) {
   const g = routeGateAt(c, r);
   return !!(g && !canPassRoute(g.from));
@@ -13513,7 +13521,16 @@ function uWorld() {
     else if (kh('ArrowLeft')) dx = -1;
     else if (kh('ArrowRight')) dx = 1;
     if (dx || dy) {
-      const gate = routeGateAt(Math.round(G.pl.x) + dx, Math.round(G.pl.y) + dy);
+      const fromX = Math.round(G.pl.x),
+        fromY = Math.round(G.pl.y),
+        toX = fromX + dx,
+        toY = fromY + dy;
+      const progressGate = routeProgressGate(fromX, fromY, toX, toY);
+      if (progressGate) {
+        showRouteBlockedDialog(progressGate);
+        return;
+      }
+      const gate = routeGateAt(toX, toY);
       if (gate && !canPassRoute(gate.from)) {
         showRouteBlockedDialog(gate);
         return;
