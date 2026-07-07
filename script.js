@@ -8296,7 +8296,7 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'hydrapom': // Knightapple: serpiente verde erguida con pechera de manzana y brazos-hoja
+    case 'hydrapom': // Knightapple: serpiente verde alta con pechera de manzana y brazos-hoja delgados
       {
         const sway = Math.sin(f * 0.1) * 2;
         const leaf = Math.sin(f * 0.12) * 2;
@@ -8304,76 +8304,73 @@ function dCre(x, y, id, lv, f) {
         const RED1 = '#B82020', RED2 = '#D83030', RED3 = '#F05040';
         const CREAM = '#F0E6C8';
 
-        // Cuerpo serpentino delgado, erguido, con base enrollada.
-        px(x + 12, by + 32, 24 + sz, 7, G1);
-        px(x + 8, by + 36, 22 + sz, 7, G2);
+        // Cuerpo serpentino más alto y visible, con base enrollada.
+        px(x + 13, by + 32, 24 + sz, 6, G1);
+        px(x + 8, by + 36, 23 + sz, 6, G2);
         px(x + 2, by + 39, 22 + sz, 6, '#6FC838');
-        px(x + sz + 29, by + 36, 13, 8, '#E8E8D8');
-        px(x + sz + 35, by + 32, 9, 8, G2);
-        // Tramo vertical del cuello/cuerpo, muy delgado.
-        px(x + 16, by + 14, 7, 23, G1);
-        px(x + 18, by + 13, 3, 24, G3);
-        px(x + 13, by + 22, 4, 15, CREAM); // panza clara lateral
+        px(x + sz + 29, by + 36, 13, 7, '#E8E8D8');
+        px(x + sz + 35, by + 32, 9, 7, G2);
+        // Tramo vertical del cuerpo: más largo, delgado y protagonista.
+        px(x + 16, by + 9, 7, 29, G1);
+        px(x + 18, by + 8, 3, 30, G3);
+        px(x + 13, by + 20, 4, 18, CREAM); // panza clara lateral
+        px(x + 15, by + 13, 2, 7, '#6FC838');
 
-        // Pechera de manzana roja justo bajo la cabeza.
-        px(x + 10, by + 17, 21 + sz, 15 + sz, RED1);
-        px(x + 12, by + 16, 17 + sz, 15 + sz, RED2);
-        px(x + 14, by + 18, 12 + sz, 10 + sz, RED3);
-        px(x + 15, by + 17, 4, 2, '#FF8A78'); // brillo
-        px(x + 25, by + 20, 2, 2, '#FFB0A0');
-        // semillas/ranuras de la pechera
-        px(x + 16, by + 22, 3, 4, '#A85A38');
-        px(x + 23, by + 21, 3, 4, '#A85A38');
-        px(x + 15, by + 27, 3, 3, '#A85A38');
-        px(x + 21, by + 27, 3, 3, '#A85A38');
+        // Pechera de manzana más pequeña para dejar ver el cuerpo delgado.
+        px(x + 12, by + 20, 17 + sz, 12 + sz, RED1);
+        px(x + 14, by + 19, 13 + sz, 12 + sz, RED2);
+        px(x + 16, by + 21, 9 + sz, 8 + sz, RED3);
+        px(x + 17, by + 20, 3, 2, '#FF8A78');
+        px(x + 24, by + 23, 2, 2, '#FFB0A0');
+        // semillas/ranuras más pequeñas.
+        px(x + 17, by + 24, 2, 3, '#A85A38');
+        px(x + 23, by + 24, 2, 3, '#A85A38');
+        px(x + 16, by + 29, 2, 2, '#A85A38');
+        px(x + 22, by + 29, 2, 2, '#A85A38');
 
-        // Brazos en forma de hojas, saliendo de la manzana.
+        // Brazos-hoja delgados, ya no escudo ni espada.
         cx.globalAlpha = 0.98;
-        // brazo-hoja izquierdo tipo escudo/hoja redonda
-        px(x - 7, by + 19 + leaf, 12, 5, G3);
-        px(x - 11, by + 23 + leaf, 16, 5, G2);
-        px(x - 9, by + 28 + leaf, 12, 4, '#94D860');
-        px(x - 1, by + 23 + leaf, 3, 8, '#6FA840');
-        // brazo-hoja derecho largo tipo espada
-        px(x + sz + 28, by + 15 - leaf, 19, 4, G3);
-        px(x + sz + 28, by + 20 - leaf, 23, 4, G2);
-        px(x + sz + 35, by + 24 - leaf, 14, 4, '#94D860');
-        px(x + sz + 48, by + 16 - leaf, 6, 3, G3);
-        px(x + sz + 29, by + 20 - leaf, 7, 2, '#B08858');
-        // hojita secundaria derecha baja
-        px(x + sz + 32, by + 29 + leaf, 14, 4, G3);
-        px(x + sz + 35, by + 34 + leaf, 10, 4, '#94D860');
+        // brazo-hoja izquierdo fino
+        px(x + 3, by + 22 + leaf, 11, 3, G3);
+        px(x - 2, by + 25 + leaf, 15, 3, G2);
+        px(x - 5, by + 28 + leaf, 11, 3, '#94D860');
+        px(x + 9, by + 23 + leaf, 3, 8, '#6FA840');
+        // brazo-hoja derecho fino
+        px(x + sz + 27, by + 21 - leaf, 14, 3, G3);
+        px(x + sz + 28, by + 24 - leaf, 18, 3, G2);
+        px(x + sz + 36, by + 27 - leaf, 10, 3, '#94D860');
+        px(x + sz + 29, by + 23 - leaf, 3, 8, '#6FA840');
         cx.globalAlpha = 1;
 
-        // Cabeza verde arriba, con ojos saltones amarillos y pupilas negras.
-        px(x + 10, by + 1 + sway, 22 + sz, 12, G1);
-        px(x + 12, by + 3 + sway, 18 + sz, 8, G2);
-        px(x + 14, by + 5 + sway, 14 + sz, 5, G3);
-        // Hocico/mandíbula verde más oscuro, como serpiente.
-        px(x + 9, by + 9 + sway, 12, 7, '#3F8418');
-        px(x + 11, by + 11 + sway, 9, 4, '#5CA828');
-        // Ojos saltones amarillos
-        px(x + 12, by - 2 + sway, 7, 6, '#E8D840');
-        px(x + sz + 23, by - 2 + sway, 7, 6, '#E8D840');
-        px(x + 14, by + 0 + sway, 3, 3, '#1A2010');
-        px(x + sz + 25, by + 0 + sway, 3, 3, '#1A2010');
-        px(x + 15, by + 0 + sway, 1, 1, '#F8F8C0');
-        px(x + sz + 26, by + 0 + sway, 1, 1, '#F8F8C0');
-        // Cresta/hojas de la cabeza
-        px(x + 17, by - 7 + sway, 6, 6, G2);
-        px(x + 24, by - 9 + sway, 10, 5, G3);
-        px(x + 31, by - 10 + sway, 6, 3, G3);
-        px(x + 26, by - 6 + sway, 4, 2, '#2F7A24');
-        // Boca simple
-        px(x + 14, by + 12 + sway, 5, 1, '#1F5018');
+        // Cabeza verde más pequeña arriba, con ojos saltones amarillos.
+        px(x + 13, by + 0 + sway, 16 + sz, 10, G1);
+        px(x + 15, by + 2 + sway, 12 + sz, 7, G2);
+        px(x + 17, by + 4 + sway, 8 + sz, 4, G3);
+        // Hocico/boca proyectada en forma de pico (sin ser pico).
+        px(x + 10, by + 8 + sway, 10, 6, '#3F8418');
+        px(x + 8, by + 10 + sway, 7, 4, '#5CA828');
+        px(x + 6, by + 11 + sway, 4, 2, '#4E9A1E');
+        px(x + 9, by + 14 + sway, 8, 2, '#1F5018');
+        px(x + 10, by + 15 + sway, 4, 1, '#D8F0A0');
+        // Ojos saltones amarillos con pupila negra.
+        px(x + 13, by - 4 + sway, 6, 6, '#E8D840');
+        px(x + sz + 22, by - 4 + sway, 6, 6, '#E8D840');
+        px(x + 15, by - 2 + sway, 3, 3, '#1A2010');
+        px(x + sz + 24, by - 2 + sway, 3, 3, '#1A2010');
+        px(x + 16, by - 2 + sway, 1, 1, '#F8F8C0');
+        px(x + sz + 25, by - 2 + sway, 1, 1, '#F8F8C0');
+        // Cresta/hojas de la cabeza, compacta.
+        px(x + 18, by - 8 + sway, 5, 5, G2);
+        px(x + 24, by - 10 + sway, 8, 4, G3);
+        px(x + 30, by - 11 + sway, 5, 3, G3);
 
-        // Unión/cinturón bajo la pechera.
-        px(x + 15, by + 30 + sz, 9, 3, '#5A3818');
-        px(x + 17, by + 30 + sz, 4, 3, '#C8A830');
+        // Unión bajo la pechera.
+        px(x + 16, by + 31 + sz, 8, 3, '#5A3818');
+        px(x + 18, by + 31 + sz, 3, 3, '#C8A830');
         // Aura vegetal mínima.
         cx.globalAlpha = 0.05;
         cx.fillStyle = '#B8E880';
-        pixelGlow(x + 20, by + 22, 28 + sz, 16);
+        pixelGlow(x + 20, by + 22, 24 + sz, 18);
         cx.globalAlpha = 1;
       }
       break;
