@@ -7578,55 +7578,59 @@ function dCre(x, y, id, lv, f) {
       px(x + 18, by + 30 + sz, 4, 4, '#E0A030');
       break;
 
-    case 'cosmocardumen': // Cardumen cósmico
+    case 'cosmocardumen': // Tiburón cósmico formado por muchos peces pequeños
       {
-        const chv2 = Math.sin(fr * 0.1) * 2;
+        const swim = Math.sin(f * 0.08) * 2;
         cx.globalAlpha = 0.08;
         cx.fillStyle = '#3060E0';
-      pixelGlow(x + 16, by + chv2 + 20, 20 + sz, 14);
+        pixelGlow(x + 17, by + swim + 20, 30 + sz, 16);
         cx.globalAlpha = 1;
-        for (let i = 0; i < 12; i++) {
-          const px3 = x + 4 + Math.sin(i * 1.2 + f * 0.03) * 3 + (i % 4) * 6;
-          const py3 =
-            by +
-            chv2 +
-            10 +
-            Math.cos(i * 0.8 + f * 0.04) * 2 +
-            Math.floor(i / 4) * 8;
-          const col2 =
-            i % 3 === 0 ? '#2070C0' : i % 3 === 1 ? '#3090E0' : '#50B0F0';
-          cx.fillStyle = col2;
-          cx.fillRect(px3, py3, 4, 3);
-          cx.fillStyle = '#fff';
-          cx.fillRect(px3 + 3, py3 + 1, 1, 1);
-        }
-        px(x + 18, by + chv2 + 16, 6, 5, '#fff');
-        px(x + 20, by + chv2 + 18, 3, 3, '#101848');
-        px(x + 20, by + chv2 + 18, 1, 1, '#F8F8F8');
-        for (let i = 0; i < 4; i++) {
-          const tw3 = Math.sin(f * 0.12 + i) * 2;
-          px(x + 2 + i, by + chv2 + 18 + tw3 + i * 2, 3, 2, '#2060B0');
-        }
-        px(x + sz + 22, by + chv2 + 12, 8, 8, '#A0A0B0');
-        px(x + sz + 24, by + chv2 + 14, 4, 4, '#88B8F8');
-        px(x + 18, by + chv2 + 6, 2, 6, '#A0A0B0');
-        px(x + 17, by + chv2 + 4, 4, 3, '#E83030');
-        cx.globalAlpha = 0.5;
-        const sa2 = f * 0.02;
-        px(
-          x + 16 + Math.cos(sa2) * 18,
-          by + chv2 + 18 + Math.sin(sa2) * 12,
-          2,
-          2,
-          '#F8E830'
-        );
-        px(
-          x + 16 + Math.cos(sa2 + 3.14) * 16,
-          by + chv2 + 18 + Math.sin(sa2 + 3.14) * 10,
-          2,
-          2,
-          '#F8F8C0'
-        );
+
+        // Silueta general de tiburón: cabeza a la derecha, cola a la izquierda,
+        // formada por peces rectangulares pequeños.
+        const fish = [
+          // fila superior/lomo
+          [6, 17, 5, 3, 0], [12, 14, 5, 3, 1], [18, 12, 5, 3, 2], [24, 12, 5, 3, 0], [30, 14, 5, 3, 1],
+          // cuerpo central ancho
+          [3, 22, 5, 3, 1], [9, 20, 5, 3, 2], [15, 18, 5, 3, 0], [21, 18, 5, 3, 1], [27, 19, 5, 3, 2], [33, 21, 5, 3, 0],
+          [8, 25, 5, 3, 0], [14, 25, 5, 3, 1], [20, 25, 5, 3, 2], [26, 25, 5, 3, 0], [32, 25, 5, 3, 1],
+          // vientre
+          [13, 29, 5, 3, 2], [19, 30, 5, 3, 0], [25, 29, 5, 3, 1],
+          // cola bífida a la izquierda
+          [-4, 16, 5, 3, 2], [0, 19, 5, 3, 0], [-5, 27, 5, 3, 1], [0, 25, 5, 3, 2],
+          // aleta dorsal y aletas inferiores
+          [21, 7, 5, 3, 2], [23, 5, 4, 3, 1], [18, 34, 5, 3, 0], [28, 33, 5, 3, 2],
+        ];
+        const cols = ['#2070C0', '#3090E0', '#50B0F0'];
+        fish.forEach((a, i) => {
+          const fx = x + a[0] + Math.sin(f * 0.035 + i) * 1.5;
+          const fy = by + swim + a[1] + Math.cos(f * 0.04 + i) * 1;
+          cx.fillStyle = cols[a[4]];
+          cx.fillRect(fx, fy, a[2], a[3]);
+          // puntito-ojo/escama clara de cada pez
+          cx.fillStyle = '#E8F8FF';
+          cx.fillRect(fx + a[2] - 1, fy + 1, 1, 1);
+          // colita pixelada
+          cx.fillStyle = a[4] === 2 ? '#2070C0' : '#1858A0';
+          cx.fillRect(fx - 2, fy + 1, 2, 1);
+        });
+
+        // Cabeza del tiburón/cardumen: más compacta a la derecha
+        px(x + 36, by + swim + 18, 8, 10, '#2070C0');
+        px(x + 39, by + swim + 20, 7, 6, '#3090E0');
+        px(x + 44, by + swim + 22, 4, 3, '#50B0F0'); // hocico
+        px(x + 40, by + swim + 20, 3, 3, '#fff');
+        px(x + 42, by + swim + 21, 1, 1, '#101848');
+        // boca de tiburón en zigzag pixelado
+        px(x + 41, by + swim + 27, 8, 1, '#101848');
+        px(x + 43, by + swim + 28, 2, 1, '#F8F8F8');
+        px(x + 47, by + swim + 28, 2, 1, '#F8F8F8');
+
+        // Estrellas orbitales cuadradas para mantener la idea cósmica
+        cx.globalAlpha = 0.65;
+        const sa = f * 0.02;
+        px(x + 16 + Math.cos(sa) * 20, by + swim + 17 + Math.sin(sa) * 10, 2, 2, '#F8E830');
+        px(x + 22 + Math.cos(sa + 3.14) * 18, by + swim + 23 + Math.sin(sa + 3.14) * 9, 2, 2, '#F8F8C0');
         cx.globalAlpha = 1;
       }
       break;
