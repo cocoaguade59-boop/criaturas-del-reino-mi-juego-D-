@@ -3193,10 +3193,11 @@ function dBoxMenu(x, y, w, h, t) {
   // Título
   if (t) {
     cx.fillStyle = '#0a0a2e';
-    cx.fillRect(x + 20, y - 10, t.length * 9 + 14, 20);
+    const titleW = t.length * 11 + 22;
+    cx.fillRect(x + 20, y - 10, titleW, 20);
     cx.strokeStyle = '#ffd700';
     cx.lineWidth = 2;
-    cx.strokeRect(x + 20, y - 10, t.length * 9 + 14, 20);
+    cx.strokeRect(x + 20, y - 10, titleW, 20);
     cx.fillStyle = '#fff';
     cx.font = '10px "Press Start 2P"';
     cx.fillText(t, x + 28, y + 4);
@@ -12809,15 +12810,55 @@ function dTitle() {
   }
   cx.globalAlpha = 1;
 
-  // Luna, castillo y camino
-  cx.globalAlpha = 0.85;
+  // Luna, montañas pixeladas y castillo integrado al fondo
+  cx.globalAlpha = 0.75;
   cx.fillStyle = '#F8E8A0';
   pixelGlow(500, 82, 36, 36);
   cx.globalAlpha = 1;
-  cx.fillStyle = '#10182E';
-  for (let i = 0; i < 640; i += 2) cx.fillRect(i, Math.sin(i * 0.01) * 28 + 245, 2, 235);
-  px(452, 154, 88, 100, '#0A0A18'); px(432, 174, 28, 80, '#0A0A18'); px(532, 174, 28, 80, '#0A0A18'); px(488, 108, 18, 56, '#0A0A18');
-  px(466, 145, 10, 10, '#E8C830'); px(516, 145, 10, 10, '#E8C830'); px(492, 130, 10, 10, '#E8C830');
+
+  // Montañas sin curvas: bloques escalonados tipo pixel-art
+  const farPeaks = [
+    { x: -40, y: 260, w: 150, h: 54 }, { x: 70, y: 242, w: 170, h: 72 },
+    { x: 210, y: 255, w: 150, h: 58 }, { x: 330, y: 236, w: 190, h: 78 },
+    { x: 500, y: 252, w: 170, h: 62 },
+  ];
+  farPeaks.forEach((m) => {
+    cx.fillStyle = '#17213A';
+    for (let yy = 0; yy < m.h; yy += 8) {
+      const k = yy / m.h;
+      const ww = Math.max(18, m.w * (1 - k));
+      cx.fillRect(m.x + (m.w - ww) / 2, m.y + yy, ww, 8);
+    }
+    cx.fillStyle = 'rgba(255,255,255,.08)';
+    cx.fillRect(m.x + m.w * .46, m.y + 8, Math.max(8, m.w * .12), 8);
+  });
+  const nearPeaks = [
+    { x: -60, y: 286, w: 220, h: 46 }, { x: 118, y: 272, w: 230, h: 60 },
+    { x: 314, y: 280, w: 230, h: 52 }, { x: 500, y: 270, w: 210, h: 62 },
+  ];
+  nearPeaks.forEach((m) => {
+    cx.fillStyle = '#1D2D35';
+    for (let yy = 0; yy < m.h; yy += 8) {
+      const k = yy / m.h;
+      const ww = Math.max(24, m.w * (1 - k * .9));
+      cx.fillRect(m.x + (m.w - ww) / 2, m.y + yy, ww, 8);
+    }
+  });
+
+  // Castillo más claro y menos contrastado, encajado detrás de las montañas
+  cx.globalAlpha = 0.82;
+  px(452, 168, 88, 86, '#17223A');
+  px(434, 186, 26, 68, '#1B2940');
+  px(532, 186, 26, 68, '#1B2940');
+  px(462, 142, 18, 34, '#1B2940');
+  px(512, 142, 18, 34, '#1B2940');
+  px(488, 122, 18, 48, '#1E3048');
+  px(466, 155, 10, 10, '#D8B840');
+  px(516, 155, 10, 10, '#D8B840');
+  px(492, 138, 10, 10, '#D8B840');
+  px(488, 228, 16, 26, '#122034');
+  cx.globalAlpha = 1;
+
   cx.fillStyle = '#204A23'; cx.fillRect(0, 310, 640, 170);
   cx.fillStyle = '#B8A070';
   for (let yy = 310; yy < 480; yy += 8) {
