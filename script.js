@@ -7295,48 +7295,48 @@ function dCre(x, y, id, lv, f) {
       {
         const flame = Math.sin(f * 0.18) * 2;
         // cuerpo cuadrúpedo negro, ancho y bajo
-        px(x + 1, by + 20, 31 + sz, 16 + sz, '#101010');
-        px(x + 3, by + 22, 27 + sz, 12 + sz, '#181818');
-        px(x + 7, by + 24, 19 + sz, 7, '#242020');
+        px(x - 2, by + 18, 36 + sz, 19 + sz, '#101010');
+        px(x + 1, by + 20, 32 + sz, 15 + sz, '#181818');
+        px(x + 5, by + 23, 24 + sz, 8, '#242020');
         // lomo ardiente tenue
-        px(x + 8, by + 18, 18 + sz, 4, '#501010');
-        px(x + 12, by + 17, 10 + sz, 3, '#A82010');
+        px(x + 6, by + 16, 22 + sz, 5, '#501010');
+        px(x + 10, by + 15, 14 + sz, 3, '#A82010');
         // cuatro patas fuertes
-        px(x + 4, by + 33 + sz, 5, 9, '#101010');
-        px(x + 12, by + 34 + sz, 5, 8, '#101010');
-        px(x + sz + 22, by + 34 + sz, 5, 8, '#101010');
-        px(x + sz + 30, by + 33 + sz, 5, 9, '#101010');
-        px(x + 3, by + 41 + sz, 7, 2, '#050505');
-        px(x + sz + 29, by + 41 + sz, 7, 2, '#050505');
+        px(x + 2, by + 34 + sz, 6, 10, '#101010');
+        px(x + 12, by + 35 + sz, 6, 9, '#101010');
+        px(x + sz + 23, by + 35 + sz, 6, 9, '#101010');
+        px(x + sz + 33, by + 34 + sz, 6, 10, '#101010');
+        px(x + 0, by + 43 + sz, 10, 3, '#050505');
+        px(x + sz + 32, by + 43 + sz, 10, 3, '#050505');
         // cabeza poderosa al frente
-        px(x + 21, by + 8, 15 + sz, 14, '#101010');
-        px(x + 23, by + 10, 11 + sz, 10, '#201818');
-        px(x + 28, by + 16, 8, 5, '#0A0A0A'); // hocico oscuro
+        px(x + 22, by + 7, 17 + sz, 16, '#101010');
+        px(x + 24, by + 9, 13 + sz, 12, '#201818');
+        px(x + 30, by + 16, 9, 6, '#0A0A0A'); // hocico oscuro
         px(x + 30, by + 18, 2, 2, '#C8A080');
         px(x + 34, by + 18, 2, 2, '#C8A080');
         // cuernos grandes de fuego
-        px(x + 16, by + 3, 8, 5, '#E84020');
-        px(x + 13, by + 0, 6, 4, '#F8A030');
-        px(x + 11, by - 2, 4, 3, '#F8E060');
-        px(x + sz + 34, by + 3, 8, 5, '#E84020');
-        px(x + sz + 40, by + 0, 6, 4, '#F8A030');
-        px(x + sz + 45, by - 2, 4, 3, '#F8E060');
+        px(x + 15, by + 1, 10, 6, '#E84020');
+        px(x + 11, by - 3, 8, 5, '#F8A030');
+        px(x + 8, by - 5, 5, 4, '#F8E060');
+        px(x + sz + 37, by + 1, 10, 6, '#E84020');
+        px(x + sz + 45, by - 3, 8, 5, '#F8A030');
+        px(x + sz + 52, by - 5, 5, 4, '#F8E060');
         // ojos encendidos
         px(x + 25, by + 11, 4, 4, '#F8C030');
         px(x + sz + 33, by + 11, 4, 4, '#F8C030');
         px(x + 27, by + 13, 2, 2, '#601010');
         px(x + sz + 35, by + 13, 2, 2, '#601010');
         // cola con punta de llama
-        px(x - 7, by + 22, 10, 3, '#101010');
-        px(x - 12, by + 18 + flame, 6, 6, '#E84020');
-        px(x - 14, by + 15 + flame, 4, 5, '#F8A030');
-        px(x - 15, by + 13 + flame, 2, 3, '#F8E060');
+        px(x - 10, by + 22, 12, 4, '#101010');
+        px(x - 17, by + 17 + flame, 8, 8, '#E84020');
+        px(x - 20, by + 13 + flame, 6, 6, '#F8A030');
+        px(x - 22, by + 10 + flame, 3, 5, '#F8E060');
         // delantal quemado mínimo para mantener idea chef
-        px(x + 12, by + 25, 10, 6, '#D8C8A0');
-        px(x + 14, by + 26, 6, 3, '#E0D0B0');
+        px(x + 12, by + 25, 13, 7, '#D8C8A0');
+        px(x + 14, by + 26, 9, 4, '#E0D0B0');
         cx.globalAlpha = 0.08;
         cx.fillStyle = '#F84020';
-        pixelGlow(x + 18, by + 24, 26 + sz, 16);
+        pixelGlow(x + 18, by + 24, 34 + sz, 20);
         cx.globalAlpha = 1;
       }
       break;
@@ -13711,7 +13711,8 @@ function dTitle() {
   cx.fillStyle = '#000'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 323, 84); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 323, 124);
   cx.fillStyle = '#FFE070'; cx.font = '18px "Press Start 2P"'; cx.fillText('CRIATURAS DEL', 320, 81); cx.font = '28px "Press Start 2P"'; cx.fillText('REINO', 320, 121);
 
-  const ids = Object.keys(CDB);
+  // El desfile respeta el mismo orden de aparición del Criaturario.
+  const ids = dexIds();
   const spacing = 92;
   const totalW = ids.length * spacing;
   const base = 690 - (cf * 0.55 % (totalW + 760));
@@ -13727,7 +13728,8 @@ function dTitle() {
     cx.restore();
     cx.fillStyle = '#E8E8F0';
     cx.font = '5px "Press Start 2P"';
-    cx.fillText(CDB[id].nm, x + 24, y + 64);
+    cx.fillText(`#${String(i + 1).padStart(2, '0')}`, x + 24, y + 58);
+    cx.fillText(CDB[id].nm, x + 24, y + 68);
   });
 
   // Menú de entrada
