@@ -9391,6 +9391,7 @@ function dTileW(c, r) {
 
     case 14: { // Arco/cartel de entrada de pueblo
       drawWorldDecorBase(c, r, x, y);
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
       cx.fillStyle = '#6A4828';
       cx.fillRect(x + 4, y + 8, 4, 22);
       cx.fillRect(x + 24, y + 8, 4, 22);
@@ -9488,6 +9489,7 @@ function dTileW(c, r) {
 
     case 19: { // Estatua (Rey o criatura según zona)
       drawWorldDecorBase(c, r, x, y);
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
       // pedestal
       cx.fillStyle = '#686878';
       cx.fillRect(x + 6, y + 24, 20, 6);
@@ -9578,6 +9580,7 @@ function dTileW(c, r) {
 
     case 24: { // Huellas de criaturas
       drawWorldDecorBase(c, r, x, y);
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
       const col = snow > 0.35 ? '#A8B8B0' : '#2E6A20';
       cx.fillStyle = col;
       [[7,8],[12,13],[18,18],[23,23],[10,24],[20,8]].forEach(([a,b]) => {
