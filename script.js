@@ -2993,6 +2993,7 @@ const G = {
   hasSave: false,
   showDex: false,
   dexSel: 0,
+  supervisor: false,
   sSel: 0,
   bs: null,
   ds: null,
@@ -3036,6 +3037,7 @@ document.addEventListener('keydown', (e) => {
       'Escape',
       'z',
       'x',
+      'y',
     ].includes(key)
   ) {
     e.preventDefault();
@@ -13675,6 +13677,7 @@ function giveDiploma(leader) {
 
 // Función que verifica si el jugador puede pasar de un pueblo al siguiente
 function canPassRoute(fromPueblo) {
+  if (G.supervisor) return true;
   switch (fromPueblo) {
     case 'pitch':
       return true; // P1 -> P2 sin diploma
@@ -13961,7 +13964,7 @@ function uWorld() {
     const tile = wMap[tr]?.[tc];
 
     // Encuentros en hierba alta
-    if (tile === 5 && Math.random() < 0.018975) {
+    if (!G.supervisor && tile === 5 && Math.random() < 0.018975) {
       startWild();
     }
 
@@ -13972,7 +13975,7 @@ function uWorld() {
         for (let dc = -1; dc <= 1; dc++) {
           if (wMap[tr + dr]?.[tc + dc] === 2) nearWater = true;
         }
-      if (nearWater && Math.random() < 0.0088) startWild('water');
+      if (!G.supervisor && nearWater && Math.random() < 0.0088) startWild('water');
     }
 
     // Cristal Vínculo
@@ -14048,6 +14051,10 @@ function uWorld() {
   // Acción
   if (kp(' ')) {
     if (checkRouteSign()) return;
+    if (G.supervisor) {
+      aN('Supervisor: interacción con NPCs desactivada.');
+      return;
+    }
     checkNPC(npcs);
     // Edison post-game
     if (postGame) checkEdison();
@@ -14123,7 +14130,7 @@ function uCave() {
     const walkableCaveTile =
       tile === 20 || tile === 26 || tile === 27 || tile === 28;
 
-    if (walkableCaveTile) {
+    if (walkableCaveTile && !G.supervisor) {
       const encounterChance = tile === 26 ? 0.018 : 0.007;
 
       if (Math.random() < encounterChance) {
@@ -14148,7 +14155,8 @@ function uCave() {
   }
 
   if (kp(' ')) {
-    checkNPC(caveNpcs);
+    if (G.supervisor) aN('Supervisor: interacción con NPCs desactivada.');
+    else checkNPC(caveNpcs);
   }
   if (kp('x') || kp('Escape')) {
     sfx.sel();
@@ -14160,7 +14168,8 @@ function uCave() {
 }
 
 if (kp(' ')) {
-  checkNPC(caveNpcs);
+  if (G.supervisor) aN('Supervisor: interacción con NPCs desactivada.');
+  else checkNPC(caveNpcs);
 }
 if (kp('x') || kp('Escape')) {
   sfx.sel();
@@ -14191,7 +14200,8 @@ function uCastle() {
   }
 
   if (kp(' ')) {
-    checkNPC(castNpcs);
+    if (G.supervisor) aN('Supervisor: interacción con NPCs desactivada.');
+    else checkNPC(castNpcs);
   }
   if (kp('x') || kp('Escape')) {
     sfx.sel();
@@ -14212,7 +14222,7 @@ function uTower() {
     const tile = towerMap[tr]?.[tc];
 
     // Encuentros (todos los tipos + Serafox raro)
-    if (tile === 26 && Math.random() < 0.03) {
+    if (!G.supervisor && tile === 26 && Math.random() < 0.03) {
       if (Math.random() < 0.05) {
         // ¡Serafox!
         startSerafoxBattle();
@@ -15853,6 +15863,7 @@ function resetGame(startIntro = false) {
   G.proaOpen = false;
   G.showDex = false;
   G.dexSel = 0;
+  G.supervisor = false;
 
   postGame = false;
   towerOpen = false;
@@ -18478,13 +18489,18 @@ function drawMap() {
     cx.font = '5px "Press Start 2P"';
     cx.fillText('★POST-GAME★', 540, 55);
   }
+  if (G.supervisor) {
+    cx.fillStyle = '#ffd700';
+    cx.font = '5px "Press Start 2P"';
+    cx.fillText('SUPERVISOR: Y salir', 500, postGame ? 67 : 55);
+  }
 
   // Controles
   cx.fillStyle = 'rgba(0,0,0,.4)';
   cx.fillRect(4, 462, 320, 16);
   cx.fillStyle = '#666';
   cx.font = '5px "Press Start 2P"';
-  cx.fillText('Flechas:Mover Z:Sprint SPACE:Acción X:Menú', 8, 473);
+  cx.fillText('Flechas:Mover Z:Sprint SPACE:Acción X:Menú Y:Supervisor', 8, 473);
 
   // === PARTÍCULAS Y NOTIFICACIONES ===
   drawParticles();
@@ -19195,8 +19211,27 @@ function updateMusic() {
 // BLOQUE 25: LOOP PRINCIPAL + INICIALIZACIÓN
 // ============================================================
 
+function toggleSupervisorMode() {
+  G.supervisor = !G.supervisor;
+  if (G.supervisor) {
+    G.scr = 'world';
+    G.ms = null;
+    G.showMap = false;
+    G.proaOpen = false;
+    G.showMissions = false;
+    G.showDex = false;
+    aN('MODO SUPERVISOR: rutas libres, sin NPCs ni encuentros');
+  } else {
+    aN('Modo supervisor desactivado');
+  }
+  sfx.sel();
+}
+
 function update() {
   fr++;
+  if (kp('y') && !['battle', 'dialog', 'starter', 'intro', 'confirmReset', 'vision'].includes(G.scr)) {
+    toggleSupervisorMode();
+  }
   uP();
   updateMusic();
 
