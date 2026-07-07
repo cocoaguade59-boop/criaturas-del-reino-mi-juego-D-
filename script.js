@@ -6847,40 +6847,35 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'serpentdrg': // Serpiente dragón mafioso elegante
-      px(x + 6, by + 16, 20 + sz, 20 + sz, '#282858');
-      px(x + 8, by + 18, 16 + sz, 16 + sz, '#383868');
-      px(x + 10, by + 20, 12 + sz, 12, '#484878');
-      px(x + 2, by + 28, 6, 8, '#282858');
-      px(x + sz + 24, by + 26, 6, 10, '#282858');
-      px(x, by + 32, 4, 6, '#383868');
-      px(x + sz + 28, by + 30, 4, 6, '#383868');
-      px(x + 6, by + 2, 20 + sz, 16, '#282858');
-      px(x + 8, by + 4, 16 + sz, 12, '#383868');
-      px(x + 10, by + 6, 12 + sz, 8, '#484878');
-      px(x + 4, by - 2, 24 + sz, 4, '#1A1A1A');
-      px(x + 8, by - 5, 16 + sz, 5, '#282828');
-      px(x + 10, by - 6, 12 + sz, 3, '#383838');
-      px(x + 12, by - 4, 8 + sz, 1, '#C83030');
-      px(x + 10, by + 6, 5, 3, '#F0C020');
-      px(x + sz + 18, by + 6, 5, 3, '#F0C020');
-      px(x + 12, by + 7, 2, 2, '#100838');
-      px(x + sz + 20, by + 7, 2, 2, '#100838');
-      px(x + 10, by + 4, 1, 4, '#C07060');
-      px(x + sz + 22, by + 12, 6, 2, '#8A6020');
-      px(x + sz + 27, by + 11, 2, 2, '#E8A030');
-      if (f % 20 < 10) {
-        px(x + sz + 28, by + 9, 2, 2, '#C8C8C8');
+    case 'serpentdrg': // Serpentón: serpiente dragón mafioso joven, más pequeño
+      {
+        const sway = Math.sin(f * 0.12) * 1;
+        px(x + 9, by + 22 + sway, 18 + sz, 10 + sz, '#282858');
+        px(x + 11, by + 24 + sway, 14 + sz, 6 + sz, '#383868');
+        px(x + 6, by + 29 + sway, 16, 4, '#282858');
+        px(x + 2, by + 32 + sway, 9, 4, '#383868');
+        px(x + sz + 24, by + 30 + sway, 9, 4, '#282858');
+        px(x + 15, by + 18 + sway, 4, 9, '#C83030');
+        px(x + 16, by + 18 + sway, 2, 1, '#D84040');
+        px(x + 8, by + 6 + sway, 18 + sz, 12, '#282858');
+        px(x + 10, by + 8 + sway, 14 + sz, 8, '#383868');
+        px(x + 12, by + 10 + sway, 10 + sz, 5, '#484878');
+        px(x + 5, by + 1 + sway, 24 + sz, 4, '#1A1A1A');
+        px(x + 9, by - 2 + sway, 16 + sz, 4, '#282828');
+        px(x + 11, by - 3 + sway, 12 + sz, 2, '#383838');
+        px(x + 13, by - 1 + sway, 8 + sz, 1, '#C83030');
+        px(x + 11, by + 9 + sway, 5, 3, '#F0C020');
+        px(x + sz + 19, by + 9 + sway, 5, 3, '#F0C020');
+        px(x + 13, by + 10 + sway, 2, 2, '#100838');
+        px(x + sz + 21, by + 10 + sway, 2, 2, '#100838');
+        px(x + 11, by + 7 + sway, 1, 4, '#C07060');
+        px(x + sz + 22, by + 15 + sway, 6, 2, '#8A6020');
+        px(x + sz + 27, by + 14 + sway, 2, 2, '#E8A030');
+        if (f % 20 < 10) px(x + sz + 28, by + 12 + sway, 2, 2, '#C8C8C8');
+        px(x - 4, by + 34 + sway, 6, 3, '#282858');
+        px(x - 7, by + 32 + sway, 4, 4, '#C8A030');
       }
-      px(x + 14, by + 14, 4, 8, '#C83030');
-      px(x + 15, by + 14, 2, 1, '#C83030');
-      px(x - 4, by + 34, 6, 3, '#282858');
-      px(x - 7, by + 32, 4, 4, '#C8A030');
       break;
-
-    // ==========================================
-    // HADA 🧚
-    // ==========================================
 
     case 'pixie': // Duendecillo: ladrón pequeño, encorvado y con saco diminuto
       {
@@ -7889,35 +7884,39 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'espinarcor': // Espinarcor: carnero corredor, silueta horizontal de embestida
+    case 'espinarcor': // Espinarcor: etapa intermedia, carnero punk juvenil con chaqueta
       {
-        const run = Math.sin(f * 0.18) * 2;
-        px(x + 0, by + 22 + run, 30 + sz, 12 + sz, '#305820');
-        px(x + 3, by + 24 + run, 24 + sz, 8 + sz, '#406028');
-        px(x + 6, by + 25 + run, 18 + sz, 5, '#508038');
-        px(x + 2, by + 19 + run, 26 + sz, 7, '#111820');
-        px(x + 5, by + 20 + run, 20 + sz, 4, '#253030');
-        for (let i = 0; i < 5; i++) px(x + 4 + i * 5, by + 18 + run, 2, 3, '#C8A830');
-        px(x + 22, by + 10 + run, 16 + sz, 14, '#305820');
-        px(x + 24, by + 12 + run, 12 + sz, 10, '#406028');
-        px(x + 26, by + 14 + run, 8 + sz, 6, '#5C8840');
-        px(x + 18, by + 8 + run, 9, 5, '#2A4818');
-        px(x + 15, by + 7 + run, 5, 3, '#D8B840');
-        px(x + sz + 36, by + 8 + run, 9, 5, '#2A4818');
-        px(x + sz + 43, by + 7 + run, 5, 3, '#D8B840');
-        px(x + 11, by + 15 + run, 18 + sz, 4, '#38A020');
-        px(x + 14, by + 12 + run, 12 + sz, 4, '#48C030');
-        px(x + 18, by + 9 + run, 5 + sz, 3, '#A8D860');
-        px(x + 4, by + 31 + sz + run, 7, 9, '#305820');
-        px(x + 17, by + 32 + sz - run, 7, 8, '#305820');
-        px(x + sz + 28, by + 31 + sz + run, 7, 9, '#305820');
-        px(x + 2, by + 39 + sz + run, 9, 2, '#2A2018');
-        px(x + sz + 28, by + 39 + sz + run, 9, 2, '#2A2018');
-        px(x + 27, by + 14 + run, 5, 4, '#fff');
-        px(x + sz + 35, by + 14 + run, 5, 4, '#fff');
-        px(x + 29, by + 15 + run, 3, 2, '#203010');
-        px(x + sz + 37, by + 15 + run, 3, 2, '#203010');
-        px(x + 29, by + 20 + run, 6, 1, '#203010');
+        const step = Math.sin(f * 0.14) * 1;
+        px(x + 5, by + 21 + step, 24 + sz, 14 + sz, '#305820');
+        px(x + 7, by + 23 + step, 20 + sz, 10 + sz, '#406028');
+        px(x + 10, by + 25 + step, 14 + sz, 6, '#508038');
+        px(x + 5, by + 19 + step, 24 + sz, 7, '#111820');
+        px(x + 8, by + 20 + step, 18 + sz, 4, '#253030');
+        px(x + 8, by + 20 + step, 2, 2, '#C8A830');
+        px(x + 15, by + 20 + step, 2, 2, '#C8A830');
+        px(x + sz + 23, by + 20 + step, 2, 2, '#C8A830');
+        px(x + 8, by + 7 + step, 22 + sz, 15, '#305820');
+        px(x + 10, by + 9 + step, 18 + sz, 11, '#406028');
+        px(x + 13, by + 12 + step, 12 + sz, 6, '#5C8840');
+        px(x + 3, by + 4 + step, 8, 6, '#2A4818');
+        px(x, by + 3 + step, 5, 3, '#D8B840');
+        px(x + sz + 28, by + 4 + step, 8, 6, '#2A4818');
+        px(x + sz + 34, by + 3 + step, 5, 3, '#D8B840');
+        px(x + 11, by + 4 + step, 16 + sz, 4, '#38A020');
+        px(x + 14, by + 1 + step, 10 + sz, 4, '#48C030');
+        px(x + 18, by - 2 + step, 4 + sz, 3, '#A8D860');
+        px(x + 7, by + 33 + sz + step, 6, 7, '#305820');
+        px(x + 18, by + 34 + sz - step, 6, 6, '#305820');
+        px(x + sz + 25, by + 33 + sz + step, 6, 7, '#305820');
+        px(x + 5, by + 39 + sz + step, 8, 2, '#2A2018');
+        px(x + sz + 25, by + 39 + sz + step, 8, 2, '#2A2018');
+        px(x + 12, by + 13 + step, 5, 4, '#fff');
+        px(x + sz + 22, by + 13 + step, 5, 4, '#fff');
+        px(x + 14, by + 14 + step, 3, 2, '#203010');
+        px(x + sz + 24, by + 14 + step, 3, 2, '#203010');
+        px(x + 15, by + 19 + step, 7, 1, '#203010');
+        px(x + 3, by + 24 + step, 3, 4, '#A8D860');
+        px(x + sz + 31, by + 24 + step, 3, 4, '#A8D860');
       }
       break;
 
@@ -7959,6 +7958,13 @@ function dCre(x, y, id, lv, f) {
         px(x + 11, by + 14, 11, 3, '#111810');
         px(x + 14, by + 15, 2, 1, '#E8E8E8');
         px(x + 19, by + 15, 2, 1, '#E8E8E8');
+        // ramas en las manos como baquetas de batería
+        px(x - 16, by + 20 + pulse, 16, 2, '#6A4828');
+        px(x - 18, by + 18 + pulse, 4, 3, '#8A5A28');
+        px(x + sz + 35, by + 20 - pulse, 16, 2, '#6A4828');
+        px(x + sz + 49, by + 18 - pulse, 4, 3, '#8A5A28');
+        px(x - 3, by + 18, 5, 5, '#223018');
+        px(x + sz + 33, by + 18, 5, 5, '#223018');
         px(x + 4, by + 38 + sz, 8, 8, '#223018');
         px(x + sz + 24, by + 38 + sz, 8, 8, '#223018');
         px(x + 2, by + 45 + sz, 11, 3, '#151510');
@@ -8706,45 +8712,38 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'blaztoro': // Toro pastelero con delantal
-      px(x + 4, by + 18, 24 + sz, 16 + sz, '#A03020');
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#C04030');
-      px(x + 8, by + 20, 16 + sz, 10, '#F0E8E0');
-      px(x + 10, by + 22, 12 + sz, 6, '#F8F0E8');
-      px(x + 14, by + 24, 4, 3, '#E05060');
-      px(x + 4, by + 4, 24 + sz, 14, '#A03020');
-      px(x + 6, by + 6, 20 + sz, 10, '#C04030');
-      px(x + 4, by + 2, 4, 6, '#E8D8C0');
-      px(x + sz + 24, by + 2, 4, 6, '#E8D8C0');
-      px(x + 2, by + 0, 4, 4, '#F0E0D0');
-      px(x + sz + 26, by + 0, 4, 4, '#F0E0D0');
-      px(x + 5, by + 6, 3, 4, '#C04030');
-      px(x + sz + 24, by + 6, 3, 4, '#C04030');
-      px(x + 8, by + 8, 5, 5, '#fff');
-      px(x + sz + 18, by + 8, 5, 5, '#fff');
-      px(x + 10, by + 10, 3, 3, '#401818');
-      px(x + sz + 20, by + 10, 3, 3, '#401818');
-      px(x + 10, by + 10, 1, 1, '#fff');
-      px(x + sz + 20, by + 10, 1, 1, '#fff');
-      px(x + 12, by + 14, 8, 4, '#D05040');
-      px(x + 14, by + 16, 4, 2, '#E06050');
-      px(x + 14, by + 14, 4, 2, '#C04030');
-      px(x + 15, by + 15, 2, 1, '#C8A830');
-      px(x + 8, by + 0, 16 + sz, 4, '#F8F8F8');
-      px(x + 10, by - 3, 12 + sz, 5, '#F8F8F8');
-      px(x + 12, by - 4, 8 + sz, 3, '#F0F0F0');
-      px(x + sz + 22, by + 26, 6, 5, '#F0D8C0');
-      px(x + sz + 23, by + 24, 4, 3, '#F088A0');
-      px(x + sz + 24, by + 23, 2, 2, '#F8E830');
-      px(x + 6, by + 32 + sz, 6, 6, '#A03020');
-      px(x + sz + 20, by + 32 + sz, 6, 6, '#A03020');
-      px(x + 5, by + 36 + sz, 7, 2, '#802818');
-      px(x + sz + 19, by + 36 + sz, 7, 2, '#802818');
+    case 'blaztoro': // Blaztoro: torito pastelero pequeño y delicado
+      {
+        const bob = Math.sin(f * 0.14) * 1;
+        px(x + 8, by + 22 + bob, 20 + sz, 12 + sz, '#A03020');
+        px(x + 10, by + 24 + bob, 16 + sz, 8 + sz, '#C04030');
+        px(x + 11, by + 23 + bob, 14 + sz, 9, '#F0E8E0');
+        px(x + 13, by + 25 + bob, 10 + sz, 5, '#F8F0E8');
+        px(x + 16, by + 27 + bob, 4, 3, '#E05060');
+        px(x + 8, by + 8 + bob, 18 + sz, 13, '#A03020');
+        px(x + 10, by + 10 + bob, 14 + sz, 9, '#C04030');
+        px(x + 12, by + 12 + bob, 10 + sz, 5, '#D05040');
+        px(x + 6, by + 5 + bob, 4, 5, '#E8D8C0');
+        px(x + sz + 25, by + 5 + bob, 4, 5, '#E8D8C0');
+        px(x + 5, by + 3 + bob, 3, 3, '#F0E0D0');
+        px(x + sz + 27, by + 3 + bob, 3, 3, '#F0E0D0');
+        px(x + 9, by + 2 + bob, 16 + sz, 4, '#F8F8F8');
+        px(x + 11, by - 1 + bob, 12 + sz, 5, '#F8F8F8');
+        px(x + 13, by - 2 + bob, 8 + sz, 3, '#F0F0F0');
+        px(x + 11, by + 12 + bob, 5, 5, '#fff');
+        px(x + sz + 19, by + 12 + bob, 5, 5, '#fff');
+        px(x + 13, by + 14 + bob, 3, 3, '#401818');
+        px(x + sz + 21, by + 14 + bob, 3, 3, '#401818');
+        px(x + 14, by + 19 + bob, 7, 2, '#C04030');
+        px(x + sz + 25, by + 25 + bob, 6, 5, '#F0D8C0');
+        px(x + sz + 26, by + 23 + bob, 4, 3, '#F088A0');
+        px(x + sz + 27, by + 22 + bob, 2, 2, '#F8E830');
+        px(x + 9, by + 32 + sz + bob, 5, 5, '#A03020');
+        px(x + sz + 21, by + 32 + sz + bob, 5, 5, '#A03020');
+        px(x + 8, by + 36 + sz + bob, 6, 2, '#802818');
+        px(x + sz + 20, by + 36 + sz + bob, 6, 2, '#802818');
+      }
       break;
-
-    // ==========================================
-    // AGUA 💧 - NUEVOS (únicos)
-    // ==========================================
 
     case 'axolotl': // Ajolotín: cabeza grande, cuerpito bebé muy pequeño
       {
