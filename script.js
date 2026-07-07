@@ -13728,8 +13728,7 @@ function dTitle() {
     cx.restore();
     cx.fillStyle = '#E8E8F0';
     cx.font = '5px "Press Start 2P"';
-    cx.fillText(`#${String(i + 1).padStart(2, '0')}`, x + 24, y + 58);
-    cx.fillText(CDB[id].nm, x + 24, y + 68);
+    cx.fillText(CDB[id].nm, x + 24, y + 64);
   });
 
   // Menú de entrada
