@@ -16651,6 +16651,10 @@ function aiExpert(moves, attacker, defender) {
   return scored[0].mv;
 }
 
+function pCre() {
+  return G.party[G.bs.pi];
+}
+
 function calcCaptureChance(enemy) {
   const hpRatio = enemy.hp / enemy.mHp;
   const missingHp = 1 - hpRatio;
