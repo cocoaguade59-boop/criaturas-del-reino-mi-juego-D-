@@ -6798,39 +6798,49 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'eastern': // Dragón oriental chef de dumplings
-      px(x + 4, by + 18, 24 + sz, 16 + sz, '#C83030');
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#D84040');
-      px(x + 8, by + 22, 16 + sz, 8, '#E85050');
-      px(x + 2, by + 24, 6, 8, '#B82828');
-      px(x + sz + 24, by + 24, 6, 8, '#B82828');
-      px(x + 6, by + 2, 20 + sz, 16, '#C83030');
-      px(x + 8, by + 4, 16 + sz, 12, '#D84040');
-      px(x + 4, by + 10, 4, 1, '#E8C830');
-      px(x + 2, by + 12, 3, 1, '#E8C830');
-      px(x + sz + 24, by + 10, 4, 1, '#E8C830');
-      px(x + sz + 27, by + 12, 3, 1, '#E8C830');
-      px(x + 6, by - 2, 4, 5, '#E8C830');
-      px(x + sz + 22, by - 2, 4, 5, '#E8C830');
-      px(x + 5, by - 4, 3, 3, '#F0D040');
-      px(x + sz + 24, by - 4, 3, 3, '#F0D040');
-      px(x + 10, by - 2, 12 + sz, 4, '#F8F8F8');
-      px(x + 12, by - 5, 8 + sz, 5, '#F8F8F8');
-      px(x + 14, by - 6, 4 + sz, 3, '#F0F0F0');
-      px(x + 10, by + 6, 5, 5, '#fff');
-      px(x + sz + 18, by + 6, 5, 5, '#fff');
-      px(x + 12, by + 8, 3, 3, '#881818');
-      px(x + sz + 20, by + 8, 3, 3, '#881818');
-      px(x + 12, by + 8, 1, 1, '#fff');
-      px(x + sz + 20, by + 8, 1, 1, '#fff');
-      px(x + sz + 22, by + 28, 6, 5, '#F0E0C0');
-      px(x + sz + 23, by + 29, 4, 3, '#F8E8D0');
-      px(x + sz + 24, by + 28, 2, 1, '#E0D0B0');
-      px(x + 8, by + 32 + sz, 5, 5, '#C83030');
-      px(x + sz + 18, by + 32 + sz, 5, 5, '#C83030');
-      cx.globalAlpha = 0.3;
-      px(x + sz + 28, by + 26, 4, 3, '#E8E8E8');
-      cx.globalAlpha = 1;
+    case 'eastern': // Lóngbao: dragón oriental bebé dentro de un bao al vapor
+      {
+        const steam = Math.sin(f * 0.1) * 2;
+        // vapor cuadrado alrededor
+        cx.globalAlpha = 0.35;
+        px(x + 6, by + 2 + steam, 3, 3, '#F8F8F8');
+        px(x + 24, by + 4 - steam, 3, 3, '#F8F8F8');
+        px(x + 15, by - 1 + steam, 2, 2, '#F0F0F0');
+        cx.globalAlpha = 1;
+        // cuerpo bao: blanco/crema, redondito por bloques
+        px(x + 6, by + 19, 24 + sz, 17 + sz, '#E8D8C0');
+        px(x + 8, by + 17, 20 + sz, 18 + sz, '#F8E8D0');
+        px(x + 11, by + 15, 14 + sz, 6, '#FFF0D8');
+        // pliegues del bao
+        px(x + 12, by + 17, 2, 14, '#D8C0A0');
+        px(x + 18, by + 16, 2, 13, '#D8C0A0');
+        px(x + 24, by + 18, 2, 10, '#D8C0A0');
+        px(x + 14, by + 14, 8, 3, '#E8D8C0');
+        // cabeza de dragón asomando
+        px(x + 8, by + 4, 20 + sz, 14, '#C83030');
+        px(x + 10, by + 6, 16 + sz, 10, '#D84040');
+        px(x + 12, by + 8, 12 + sz, 6, '#E85050');
+        // bigotes/fideos chinos
+        px(x + 3, by + 13, 8, 2, '#F8F8F8');
+        px(x + sz + 25, by + 13, 8, 2, '#F8F8F8');
+        px(x + 1, by + 15, 5, 1, '#E8E8E8');
+        px(x + sz + 31, by + 15, 5, 1, '#E8E8E8');
+        // cuernos y gorrito de vapor
+        px(x + 6, by - 1, 4, 5, '#E8C830');
+        px(x + sz + 25, by - 1, 4, 5, '#E8C830');
+        px(x + 5, by - 3, 3, 3, '#F0D040');
+        px(x + sz + 27, by - 3, 3, 3, '#F0D040');
+        px(x + 14, by - 3, 8 + sz, 3, '#F8F8F8');
+        // ojos
+        px(x + 10, by + 9, 5, 5, '#fff');
+        px(x + sz + 19, by + 9, 5, 5, '#fff');
+        px(x + 12, by + 11, 3, 3, '#881818');
+        px(x + sz + 21, by + 11, 3, 3, '#881818');
+        px(x + 15, by + 15, 5, 2, '#A82820');
+        // colita de dragón saliendo del bao
+        px(x + sz + 28, by + 26, 6, 5, '#C83030');
+        px(x + sz + 32, by + 24, 4, 4, '#E85050');
+      }
       break;
 
     case 'serpentdrg': // Serpiente dragón mafioso elegante
@@ -7534,32 +7544,37 @@ function dCre(x, y, id, lv, f) {
         px(x + sz + 23, by + 10, 6, 5, '#fff');
         px(x + 9, by + 12, 3, 2, '#181818');
         px(x + sz + 25, by + 12, 3, 2, '#181818');
+        // mostacho blanco de maestro estilista
+        px(x + 10, by + 15, 6, 2, '#F8F8F8');
+        px(x + sz + 20, by + 15, 6, 2, '#F8F8F8');
+        px(x + 8, by + 16, 5, 1, '#E8E8E8');
+        px(x + sz + 24, by + 16, 5, 1, '#E8E8E8');
         // monóculo/lente estilista
         px(x + sz + 24, by + 9, 7, 6, '#C8A830');
         px(x + sz + 25, by + 10, 5, 4, '#D8E8F0');
         // brazos largos hacia pinzas enormes
-        px(x - 10, by + 21 + snap, 16, 5, '#A03018');
-        px(x + sz + 30, by + 21 - snap, 16, 5, '#A03018');
+        px(x - 5, by + 21 + snap, 10, 5, '#A03018');
+        px(x + sz + 31, by + 21 - snap, 10, 5, '#A03018');
         // pinza izquierda enorme tipo tijera
-        px(x - 28, by + 12 + snap, 20, 12, '#C8A830');
-        px(x - 30, by + 9 + snap, 12, 8, '#D8B840');
-        px(x - 30, by + 22 + snap, 12, 8, '#D8B840');
-        px(x - 27, by + 11 + snap, 6, 4, '#F0D860');
-        px(x - 27, by + 24 + snap, 6, 4, '#F0D860');
-        px(x - 18, by + 17 + snap, 10, 3, '#8A6018');
+        px(x - 20, by + 12 + snap, 18, 12, '#C8A830');
+        px(x - 22, by + 9 + snap, 10, 8, '#D8B840');
+        px(x - 22, by + 22 + snap, 10, 8, '#D8B840');
+        px(x - 19, by + 11 + snap, 5, 4, '#F0D860');
+        px(x - 19, by + 24 + snap, 5, 4, '#F0D860');
+        px(x - 10, by + 17 + snap, 8, 3, '#8A6018');
         // pinza derecha enorme tipo tijera
-        px(x + sz + 44, by + 12 - snap, 20, 12, '#C8A830');
-        px(x + sz + 56, by + 9 - snap, 12, 8, '#D8B840');
-        px(x + sz + 56, by + 22 - snap, 12, 8, '#D8B840');
-        px(x + sz + 59, by + 11 - snap, 6, 4, '#F0D860');
-        px(x + sz + 59, by + 24 - snap, 6, 4, '#F0D860');
-        px(x + sz + 44, by + 17 - snap, 10, 3, '#8A6018');
+        px(x + sz + 38, by + 12 - snap, 18, 12, '#C8A830');
+        px(x + sz + 50, by + 9 - snap, 10, 8, '#D8B840');
+        px(x + sz + 50, by + 22 - snap, 10, 8, '#D8B840');
+        px(x + sz + 53, by + 11 - snap, 5, 4, '#F0D860');
+        px(x + sz + 53, by + 24 - snap, 5, 4, '#F0D860');
+        px(x + sz + 38, by + 17 - snap, 8, 3, '#8A6018');
         // peine y tijeras como accesorios
-        px(x - 24, by + 5 + snap, 12, 2, '#F0F0F0');
+        px(x - 18, by + 5 + snap, 10, 2, '#F0F0F0');
         px(x - 24, by + 7 + snap, 2, 3, '#F0F0F0');
         px(x - 20, by + 7 + snap, 2, 3, '#F0F0F0');
         px(x - 16, by + 7 + snap, 2, 3, '#F0F0F0');
-        px(x + sz + 54, by + 5 - snap, 10, 2, '#E8E8E8');
+        px(x + sz + 48, by + 5 - snap, 9, 2, '#E8E8E8');
         px(x + sz + 58, by + 3 - snap, 2, 6, '#E8E8E8');
         // patas múltiples
         px(x + 6, by + 31 + sz, 4, 4, '#B83818');
@@ -8036,35 +8051,63 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'longwok': // Dragón chef con wok gigante
-      px(x + 2, by + 16, 28 + sz, 18 + sz, '#B02828');
-      px(x + 4, by + 18, 24 + sz, 14 + sz, '#C83838');
-      px(x + 6, by + 20, 20 + sz, 10, '#D84848');
-      px(x + 6, by + 16, 20 + sz, 4, '#F8F8F8');
-      px(x + 8, by + 14, 16 + sz, 4, '#F0F0F0');
-      px(x + 4, by + 2, 24 + sz, 16, '#B02828');
-      px(x + 6, by + 4, 20 + sz, 12, '#C83838');
-      px(x + 4, by + 10, 4, 1, '#E8C830');
-      px(x + 2, by + 12, 3, 1, '#E8C830');
-      px(x + sz + 24, by + 10, 4, 1, '#E8C830');
-      px(x + sz + 27, by + 12, 3, 1, '#E8C830');
-      px(x + 4, by - 2, 4, 5, '#E8C830');
-      px(x + sz + 24, by - 2, 4, 5, '#E8C830');
-      px(x + 10, by - 4, 12 + sz, 6, '#F8F8F8');
-      px(x + 12, by - 6, 8 + sz, 4, '#F8F8F8');
-      px(x + 10, by + 6, 5, 5, '#fff');
-      px(x + sz + 18, by + 6, 5, 5, '#fff');
-      px(x + 12, by + 8, 3, 3, '#881818');
-      px(x + sz + 20, by + 8, 3, 3, '#881818');
-      px(x + sz + 22, by + 20, 10, 8, '#585858');
-      px(x + sz + 24, by + 18, 6, 4, '#686868');
-      px(x + sz + 24, by + 19, 6, 2, '#E8C030');
-      px(x + sz + 26, by + 18, 2, 2, '#E85030');
-      if (f % 16 < 8) {
-        px(x + sz + 26, by + 16, 3, 3, '#E8E0D0');
+    case 'longwok': // Lóngwok: dragón chef serpentino enrollado en un wok gigante
+      {
+        const steam = Math.sin(f * 0.12) * 2;
+        // Wok gigante como base/silueta principal
+        px(x - 2, by + 24, 38 + sz, 12 + sz, '#303038');
+        px(x + 0, by + 26, 34 + sz, 8 + sz, '#484850');
+        px(x + 4, by + 24, 26 + sz, 4, '#707078');
+        px(x - 8, by + 27, 8, 3, '#202028');
+        px(x + sz + 34, by + 27, 8, 3, '#202028');
+        // fuego bajo el wok
+        if (f % 16 < 8) {
+          px(x + 8, by + 36 + sz, 5, 5, '#E84020');
+          px(x + 15, by + 38 + sz, 6, 5, '#F8A030');
+          px(x + 24, by + 36 + sz, 5, 5, '#E84020');
+        }
+        // cuerpo serpentino saliendo/enrollado alrededor del wok
+        px(x + 5, by + 20, 25 + sz, 5, '#B02828');
+        px(x + 1, by + 17, 22 + sz, 5, '#C83838');
+        px(x + 10, by + 14, 23 + sz, 5, '#B02828');
+        px(x + 18, by + 11, 15 + sz, 5, '#D84848');
+        // panza blanca de dragón oriental
+        px(x + 9, by + 21, 16 + sz, 2, '#F8F8F8');
+        px(x + 7, by + 18, 13 + sz, 2, '#F0F0F0');
+        px(x + 15, by + 15, 12 + sz, 2, '#F8F8F8');
+        // cabeza chef sobre el wok
+        px(x + 6, by + 2, 22 + sz, 14, '#B02828');
+        px(x + 8, by + 4, 18 + sz, 10, '#C83838');
+        px(x + 10, by + 6, 14 + sz, 6, '#D84848');
+        // gorro chef más grande
+        px(x + 6, by - 6, 22 + sz, 7, '#F8F8F8');
+        px(x + 9, by - 10, 16 + sz, 6, '#FFFFFF');
+        px(x + 12, by - 13, 10 + sz, 4, '#F0F0F0');
+        // bigotes/fideos largos
+        px(x - 4, by + 11, 12, 2, '#F8F8F8');
+        px(x + sz + 25, by + 11, 12, 2, '#F8F8F8');
+        px(x - 8, by + 14, 10, 1, '#E8E8E8');
+        px(x + sz + 33, by + 14, 10, 1, '#E8E8E8');
+        // ojos y cejas de maestro cocinero
+        px(x + 10, by + 7, 5, 5, '#fff');
+        px(x + sz + 20, by + 7, 5, 5, '#fff');
+        px(x + 12, by + 9, 3, 3, '#881818');
+        px(x + sz + 22, by + 9, 3, 3, '#881818');
+        px(x + 10, by + 6, 5, 1, '#881818');
+        px(x + sz + 20, by + 6, 5, 1, '#881818');
+        // cucharón y verduras al vuelo
+        px(x + sz + 31, by + 10, 2, 18, '#5A4020');
+        px(x + sz + 29, by + 8, 6, 4, '#C8C8C8');
+        px(x + 16, by + 20 + steam, 3, 3, '#48A030');
+        px(x + 23, by + 18 - steam, 3, 3, '#E8C830');
+        px(x + 12, by + 17 + steam, 3, 3, '#F0E0C0');
+        // vapor cuadrado
+        cx.globalAlpha = 0.35;
+        px(x + 8, by - 1 + steam, 3, 3, '#E8E8E8');
+        px(x + 28, by + 1 - steam, 3, 3, '#F8F8F8');
+        px(x + 20, by - 4 + steam, 2, 2, '#F0F0F0');
+        cx.globalAlpha = 1;
       }
-      px(x + 8, by + 32 + sz, 5, 5, '#B02828');
-      px(x + sz + 18, by + 32 + sz, 5, 5, '#B02828');
       break;
 
     case 'ornishadow': // Ornitorrinco con gadgets
