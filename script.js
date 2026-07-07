@@ -9114,6 +9114,37 @@ function lerpColor(a, b, t) {
   return 'rgb(' + R + ',' + G + ',' + B + ')';
 }
 
+
+function drawWorldDecorBase(c, r, x, y) {
+  // Base contextual para decoración: si está en cantera, se dibuja sobre piedra;
+  // si está al norte, se adapta al suelo frío/nevado; si no, césped normal.
+  const inRodaje = c >= 48 && c <= 64 && r >= 75 && r <= 89;
+  const inMontajeLookout = c >= 40 && c <= 52 && r >= 16 && r <= 22;
+  if (inRodaje || inMontajeLookout) {
+    cx.fillStyle = inRodaje ? '#8A8172' : '#AFA898';
+    cx.fillRect(x, y, T, T);
+    cx.fillStyle = inRodaje ? '#9A9182' : '#C2BAAA';
+    if ((c + r) % 2 === 0) cx.fillRect(x + 1, y + 1, 14, 14);
+    else cx.fillRect(x + 17, y + 1, 14, 14);
+    cx.fillStyle = inRodaje ? '#746C60' : '#8E8678';
+    cx.fillRect(x, y + 15, T, 1);
+    cx.fillRect(x + 15, y, 1, T);
+    return;
+  }
+  const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+  const baseA = lerpColor('#58A830', '#F2F8F4', snow);
+  const baseB = lerpColor('#48982A', '#E2ECE6', snow);
+  cx.fillStyle = (c + r) % 2 ? baseA : baseB;
+  cx.fillRect(x, y, T, T);
+  cx.fillStyle = lerpColor('#408820', '#C2D4C2', snow);
+  if ((c * 7 + r * 13) % 5 === 0) cx.fillRect(x + 8, y + 14, 2, 4);
+  if (snow > 0.25) {
+    cx.fillStyle = 'rgba(255,255,255,' + (0.35 + snow * 0.45).toFixed(2) + ')';
+    cx.fillRect(x + 5, y + 7, 3, 2);
+    cx.fillRect(x + 22, y + 24, 3, 2);
+  }
+}
+
 function dTileW(c, r) {
   const x = c * T - cam.x,
     y = r * T - cam.y;
@@ -9359,9 +9390,7 @@ function dTileW(c, r) {
 
 
     case 14: { // Arco/cartel de entrada de pueblo
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#6A4828';
       cx.fillRect(x + 4, y + 8, 4, 22);
       cx.fillRect(x + 24, y + 8, 4, 22);
@@ -9381,9 +9410,7 @@ function dTileW(c, r) {
     }
 
     case 15: { // Farol / antorcha de pueblo
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#4A3018';
       cx.fillRect(x + 14, y + 9, 4, 20);
       cx.fillStyle = '#6A4828';
@@ -9400,9 +9427,7 @@ function dTileW(c, r) {
     }
 
     case 16: { // Banco / descanso
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#6A4828';
       cx.fillRect(x + 5, y + 17, 22, 4);
       cx.fillRect(x + 7, y + 12, 18, 4);
@@ -9434,9 +9459,7 @@ function dTileW(c, r) {
     }
 
     case 18: { // Puesto / carpa de feria o vendedor
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       // mesa
       cx.fillStyle = '#6A4828';
       cx.fillRect(x + 4, y + 20, 24, 5);
@@ -9464,9 +9487,7 @@ function dTileW(c, r) {
     }
 
     case 19: { // Estatua (Rey o criatura según zona)
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       // pedestal
       cx.fillStyle = '#686878';
       cx.fillRect(x + 6, y + 24, 20, 6);
@@ -9499,9 +9520,7 @@ function dTileW(c, r) {
     }
 
     case 20: { // Cerca de madera
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#6A4828';
       cx.fillRect(x + 2, y + 13, 28, 4);
       cx.fillRect(x + 2, y + 22, 28, 4);
@@ -9512,9 +9531,7 @@ function dTileW(c, r) {
     }
 
     case 21: { // Cajas de madera
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#8A5A28';
       cx.fillRect(x + 5, y + 15, 10, 10);
       cx.fillRect(x + 17, y + 11, 10, 14);
@@ -9528,9 +9545,7 @@ function dTileW(c, r) {
     }
 
     case 22: { // Pozo de pueblo
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#6E6E6E';
       cx.fillRect(x + 7, y + 17, 18, 10);
       cx.fillStyle = '#8A8A8A';
@@ -9547,9 +9562,7 @@ function dTileW(c, r) {
     }
 
     case 23: { // Muñeco de entrenamiento
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       cx.fillStyle = '#6A4828';
       cx.fillRect(x + 14, y + 8, 4, 20);
       cx.fillRect(x + 8, y + 14, 16, 4);
@@ -9564,9 +9577,7 @@ function dTileW(c, r) {
     }
 
     case 24: { // Huellas de criaturas
-      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
-      cx.fillStyle = lerpColor('#58A830', '#F2F8F4', snow);
-      cx.fillRect(x, y, T, T);
+      drawWorldDecorBase(c, r, x, y);
       const col = snow > 0.35 ? '#A8B8B0' : '#2E6A20';
       cx.fillStyle = col;
       [[7,8],[12,13],[18,18],[23,23],[10,24],[20,8]].forEach(([a,b]) => {
@@ -9611,6 +9622,24 @@ function dTileW(c, r) {
       cx.fillStyle = '#B0A898';
       if ((c * 5 + r * 3) % 4 === 0) cx.fillRect(x + 7, y + 7, 5, 2);
       if ((c * 2 + r) % 5 === 0) cx.fillRect(x + 19, y + 22, 6, 2);
+      break;
+    }
+
+    case 27: { // Desnivel / borde elevado del terreno
+      const snow = Math.max(0, Math.min(1, (68 - r) / 46));
+      const inRodaje = c >= 48 && c <= 64 && r >= 75 && r <= 89;
+      cx.fillStyle = inRodaje ? '#8A8172' : lerpColor('#58A830', '#F2F8F4', snow);
+      cx.fillRect(x, y, T, T);
+      // pared baja escalonada
+      cx.fillStyle = inRodaje ? '#6F675C' : lerpColor('#7A5A38', '#C8D0CC', snow);
+      cx.fillRect(x, y + 15, T, 13);
+      cx.fillStyle = inRodaje ? '#918878' : lerpColor('#9A7040', '#E8F0EC', snow);
+      cx.fillRect(x, y + 12, T, 5);
+      cx.fillStyle = inRodaje ? '#B0A898' : lerpColor('#B89058', '#FFFFFF', snow);
+      if ((c + r) % 2 === 0) cx.fillRect(x + 3, y + 12, 10, 2);
+      else cx.fillRect(x + 18, y + 12, 9, 2);
+      cx.fillStyle = 'rgba(0,0,0,.18)';
+      cx.fillRect(x, y + 27, T, 5);
       break;
     }
 
@@ -10486,6 +10515,24 @@ function dTileC(c, r, map) {
       }
       break;
 
+    case 29: // Desnivel de cueva / plataforma rocosa
+      {
+        const v = (c * 7 + r * 13) % 3;
+        cx.fillStyle = ['#3D4455', '#3A4050', '#383E4C'][v];
+        cx.fillRect(x, y, T, T);
+        cx.fillStyle = '#2E3440';
+        cx.fillRect(x, y + 14, T, 16);
+        cx.fillStyle = '#525C70';
+        cx.fillRect(x, y + 10, T, 6);
+        cx.fillStyle = '#677288';
+        if ((c + r) % 2 === 0) cx.fillRect(x + 4, y + 10, 12, 2);
+        else cx.fillRect(x + 18, y + 10, 10, 2);
+        cx.fillStyle = '#252B36';
+        cx.fillRect(x + 7, y + 20, 2, 8);
+        cx.fillRect(x + 22, y + 18, 2, 6);
+      }
+      break;
+
     case 28: // Cristal Vínculo en cueva
       {
         // Suelo base
@@ -10809,6 +10856,66 @@ function addRouteDecorations() {
     if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && (wMap[r][c] === 0 || wMap[r][c] === 1 || wMap[r][c] === 5)) wMap[r][c] = t;
   });
 }
+function applyVillageIrregularShape(sx, sy, id) {
+  const set = (c, r, t) => {
+    if (r >= 2 && r < WR - 2 && c >= 2 && c < WC - 2 && wMap[r][c] !== 4) wMap[r][c] = t;
+  };
+  // Romper rectángulo perfecto: esquinas con césped/flores y bordes menos rígidos.
+  const cornerTiles = [
+    [sx - 2, sy - 2], [sx - 1, sy - 2], [sx + 8, sy - 2], [sx + 9, sy - 2],
+    [sx - 2, sy + 7], [sx - 1, sy + 7], [sx + 8, sy + 7], [sx + 9, sy + 7],
+    [sx - 2, sy - 1], [sx + 9, sy - 1], [sx - 2, sy + 6], [sx + 9, sy + 6],
+  ];
+  cornerTiles.forEach(([c, r], i) => set(c, r, i % 3 === 0 ? 6 : 0));
+
+  // Caminos escalonados secundarios: simulan diagonales sin curvas.
+  for (let k = 0; k < 5; k++) {
+    set(sx - 2 + k, sy + 7 - k, 1);
+    if (k < 4) set(sx - 1 + k, sy + 7 - k, 1);
+    set(sx + 9 - k, sy + 7 - k, 1);
+  }
+  // Callejón angosto entre casas superiores e inferiores.
+  for (let r = sy + 1; r <= sy + 5; r++) set(sx + 4, r, 1);
+  for (let c = sx + 2; c <= sx + 7; c++) set(c, sy + 3, 1);
+
+  // Desniveles visuales: bordes elevados que rompen la planicie.
+  [
+    [sx - 2, sy + 1], [sx - 1, sy + 1], [sx + 8, sy + 1], [sx + 9, sy + 1],
+    [sx + 1, sy + 7], [sx + 2, sy + 7], [sx + 6, sy + 7], [sx + 7, sy + 7],
+  ].forEach(([c, r]) => set(c, r, 27));
+
+  // Toques temáticos por pueblo sobre la forma irregular.
+  if (id === 'pitch') {
+    // Más flores normales alrededor de la plaza inicial.
+    [[sx + 1, sy + 2], [sx + 6, sy + 2], [sx + 1, sy + 5], [sx + 7, sy + 5], [sx + 5, sy + 6]].forEach(([c, r]) => set(c, r, 6));
+  }
+  if (id === 'storyboard') {
+    // Pequeño pasaje en zigzag hacia el mural.
+    for (let k = 0; k < 4; k++) set(sx + 1 + k, sy + 1 + k, 1);
+  }
+  if (id === 'rodaje') {
+    // Cantera con terrazas/desniveles rocosos más obvios.
+    for (let c = sx - 3; c <= sx + 11; c++) {
+      if (c < sx + 2 || c > sx + 6) set(c, sy - 3, 27);
+      if (c < sx + 1 || c > sx + 8) set(c, sy + 9, 27);
+    }
+    for (let r = sy - 2; r <= sy + 8; r++) {
+      if (r !== sy + 3) set(sx - 3, r, 27);
+      if (r !== sy + 3) set(sx + 11, r, 27);
+    }
+  }
+  if (id === 'ultimatoma') {
+    // Feria con entradas diagonales y puestos alrededor.
+    set(sx + 1, sy + 1, 18); set(sx + 7, sy + 1, 18);
+    set(sx + 1, sy + 6, 18); set(sx + 7, sy + 6, 18);
+  }
+  if (id === 'montaje') {
+    // Mirador escalonado al norte.
+    for (let c = sx; c <= sx + 8; c++) if (c !== sx + 4 && c !== sx + 5) set(c, sy - 1, 27);
+    set(sx + 1, sy + 2, 19); set(sx + 8, sy + 2, 19);
+  }
+}
+
 function genWorld() {
   // Inicializar mapa con hierba y hierba alta aleatoria
   for (let r = 0; r < WR; r++) {
@@ -10954,6 +11061,9 @@ function buildVillage(sx, sy, id) {
       if (archX + 1 < WC - 2 && wMap[rr][archX + 1] !== 14) wMap[rr][archX + 1] = 1;
     }
   }
+
+  // Forma irregular, senderos escalonados, callejones y desniveles.
+  applyVillageIrregularShape(sx, sy, id);
 
   // Identidad visual por pueblo: forma + decoración.
   if (id === 'storyboard') {
@@ -11250,6 +11360,15 @@ function genCave(map, cols, rows) {
     }
   }
 
+  // === DESNIVELES DE CUEVA: plataformas rocosas en bordes de salas ===
+  salas.forEach((s) => {
+    for (let c = s.x + 1; c < s.x + s.w - 1; c++) {
+      if (map[s.y]?.[c] === 20 && (c + s.y) % 2 === 0) map[s.y][c] = 29;
+      const rr = s.y + s.h - 1;
+      if (map[rr]?.[c] === 20 && (c + rr) % 3 === 0) map[rr][c] = 29;
+    }
+  });
+
   // === DECORACIÓN: Cristales decorativos en salas ===
   salas.forEach((s) => {
     if (Math.random() < 0.6) {
@@ -11413,7 +11532,7 @@ function solidW(c, r) {
   if (t === 2 || t === 3 || t === 7) return true;
   if (t === 4) return true;
   // Decoración sólida del mundo: puestos, estatuas, cercas, cajas, pozos, muñecos y cámara/set.
-  if ([18, 19, 20, 21, 22, 23, 25].includes(t)) return true;
+  if ([18, 19, 20, 21, 22, 23, 25, 27].includes(t)) return true;
   if (t === 13) return true;
   if (t === 9) return true;
   if (t === 12 && !towerOpen) return true;
@@ -11426,7 +11545,7 @@ function solidC(c, r, map, cols, rows) {
   const t = map[r][c];
   // Solo paredes, agua subterránea y lava son sólidos
   // Tiles 27,28,33 NO son sólidos (salidas y cristales)
-  return t === 21 || t === 23 || t === 24 || t === 31;
+  return t === 21 || t === 23 || t === 24 || t === 29 || t === 31;
 }
 
 // === GENERACIÓN DE TORRE (mapa especial post-game) ===
