@@ -10974,6 +10974,22 @@ const npcs = [
         'Cuando no están en tu equipo,',
         'descansan en la Proa.',
       ],
+      ['¡Increíble!'],
+      [
+        'PRIMERA REGLA DE BRANDCUT:',
+        '...',
+        'Ok, mal ejemplo.',
+        'Solo pelea.',
+      ],
+      [
+        'Eres el mejor, jugador.',
+        '¡Eres el mejor!',
+        'Y no se lo digo a cualquiera.',
+      ],
+      [
+        'Y recuerden, niños:',
+        'no olviden comer sus vegetales.',
+      ],
     ],
     postDlg: [
       '¡Has llegado lejos!',
