@@ -18219,7 +18219,9 @@ function dBattle() {
   const psx = b.ps > 0 ? Math.sin(b.ps * 2) * 4 : 0;
 
   // Criaturas
-  if (b.en.hp > 0) dCre(385 + esx, 108, b.en.id, b.en.lv, f);
+  // Durante la captura el enemigo se dibuja dentro de la animación para que
+  // parezca entrar al Cristal Vínculo, no quedarse duplicado en pantalla.
+  if (b.en.hp > 0 && b.ph !== 'captureAnim') dCre(385 + esx, 108, b.en.id, b.en.lv, f);
   if (c.hp > 0) dCre(105 + psx, 238, c.id, c.lv, f);
 
   // Panel enemigo
@@ -18261,8 +18263,10 @@ function dBattle() {
   // === PANEL INFERIOR SEGÚN FASE ===
 
   if (b.ph === 'captureAnim') {
-    const cap = b.cap || { tm: b.tm, shakes: 0, chance: 0 };
+    const cap = b.cap || { tm: b.tm, shakes: 0, chance: 0, success: false };
     const t = b.tm;
+    const totalCapTime = 48 + (cap.shakes || 0) * 28 + 28;
+    const breaking = !cap.success && t > totalCapTime - 24;
     let cx0 = 424;
     let cy0 = 137;
     if (t < 28) {
@@ -18275,24 +18279,71 @@ function dBattle() {
       if (shakeIndex < cap.shakes) cx0 += Math.sin(st * 0.65) * 8;
     }
 
-    // Cristal Vínculo animado
+    // La criatura entra al cristal: se reduce y se absorbe hacia el centro.
+    if (t < 28) {
+      dCre(385 + esx, 108, b.en.id, b.en.lv, f);
+    } else if (t < 62) {
+      const k = Math.min(1, (t - 28) / 34);
+      const ex = 401 + (cx0 - 401) * k;
+      const ey = 132 + (cy0 - 132) * k;
+      const sc = Math.max(0.08, 1 - k * 0.92);
+      cx.save();
+      cx.globalAlpha = 1 - k * 0.75;
+      cx.translate(ex, ey);
+      cx.scale(sc, sc);
+      dCre(-16, -24, b.en.id, b.en.lv, f);
+      cx.restore();
+      // rayos cuadrados de absorción
+      cx.globalAlpha = 0.35 + Math.sin(fr * 0.4) * 0.15;
+      cx.fillStyle = '#D0A0F8';
+      px(cx0 - 24, cy0 - 2, 18, 4, '#D0A0F8');
+      px(cx0 + 8, cy0 - 2, 18, 4, '#D0A0F8');
+      px(cx0 - 2, cy0 - 24, 4, 18, '#D0A0F8');
+      px(cx0 - 2, cy0 + 8, 4, 18, '#D0A0F8');
+      cx.globalAlpha = 1;
+    } else if (!cap.success && breaking) {
+      // Si falla, la criatura vuelve a aparecer cuando el cristal se rompe.
+      dCre(385 + Math.sin(fr * 0.5) * 3, 108, b.en.id, b.en.lv, f);
+    }
+
+    // Cristal Vínculo animado / roto
     cx.save();
     cx.translate(cx0, cy0);
-    cx.globalAlpha = 0.25 + Math.sin(fr * 0.25) * 0.08;
-    cx.fillStyle = '#B868F8';
-    pixelGlow(0, 0, 22, 18);
-    cx.globalAlpha = 1;
-    px(-8, -13, 16, 26, '#6020B0');
-    px(-6, -11, 12, 22, '#8838E0');
-    px(-3, -8, 6, 16, '#B868F8');
-    px(-1, -5, 2, 8, '#F8E8FF');
-    px(-10, -2, 20, 4, '#D0A0F8');
+    if (breaking) {
+      // Fragmentos pixelados del cristal roto
+      const br = t - (totalCapTime - 24);
+      const pieces = [
+        [-14 - br * .5, -8 - br * .25, 6, 5], [10 + br * .45, -10 - br * .2, 5, 6],
+        [-10 - br * .35, 9 + br * .25, 5, 5], [9 + br * .3, 8 + br * .3, 6, 4],
+        [-2, -2 - br * .45, 4, 4], [2, 4 + br * .35, 4, 4],
+      ];
+      cx.globalAlpha = Math.max(0.15, 1 - br / 28);
+      pieces.forEach((pc, i) => {
+        px(pc[0], pc[1], pc[2], pc[3], i % 2 ? '#8838E0' : '#B868F8');
+        px(pc[0] + 1, pc[1] + 1, Math.max(1, pc[2] - 2), 1, '#F8E8FF');
+      });
+      cx.globalAlpha = 1;
+    } else {
+      cx.globalAlpha = 0.25 + Math.sin(fr * 0.25) * 0.08;
+      cx.fillStyle = '#B868F8';
+      pixelGlow(0, 0, 22, 18);
+      cx.globalAlpha = 1;
+      px(-8, -13, 16, 26, '#6020B0');
+      px(-6, -11, 12, 22, '#8838E0');
+      px(-3, -8, 6, 16, '#B868F8');
+      px(-1, -5, 2, 8, '#F8E8FF');
+      px(-10, -2, 20, 4, '#D0A0F8');
+    }
     cx.restore();
 
     dDialogBox(10, 390, 620, 78);
     cx.fillStyle = '#000';
     cx.font = '8px "Press Start 2P"';
-    const shakeTxt = t < 28 ? 'El cristal vuela...' : `Sacudidas: ${Math.min(cap.shakes, Math.max(0, Math.floor((t - 28) / 28)))}/3`;
+    const shakeTxt = breaking
+      ? '¡El cristal se rompe!'
+      : t < 28
+      ? 'El cristal vuela...'
+      : `Sacudidas: ${Math.min(cap.shakes, Math.max(0, Math.floor((t - 28) / 28)))}/3`;
     cx.fillText('¡Nuevo sistema de captura!', 28, 414);
     cx.fillText('Cristal Vínculo: ' + shakeTxt, 28, 434);
     cx.fillStyle = '#606060';
