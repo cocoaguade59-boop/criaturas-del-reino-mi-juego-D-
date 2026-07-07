@@ -4511,11 +4511,11 @@ function dNPC(x, y, id, f) {
       px(x + 6, by + 11, 20, 8, '#C83888');
       px(x + 8, by + 12, 16, 6, '#D84898');
       px(x + 10, by + 13, 12, 4, '#E858A8');
-      px(x + 3, by + 12, 4, 7, SK.a);
-      px(x + 25, by + 12, 4, 7, SK.a);
-      px(x + 13, by + 9, 6, 3, SK.a);
-      px(x + 9, by + 0, 14, 10, SK.a);
-      px(x + 10, by + 1, 12, 8, SK.d);
+      px(x + 3, by + 12, 4, 7, SK.c);
+      px(x + 25, by + 12, 4, 7, SK.c);
+      px(x + 13, by + 9, 6, 3, SK.c);
+      px(x + 9, by + 0, 14, 10, SK.c);
+      px(x + 10, by + 1, 12, 8, SK.c);
       // Pelo NEGRO ONDULADO largo
       px(x + 7, by - 2, 18, 4, '#1A1A1A');
       px(x + 6, by + 0, 4, 16, '#1A1A1A');
@@ -4536,7 +4536,7 @@ function dNPC(x, y, id, f) {
       px(x + 20, by + 4, 2, 3, '#6A4028');
       px(x + 13, by + 4, 1, 1, '#fff');
       px(x + 20, by + 4, 1, 1, '#fff');
-      px(x + 14, by + 8, 4, 1, '#E0A090');
+      px(x + 14, by + 8, 4, 1, '#B08060');
       // Post-game: armadura dorada
       if (postGame) {
         px(x + 6, by + 11, 20, 8, '#90A0B0');
@@ -4795,14 +4795,14 @@ function dNPC(x, y, id, f) {
       px(x + 19, by + 11, 3, 4, '#388038'); // Tirantes
       px(x + 6, by + 11, 20, 4, '#D8C8A0');
       px(x + 8, by + 12, 16, 2, '#E0D0B0');
-      px(x + 4, by + 12, 4, 7, SK.b);
-      px(x + 24, by + 12, 4, 7, SK.b);
-      px(x + 11, by + 6, 1, 1, '#C89060');
-      px(x + 14, by + 7, 1, 1, '#C89060');
-      px(x + 21, by + 6, 1, 1, '#C89060'); // Pecas
-      px(x + 13, by + 9, 6, 3, SK.b);
-      px(x + 9, by + 0, 14, 10, SK.b);
-      px(x + 10, by + 1, 12, 8, SK.a);
+      px(x + 4, by + 12, 4, 7, SK.c);
+      px(x + 24, by + 12, 4, 7, SK.c);
+      px(x + 11, by + 6, 1, 1, '#A06A45');
+      px(x + 14, by + 7, 1, 1, '#A06A45');
+      px(x + 21, by + 6, 1, 1, '#A06A45'); // Pecas
+      px(x + 13, by + 9, 6, 3, SK.c);
+      px(x + 9, by + 0, 14, 10, SK.c);
+      px(x + 10, by + 1, 12, 8, SK.c);
       // Sombrero de paja
       px(x + 5, by - 3, 22, 4, '#E0C060');
       px(x + 7, by - 5, 18, 4, '#E8C870');
@@ -4817,7 +4817,7 @@ function dNPC(x, y, id, f) {
       px(x + 19, by + 4, 2, 2, '#2A6020');
       px(x + 13, by + 4, 1, 1, '#fff');
       px(x + 19, by + 4, 1, 1, '#fff');
-      px(x + 13, by + 8, 6, 1, '#C08868');
+      px(x + 13, by + 8, 6, 1, '#B08060');
       break;
 
     case 'gonchi': // Anteojos, arriba gris abajo azul grisáceo, mochila, capucha
@@ -5808,11 +5808,11 @@ function dTrainerBig(x, y, id, f) {
         px(x + 14, by + 22, 36, 14, '#D84898');
         px(x + 18, by + 24, 28, 10, '#E858A8');
       }
-      px(x + 6, by + 24, 8, 14, SK.a);
-      px(x + 50, by + 24, 8, 14, SK.a);
-      px(x + 24, by + 14, 16, 8, SK.a);
-      px(x + 18, by - 2, 28, 18, SK.a);
-      px(x + 20, by + 0, 24, 14, SK.d);
+      px(x + 6, by + 24, 8, 14, SK.c);
+      px(x + 50, by + 24, 8, 14, SK.c);
+      px(x + 24, by + 14, 16, 8, SK.c);
+      px(x + 18, by - 2, 28, 18, SK.c);
+      px(x + 20, by + 0, 24, 14, SK.c);
       // Pelo negro ondulado largo con flores
       px(x + 14, by - 8, 36, 10, '#1A1A1A');
       px(x + 12, by - 2, 8, 32, '#1A1A1A');
@@ -5836,7 +5836,7 @@ function dTrainerBig(x, y, id, f) {
       // Pestañas
       px(x + 22, by + 4, 2, 1, '#1A1A1A');
       px(x + 42, by + 4, 2, 1, '#1A1A1A');
-      px(x + 28, by + 14, 8, 2, '#E0A090');
+      px(x + 28, by + 14, 8, 2, '#B08060');
       break;
 
     case 'hernan': // Todo negro, barba corta (sin barba post-game), ojos melancólicos
@@ -6488,15 +6488,15 @@ function dTrainerBig(x, y, id, f) {
       px(x + 38, by + 22, 6, 14, '#388038');
       px(x + 10, by + 20, 44, 8, '#D8C8A0');
       px(x + 14, by + 22, 36, 4, '#E0D0B0');
-      px(x + 6, by + 24, 8, 14, SK.b);
-      px(x + 50, by + 24, 8, 14, SK.b);
+      px(x + 6, by + 24, 8, 14, SK.c);
+      px(x + 50, by + 24, 8, 14, SK.c);
       // Pecas
-      px(x + 22, by + 10, 2, 2, '#C89060');
-      px(x + 28, by + 12, 2, 2, '#C89060');
-      px(x + 40, by + 10, 2, 2, '#C89060');
-      px(x + 24, by + 14, 16, 8, SK.b);
-      px(x + 18, by - 2, 28, 18, SK.b);
-      px(x + 20, by + 0, 24, 14, SK.a);
+      px(x + 22, by + 10, 2, 2, '#A06A45');
+      px(x + 28, by + 12, 2, 2, '#A06A45');
+      px(x + 40, by + 10, 2, 2, '#A06A45');
+      px(x + 24, by + 14, 16, 8, SK.c);
+      px(x + 18, by - 2, 28, 18, SK.c);
+      px(x + 20, by + 0, 24, 14, SK.c);
       // Sombrero de paja
       px(x + 8, by - 8, 48, 8, '#E0C060');
       px(x + 14, by - 12, 36, 8, '#E8C870');
@@ -6511,7 +6511,7 @@ function dTrainerBig(x, y, id, f) {
       px(x + 39, by + 8, 3, 3, '#2A6020');
       px(x + 25, by + 8, 2, 1, '#fff');
       px(x + 39, by + 8, 2, 1, '#fff');
-      px(x + 26, by + 14, 12, 2, '#C08868');
+      px(x + 26, by + 14, 12, 2, '#B08060');
       break;
 
     case 'gonchi': // Anteojos, gorro, arriba gris abajo azul gris, mochila
