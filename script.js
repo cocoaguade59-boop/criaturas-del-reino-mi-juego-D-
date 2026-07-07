@@ -6620,27 +6620,39 @@ function dCre(x, y, id, lv, f) {
     // FUEGO 🔥
     // ==========================================
 
-    case 'flamingo': // Flamingo bailarín de flamenco
-      px(x + 10, by + 18, 12 + sz, 16 + sz, '#D83848');
-      px(x + 12, by + 20, 8 + sz, 12 + sz, '#E84858');
-      px(x + 14, by + 22, 4 + sz, 8, '#F06070');
-      px(x + 14, by + 6, 4, 14, '#D83848');
-      px(x + 15, by + 8, 2, 10, '#E84858');
-      px(x + 10, by + 2, 10, 8, '#D83848');
-      px(x + 12, by + 4, 6, 4, '#E84858');
-      px(x + 8, by + 5, 4, 2, '#F0A030');
-      px(x + 6, by + 6, 4, 1, '#D88020');
-      px(x + 14, by + 4, 3, 3, '#fff');
-      px(x + 15, by + 5, 2, 2, '#181818');
-      px(x + 15, by + 5, 1, 1, '#fff');
-      px(x + 17, by + 1, 3, 3, '#E82020');
-      px(x + 18, by + 0, 2, 2, '#F84040');
-      px(x + 14, by + 32 + sz, 2, 10, '#C89020');
-      px(x + 13, by + 40 + sz, 4, 2, '#A87018');
-      px(x + sz + 20, by + 16, 10, 8, '#B82838');
-      px(x + sz + 22, by + 14, 8, 6, '#D83848');
-      px(x + 4, by + 28, 6, 4, '#B82838');
-      px(x + 2, by + 26, 4, 4, '#C84050');
+    case 'flamingo': // Flamígaro: flamingo flamenco novato, una pata y castañuelas
+      {
+        const tap = Math.sin(f * 0.25) * 2;
+        // cuerpo vertical, baila en una sola pata
+        px(x + 12, by + 18, 10 + sz, 17 + sz, '#D83848');
+        px(x + 14, by + 20, 6 + sz, 13 + sz, '#F06070');
+        px(x + 10, by + 32 + sz, 14, 3, '#B82838'); // faldita simple de plumas
+        // cuello largo en S pixelada
+        px(x + 15, by + 6, 4, 14, '#D83848');
+        px(x + 17, by + 4, 5, 4, '#E84858');
+        px(x + 19, by + 2, 7, 5, '#D83848');
+        // cabeza y pico
+        px(x + 20, by + 1, 10, 8, '#E84858');
+        px(x + 22, by + 3, 6, 4, '#F08090');
+        px(x + 28, by + 4, 5, 2, '#F0A030');
+        px(x + 31, by + 5, 3, 1, '#D88020');
+        px(x + 24, by + 3, 3, 3, '#fff');
+        px(x + 25, by + 4, 2, 2, '#181818');
+        // flor/chispa en la cabeza
+        px(x + 20, by - 2, 3, 3, '#E82020');
+        px(x + 23, by - 1, 2, 2, '#F84040');
+        // alas-castañuelas
+        px(x + 5, by + 22 + tap, 7, 5, '#B82838');
+        px(x + 3, by + 21 + tap, 4, 4, '#F8A030');
+        px(x + sz + 21, by + 20 - tap, 9, 6, '#B82838');
+        px(x + sz + 28, by + 19 - tap, 4, 4, '#F8A030');
+        // pata única, larga
+        px(x + 16, by + 34 + sz, 2, 12, '#C89020');
+        px(x + 14, by + 45 + sz, 6, 2, '#A87018');
+        // segunda pata recogida
+        px(x + 20, by + 34 + sz, 6, 2, '#C89020');
+        px(x + 25, by + 32 + sz, 2, 4, '#C89020');
+      }
       break;
 
     case 'emberwing': // Cóndor abuelita tejiendo
@@ -7139,100 +7151,134 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'flamencero': // Flamingo con capa de fuego
-      px(x + 10, by + 18, 12 + sz, 16 + sz, '#C82838');
-      px(x + 12, by + 20, 8 + sz, 12 + sz, '#D83848');
-      px(x + 14, by + 22, 4 + sz, 8, '#E84858');
-      px(x + 14, by + 6, 4, 14, '#C82838');
-      px(x + 15, by + 8, 2, 10, '#D83848');
-      px(x + 10, by + 2, 10, 8, '#C82838');
-      px(x + 12, by + 4, 6, 4, '#D83848');
-      px(x + 8, by + 5, 4, 2, '#F0A030');
-      px(x + 6, by + 6, 4, 1, '#D88020');
-      px(x + 14, by + 4, 3, 3, '#fff');
-      px(x + 15, by + 5, 2, 2, '#181818');
-      px(x + 15, by + 5, 1, 1, '#fff');
-      px(x + 2, by + 14, 8, 14, '#E83020');
-      px(x + sz + 22, by + 14, 8, 14, '#E83020');
-      px(x + 4, by + 16, 4, 10, '#F84830');
-      px(x + sz + 24, by + 16, 4, 10, '#F84830');
-      const fcf = Math.sin(f * 0.2) * 2;
-      px(x + 2, by + 26 + fcf, 6, 4, '#F8A030');
-      px(x + sz + 24, by + 26 - fcf, 6, 4, '#F8A030');
-      px(x + 17, by + 1, 3, 3, '#E82020');
-      px(x + 18, by + 0, 2, 2, '#F84040');
-      px(x + 14, by + 32 + sz, 2, 10, '#C89020');
-      px(x + 13, by + 40 + sz, 4, 2, '#A87018');
-      break;
-
-    case 'alquimero': // Salamandra con caldero grande
-      px(x + 4, by + 18, 24 + sz, 14 + sz, '#D85018');
-      px(x + 6, by + 20, 20 + sz, 10 + sz, '#E86828');
-      px(x + 8, by + 20, 4, 3, '#B04010');
-      px(x + 18, by + 22, 5, 3, '#B04010');
-      px(x + 6, by + 18, 20 + sz, 4, '#E8E0D0');
-      px(x + 8, by + 16, 16 + sz, 4, '#F0E8E0');
-      px(x + 6, by + 4, 20 + sz, 14, '#D85018');
-      px(x + 8, by + 6, 16 + sz, 10, '#E86828');
-      px(x + 6, by + 0, 20 + sz, 6, '#4030A0');
-      px(x + 8, by - 2, 16 + sz, 4, '#5040B0');
-      px(x + 14, by - 4, 4, 4, '#5040B0');
-      px(x + 15, by - 5, 2, 2, '#F8E830');
-      px(x + 9, by + 7, 6, 5, '#C8A830');
-      px(x + 10, by + 8, 4, 3, '#D8E8F0');
-      px(x + sz + 17, by + 7, 6, 5, '#C8A830');
-      px(x + sz + 18, by + 8, 4, 3, '#D8E8F0');
-      px(x + 15, by + 9, 2, 1, '#C8A830');
-      px(x + 10, by + 8, 5, 4, '#fff');
-      px(x + sz + 18, by + 8, 5, 4, '#fff');
-      px(x + 12, by + 9, 3, 3, '#181818');
-      px(x + sz + 20, by + 9, 3, 3, '#181818');
-      px(x + sz + 18, by + 24, 10, 8, '#484848');
-      px(x + sz + 20, by + 22, 6, 4, '#585858');
-      px(x + sz + 20, by + 23, 6, 3, '#40C040');
-      cx.globalAlpha = 0.3;
-      px(x + sz + 22, by + 18 + Math.sin(f * 0.08) * 2, 4, 4, '#A0A0A0');
-      px(x + sz + 24, by + 14 + Math.sin(f * 0.1) * 3, 3, 3, '#C0C0C0');
-      cx.globalAlpha = 1;
-      px(x + 8, by + 30 + sz, 5, 5, '#D85018');
-      px(x + sz + 18, by + 30 + sz, 5, 5, '#D85018');
-      break;
-
-    case 'piromante': // Maestro alquimista de fuego
-      px(x + 2, by + 16, 28 + sz, 18 + sz, '#C04010');
-      px(x + 4, by + 18, 24 + sz, 14 + sz, '#D85018');
-      px(x + 4, by + 16, 24 + sz, 14, '#3828A0');
-      px(x + 6, by + 18, 20 + sz, 10, '#4838B0');
-      px(x + 10, by + 20, 4, 4, '#F8E830');
-      px(x + 18, by + 22, 3, 3, '#F8E830');
-      px(x, by + 14, 4, 16, '#2818A0');
-      px(x + sz + 28, by + 14, 4, 16, '#2818A0');
-      px(x + 4, by + 2, 24 + sz, 16, '#C04010');
-      px(x + 6, by + 4, 20 + sz, 12, '#D85018');
-      px(x + 4, by - 2, 4, 6, '#E82020');
-      px(x + sz + 24, by - 2, 4, 6, '#E82020');
-      px(x + 3, by - 4, 3, 3, '#F8A030');
-      px(x + sz + 26, by - 4, 3, 3, '#F8A030');
-      px(x + 8, by + 8, 6, 5, '#F8C030');
-      px(x + sz + 18, by + 8, 6, 5, '#F8C030');
-      px(x + 10, by + 10, 3, 3, '#801010');
-      px(x + sz + 20, by + 10, 3, 3, '#801010');
-      px(x + 10, by + 10, 1, 1, '#F8F8F8');
-      px(x + sz + 20, by + 10, 1, 1, '#F8F8F8');
-      px(x + 12, by + 16, 8, 4, '#E86020');
-      px(x + 14, by + 19, 4, 3, '#F08030');
-      px(x + sz + 26, by + 8, 2, 22, '#5A4020');
-      px(x + sz + 25, by + 6, 4, 4, '#F8A030');
-      px(x + sz + 26, by + 4, 2, 3, '#E82020');
-      if (f % 16 < 8) {
-        px(x + sz + 25, by + 2, 4, 3, '#F8C060');
+    case 'flamencero': // Flamencero: diva del flamenco con vestido de fuego y abanico
+      {
+        const sw = Math.sin(f * 0.18) * 3;
+        // giro gracioso: ya no es solo flamingo, ahora es bailaora exagerada con vestido gigante
+        // vestido/cuerpo de volantes en forma de campana
+        px(x + 6, by + 18, 24 + sz, 10, '#A82020');
+        px(x + 4, by + 26, 28 + sz, 9, '#C82838');
+        px(x + 2, by + 34, 32 + sz, 8, '#E83020');
+        px(x + 5, by + 38, 26 + sz, 5, '#F8A030');
+        px(x + 8, by + 20, 18 + sz, 7, '#D83848');
+        px(x + 10, by + 28, 14 + sz, 5, '#F06070');
+        // lunares cuadrados del vestido
+        px(x + 8, by + 29, 3, 3, '#F8E8D0');
+        px(x + 20, by + 34, 3, 3, '#F8E8D0');
+        px(x + sz + 26, by + 31, 3, 3, '#F8E8D0');
+        // cuello y cabeza altiva
+        px(x + 15, by + 5, 4, 15, '#C82838');
+        px(x + 17, by + 3, 5, 4, '#D83848');
+        px(x + 20, by + 1, 10, 8, '#D83848');
+        px(x + 22, by + 3, 6, 4, '#F08090');
+        px(x + 29, by + 4, 5, 2, '#F0A030');
+        px(x + 32, by + 5, 3, 1, '#D88020');
+        px(x + 24, by + 3, 3, 3, '#fff');
+        px(x + 25, by + 4, 2, 2, '#181818');
+        // peineta/flor flamenca gigante
+        px(x + 18, by - 5, 5, 5, '#E82020');
+        px(x + 23, by - 6, 4, 4, '#F84040');
+        px(x + 20, by - 9, 4, 4, '#F8A030');
+        // abanico de fuego en un ala y brazo dramático
+        px(x - 8, by + 14 + sw, 14, 5, '#E83020');
+        px(x - 12, by + 18 + sw, 18, 5, '#F84830');
+        px(x - 14, by + 22 + sw, 16, 4, '#F8A030');
+        px(x - 10, by + 16 + sw, 2, 10, '#F8E060');
+        px(x + sz + 27, by + 15 - sw, 8, 14, '#A82020');
+        px(x + sz + 29, by + 17 - sw, 4, 10, '#F84830');
+        // tacón visible bajo el vestido
+        px(x + 13, by + 41 + sz, 3, 7, '#C89020');
+        px(x + 11, by + 47 + sz, 7, 2, '#A87018');
       }
-      px(x + 8, by + 32 + sz, 6, 6, '#C04010');
-      px(x + sz + 18, by + 32 + sz, 6, 6, '#C04010');
-      cx.globalAlpha = 0.06;
-      cx.fillStyle = '#F84020';
-      pixelGlow(x + 16, by + 20, 20 + sz, 16);
-      cx.globalAlpha = 1;
+      break;
+
+    case 'alquimero': // Alquímero: salamandra dentro de un caldero andante
+      {
+        const steam = Math.sin(f * 0.1) * 2;
+        // silueta dominada por caldero, no por cuerpo de salamandra
+        px(x + 2, by + 21, 30 + sz, 16 + sz, '#2A2A30');
+        px(x + 4, by + 23, 26 + sz, 12 + sz, '#3A3A40');
+        px(x + 7, by + 20, 20 + sz, 4, '#5A5A60');
+        px(x + 8, by + 24, 18 + sz, 3, '#40C040');
+        px(x + 10, by + 25, 14 + sz, 2, '#80F080');
+        // patas del caldero
+        px(x + 5, by + 36 + sz, 5, 5, '#202024');
+        px(x + sz + 24, by + 36 + sz, 5, 5, '#202024');
+        // salamandra asomándose
+        px(x + 8, by + 6, 20 + sz, 14, '#D85018');
+        px(x + 10, by + 8, 16 + sz, 10, '#E86828');
+        px(x + 12, by + 10, 12 + sz, 6, '#F89040');
+        // sombrero alto de alquimista
+        px(x + 8, by - 2, 20 + sz, 8, '#4030A0');
+        px(x + 10, by - 6, 16 + sz, 5, '#5040B0');
+        px(x + 14, by - 9, 8 + sz, 4, '#382080');
+        px(x + 16, by - 7, 4, 2, '#F8E830');
+        // lentes de laboratorio
+        px(x + 9, by + 8, 6, 5, '#C8A830');
+        px(x + 10, by + 9, 4, 3, '#D8E8F0');
+        px(x + sz + 19, by + 8, 6, 5, '#C8A830');
+        px(x + sz + 20, by + 9, 4, 3, '#D8E8F0');
+        px(x + 15, by + 10, 4, 1, '#C8A830');
+        px(x + 14, by + 17, 5, 2, '#C04818');
+        // brazo con cucharón y libro pequeño
+        px(x - 5, by + 18, 9, 4, '#D85018');
+        px(x - 9, by + 17, 5, 6, '#8A5020');
+        px(x + sz + 29, by + 15, 2, 18, '#6A4828');
+        px(x + sz + 27, by + 14, 6, 4, '#C8C8C8');
+        // vapor pixelado
+        cx.globalAlpha = 0.35;
+        px(x + 9, by + 14 + steam, 3, 3, '#A0A0A0');
+        px(x + 17, by + 10 - steam, 4, 4, '#C0C0C0');
+        px(x + 24, by + 13 + steam, 3, 3, '#A0A0A0');
+        cx.globalAlpha = 1;
+      }
+      break;
+
+    case 'piromante': // Piromante: maestro alto con túnica, bastón y salamandra ígnea
+      {
+        const flame = Math.sin(f * 0.16) * 2;
+        // silueta vertical de mago, no salamandra común
+        px(x + 8, by + 14, 20 + sz, 27 + sz, '#3828A0');
+        px(x + 10, by + 16, 16 + sz, 23 + sz, '#4838B0');
+        px(x + 12, by + 18, 12 + sz, 18, '#C04010');
+        px(x + 14, by + 20, 8 + sz, 12, '#D85018');
+        // mangas largas
+        px(x + 2, by + 16, 8, 20, '#2818A0');
+        px(x + sz + 27, by + 16, 8, 20, '#2818A0');
+        px(x + 4, by + 30, 5, 5, '#C04010');
+        // cola de salamandra saliendo de la túnica
+        px(x + 5, by + 36 + sz, 12, 4, '#C04010');
+        px(x + 2, by + 38 + sz, 5, 3, '#F08030');
+        // cabeza/cara de maestro
+        px(x + 6, by + 2, 24 + sz, 15, '#C04010');
+        px(x + 8, by + 4, 20 + sz, 11, '#D85018');
+        px(x + 10, by + 6, 16 + sz, 7, '#F08030');
+        // gran sombrero/corona de fuego
+        px(x + 4, by - 4, 28 + sz, 6, '#3828A0');
+        px(x + 8, by - 10, 20 + sz, 7, '#4838B0');
+        px(x + 13, by - 16, 10 + sz, 7, '#2818A0');
+        px(x + 5, by - 8, 4, 6, '#E82020');
+        px(x + sz + 27, by - 8, 4, 6, '#E82020');
+        px(x + 12, by - 18 + flame, 4, 7, '#F8A030');
+        px(x + 18, by - 20 + flame, 5, 9, '#F86040');
+        // ojos dorados y barba de fuego
+        px(x + 9, by + 7, 6, 5, '#F8C030');
+        px(x + sz + 21, by + 7, 6, 5, '#F8C030');
+        px(x + 11, by + 9, 3, 3, '#801010');
+        px(x + sz + 23, by + 9, 3, 3, '#801010');
+        px(x + 12, by + 14, 10, 4, '#E86020');
+        px(x + 14, by + 18, 6, 4, '#F08030');
+        // bastón con llama enorme
+        px(x + sz + 35, by + 7, 2, 32, '#5A4020');
+        px(x + sz + 32, by + 2 + flame, 8, 6, '#F8A030');
+        px(x + sz + 34, by - 2 + flame, 4, 6, '#E82020');
+        px(x + sz + 35, by - 4 + flame, 2, 3, '#F8E060');
+        // aura pixelada
+        cx.globalAlpha = 0.06;
+        cx.fillStyle = '#F84020';
+        pixelGlow(x + 16, by + 20, 20 + sz, 20);
+        cx.globalAlpha = 1;
+      }
       break;
 
     case 'infernotoro': // Toro chef en llamas
@@ -8437,40 +8483,38 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'salamandro': // Salamandra alquimista torpe con caldero
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#E86020');
-      px(x + 8, by + 22, 16 + sz, 8 + sz, '#F07830');
-      px(x + 10, by + 22, 3, 3, '#C04818');
-      px(x + 18, by + 24, 4, 3, '#C04818');
-      px(x + 8, by + 26, 3, 2, '#C04818');
-      px(x + 6, by + 6, 20 + sz, 14, '#E86020');
-      px(x + 8, by + 8, 16 + sz, 10, '#F07830');
-      px(x + 10, by + 10, 12 + sz, 6, '#F89040');
-      px(x + 8, by + 8, 3, 3, '#C04818');
-      px(x + sz + 20, by + 10, 3, 2, '#C04818');
-      px(x + 8, by + 2, 14 + sz, 6, '#4030A0');
-      px(x + 10, by + 0, 10 + sz, 4, '#5040B0');
-      px(x + 6, by + 4, 4, 4, '#4030A0');
-      px(x + 18, by - 1, 3, 3, '#F8E830');
-      px(x + 10, by + 10, 5, 5, '#fff');
-      px(x + sz + 18, by + 10, 5, 5, '#fff');
-      px(x + 12, by + 12, 3, 3, '#181818');
-      px(x + sz + 20, by + 12, 3, 3, '#181818');
-      px(x + 12, by + 12, 1, 1, '#fff');
-      px(x + sz + 20, by + 12, 1, 1, '#fff');
-      px(x + 10, by + 9, 4, 1, '#C04818');
-      px(x + sz + 19, by + 9, 4, 1, '#C04818');
-      px(x + 14, by + 17, 4, 2, '#C04818');
-      px(x + sz + 20, by + 26, 8, 6, '#484848');
-      px(x + sz + 22, by + 24, 4, 3, '#585858');
-      px(x + sz + 22, by + 25, 4, 2, '#40E040');
-      if (f % 12 < 6) {
-        px(x + sz + 23, by + 23, 2, 2, '#80F080');
+    case 'salamandro': // Salamandro: larvita alquimista torpe arrastrando poción
+      {
+        const wob = Math.sin(f * 0.18) * 1;
+        // cuerpo bajo, casi reptando: etapa inicial con silueta horizontal
+        px(x + 5, by + 27 + wob, 24 + sz, 8 + sz, '#E86020');
+        px(x + 7, by + 29 + wob, 20 + sz, 5 + sz, '#F07830');
+        px(x + 2, by + 30 + wob, 8, 4, '#D85018'); // cola
+        px(x - 1, by + 31 + wob, 4, 3, '#F89040');
+        // cabeza grande al frente
+        px(x + 18, by + 16 + wob, 15 + sz, 12, '#E86020');
+        px(x + 20, by + 18 + wob, 11 + sz, 8, '#F89040');
+        // gorrito/pañuelo morado torpe
+        px(x + 17, by + 12 + wob, 14 + sz, 5, '#4030A0');
+        px(x + 19, by + 10 + wob, 10 + sz, 4, '#5040B0');
+        px(x + 28, by + 9 + wob, 3, 3, '#F8E830');
+        // ojos preocupados
+        px(x + 21, by + 20 + wob, 5, 5, '#fff');
+        px(x + sz + 28, by + 20 + wob, 4, 4, '#fff');
+        px(x + 23, by + 22 + wob, 3, 3, '#181818');
+        px(x + sz + 29, by + 21 + wob, 2, 2, '#181818');
+        px(x + 22, by + 18 + wob, 4, 1, '#C04818');
+        px(x + 29, by + 18 + wob, 4, 1, '#C04818');
+        px(x + 25, by + 27 + wob, 4, 2, '#C04818');
+        // patitas cortas
+        px(x + 8, by + 34 + sz + wob, 5, 3, '#C04818');
+        px(x + 22, by + 34 + sz + wob, 5, 3, '#C04818');
+        // poción caída, para reforzar torpeza
+        px(x + 2, by + 21 + wob, 6, 7, '#484848');
+        px(x + 3, by + 20 + wob, 4, 2, '#606060');
+        px(x + 3, by + 24 + wob, 4, 3, '#40E040');
+        if (f % 12 < 6) px(x + 4, by + 22 + wob, 2, 2, '#80F080');
       }
-      px(x - 2, by + 28, 6, 3, '#E86020');
-      px(x - 4, by + 26, 4, 3, '#F07830');
-      px(x + 8, by + 30 + sz, 5, 5, '#E86020');
-      px(x + sz + 18, by + 30 + sz, 5, 5, '#E86020');
       break;
 
     case 'blaztoro': // Toro pastelero con delantal
