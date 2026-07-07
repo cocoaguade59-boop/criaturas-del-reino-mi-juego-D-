@@ -6761,37 +6761,44 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'wyvern': // Wyvernito: cría acurrucada, casi sin volar
+    case 'wyvern': // Wyvernito: cachorro agresivo, agazapado con alas puntiagudas
       {
-        const wig = Math.sin(f * 0.16) * 1;
-        // silueta baja y enrollada, no erguida
-        px(x + 8, by + 27 + wig, 22 + sz, 8 + sz, '#4820A0');
-        px(x + 10, by + 29 + wig, 18 + sz, 5 + sz, '#6840C0');
-        px(x + 3, by + 30 + wig, 10, 5, '#3818A0'); // colita enrollada
-        px(x + 1, by + 28 + wig, 5, 4, '#C8A030');
-        // cabeza grande de cachorro
-        px(x + 7, by + 9 + wig, 20 + sz, 15, '#4820A0');
-        px(x + 9, by + 11 + wig, 16 + sz, 11, '#5830B0');
-        px(x + 11, by + 13 + wig, 12 + sz, 7, '#6840C0');
-        // alas mini como muñones
-        px(x + 2, by + 22 + wig, 8, 5, '#281070');
-        px(x + sz + 25, by + 22 + wig, 8, 5, '#281070');
-        px(x + 4, by + 23 + wig, 5, 3, '#4820B0');
-        px(x + sz + 27, by + 23 + wig, 5, 3, '#4820B0');
-        // cuernos de leche
-        px(x + 7, by + 5 + wig, 3, 5, '#C8A030');
-        px(x + sz + 24, by + 5 + wig, 3, 5, '#C8A030');
-        px(x + 6, by + 4 + wig, 2, 3, '#D8B040');
-        px(x + sz + 26, by + 4 + wig, 2, 3, '#D8B040');
-        // ojos grandes y mordisquito
-        px(x + 10, by + 14 + wig, 6, 6, '#F0C020');
-        px(x + sz + 19, by + 14 + wig, 6, 6, '#F0C020');
-        px(x + 12, by + 16 + wig, 3, 3, '#100838');
-        px(x + sz + 21, by + 16 + wig, 3, 3, '#100838');
-        px(x + 14, by + 22 + wig, 5, 2, '#E05050');
-        // patitas cortas
-        px(x + 12, by + 34 + sz + wig, 4, 4, '#4820A0');
-        px(x + 22, by + 34 + sz + wig, 4, 4, '#4820A0');
+        const snarl = Math.sin(f * 0.18) * 1;
+        // postura baja de depredador, listo para saltar
+        px(x + 6, by + 26 + snarl, 24 + sz, 10 + sz, '#3A1690');
+        px(x + 9, by + 28 + snarl, 18 + sz, 6 + sz, '#5830B0');
+        px(x - 1, by + 30 + snarl, 10, 4, '#241060'); // cola
+        px(x - 5, by + 28 + snarl, 5, 4, '#151018');
+        px(x - 7, by + 27 + snarl, 3, 3, '#1ED060');
+        // alas pequeñas pero afiladas
+        px(x + 0, by + 18 + snarl, 12, 5, '#1C1028');
+        px(x - 4, by + 22 + snarl, 12, 4, '#2A1668');
+        px(x + sz + 25, by + 18 + snarl, 12, 5, '#1C1028');
+        px(x + sz + 29, by + 22 + snarl, 12, 4, '#2A1668');
+        px(x + 4, by + 20 + snarl, 5, 2, '#1ED060');
+        px(x + sz + 29, by + 20 + snarl, 5, 2, '#1ED060');
+        // cabeza grande con mandíbula agresiva
+        px(x + 8, by + 8 + snarl, 21 + sz, 15, '#3A1690');
+        px(x + 10, by + 10 + snarl, 17 + sz, 11, '#5830B0');
+        px(x + 13, by + 12 + snarl, 12 + sz, 7, '#7040C8');
+        // cuernos negros con punta verde
+        px(x + 6, by + 3 + snarl, 4, 7, '#101010');
+        px(x + sz + 26, by + 3 + snarl, 4, 7, '#101010');
+        px(x + 5, by + 1 + snarl, 3, 3, '#1ED060');
+        px(x + sz + 29, by + 1 + snarl, 3, 3, '#1ED060');
+        // ojos verdes de cachorro feroz
+        px(x + 11, by + 13 + snarl, 6, 5, '#74FF80');
+        px(x + sz + 21, by + 13 + snarl, 6, 5, '#74FF80');
+        px(x + 13, by + 15 + snarl, 3, 2, '#001008');
+        px(x + sz + 23, by + 15 + snarl, 3, 2, '#001008');
+        px(x + 14, by + 21 + snarl, 8, 2, '#101010');
+        px(x + 15, by + 22 + snarl, 2, 2, '#F8F8F8');
+        px(x + 21, by + 22 + snarl, 2, 2, '#F8F8F8');
+        // garras delanteras
+        px(x + 9, by + 35 + sz + snarl, 6, 4, '#3A1690');
+        px(x + sz + 24, by + 35 + sz + snarl, 6, 4, '#3A1690');
+        px(x + 8, by + 38 + sz + snarl, 3, 2, '#1ED060');
+        px(x + sz + 28, by + 38 + sz + snarl, 3, 2, '#1ED060');
       }
       break;
 
@@ -7407,7 +7414,7 @@ function dCre(x, y, id, lv, f) {
         // aura fría pixelada detrás para presencia
         cx.globalAlpha = 0.08;
         cx.fillStyle = '#88D0F8';
-        pixelGlow(x + 16, by + 20 + frost, 38 + sz, 26);
+        pixelGlow(x + 16, by + 20 + frost, 44 + sz, 30);
         cx.globalAlpha = 1;
 
         // piel morada visible en sombras debajo de la armadura
@@ -7423,8 +7430,8 @@ function dCre(x, y, id, lv, f) {
         px(x + 8, by + 7, 7, 13, '#E8F8F8');
         px(x + 18, by + 8, 7, 12, '#C8F0F8');
         px(x + sz + 29, by + 12, 7, 8, '#B8E8F8');
-        px(x - 10, by + 18, 8, 8, '#E8F8F8');
-        px(x + sz + 37, by + 18, 8, 8, '#E8F8F8');
+        px(x - 14, by + 16, 10, 10, '#E8F8F8');
+        px(x + sz + 40, by + 16, 10, 10, '#E8F8F8');
 
         // cuatro patas con armadura; piel morada apenas en articulaciones
         px(x + 0, by + 31 + sz, 7, 10, '#4F86B0');
@@ -7467,6 +7474,11 @@ function dCre(x, y, id, lv, f) {
         px(x + sz + 24, by + 9, 4, 4, '#103C88');
         px(x + 7, by + 6, 7, 1, '#2F2458');
         px(x + sz + 22, by + 6, 7, 1, '#2F2458');
+        // colmillos/placas frontales de hielo
+        px(x + 5, by + 15, 6, 10, '#E8F8F8');
+        px(x + sz + 27, by + 15, 6, 10, '#E8F8F8');
+        px(x + 6, by + 23, 3, 5, '#B8E8F8');
+        px(x + sz + 30, by + 23, 3, 5, '#B8E8F8');
 
         // barba helada más grande e imponente
         px(x + 6, by + 17, 24 + sz, 6, '#E8F8F8');
@@ -7958,102 +7970,116 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'wyvernax': // Wyvernax: dragón juvenil morado con manchas negras y verdes
+    case 'wyvernax': // Wyvernax: adolescente imponente, morado con armadura negra y venas verdes
       {
-        const flap = Math.sin(f * 0.16) * 3;
-        // cuerpo robusto todavía morado, con manchas negras graduales
-        px(x + 3, by + 20, 28 + sz, 14 + sz, '#3818A0');
-        px(x + 5, by + 22, 24 + sz, 10 + sz, '#5838C0');
-        px(x + 9, by + 24, 16 + sz, 6, '#6840C0');
-        px(x + 7, by + 21, 6, 5, '#151018'); // mancha negra
-        px(x + sz + 23, by + 27, 6, 4, '#151018');
-        // cola morada con punta negra/verde
-        px(x - 8, by + 25, 14, 5, '#281070');
-        px(x - 13, by + 23, 6, 4, '#101010');
-        px(x - 15, by + 22, 3, 3, '#1ED060');
-        // alas de dragón imponentes pero no finales: morado con manchas negras y venas verdes
-        px(x - 10, by + 8 + flap, 20, 9, '#2810A0');
-        px(x - 14, by + 16 + flap, 22, 8, '#3818B0');
-        px(x - 8, by + 20 + flap, 14, 6, '#181020');
-        px(x + sz + 25, by + 8 - flap, 20, 9, '#2810A0');
-        px(x + sz + 27, by + 16 - flap, 22, 8, '#3818B0');
-        px(x + sz + 30, by + 20 - flap, 14, 6, '#181020');
-        px(x - 5, by + 15 + flap, 12, 2, '#1ED060');
-        px(x + sz + 31, by + 15 - flap, 12, 2, '#1ED060');
-        // cuello y cabeza más dracónicos
-        px(x + 22, by + 10, 8 + sz, 14, '#3818A0');
-        px(x + 25, by + 7, 15 + sz, 12, '#4828B0');
-        px(x + 28, by + 9, 11 + sz, 8, '#6840C0');
-        px(x + 31, by + 10, 6, 4, '#151018');
-        // cuernos morados oscuros con puntas verdes
-        px(x + 25, by + 1, 4, 7, '#1C1028');
-        px(x + sz + 38, by + 1, 4, 7, '#1C1028');
-        px(x + 24, by - 2, 3, 4, '#1ED060');
-        px(x + sz + 41, by - 2, 3, 4, '#1ED060');
-        // ojos verdes
-        px(x + 29, by + 10, 5, 4, '#74FF80');
-        px(x + sz + 37, by + 10, 5, 4, '#74FF80');
-        px(x + 31, by + 11, 3, 2, '#001008');
-        px(x + sz + 39, by + 11, 3, 2, '#001008');
-        px(x + 31, by + 18, 7, 2, '#2AF078');
-        // patas/garras
-        px(x + 8, by + 31 + sz, 6, 7, '#3818A0');
-        px(x + sz + 24, by + 31 + sz, 6, 7, '#3818A0');
-        px(x + 10, by + 36 + sz, 2, 2, '#1ED060');
-        px(x + sz + 26, by + 36 + sz, 2, 2, '#1ED060');
+        const flap = Math.sin(f * 0.16) * 4;
+        // cuerpo robusto en pose de ataque, morado aún presente
+        px(x + 0, by + 20, 34 + sz, 15 + sz, '#2C126E');
+        px(x + 3, by + 22, 28 + sz, 11 + sz, '#4828B0');
+        px(x + 8, by + 24, 18 + sz, 6, '#6840C0');
+        // placas negras parciales
+        px(x + 4, by + 19, 10, 5, '#08080C');
+        px(x + 20, by + 28, 10, 5, '#08080C');
+        px(x + 13, by + 22, 8, 3, '#141018');
+        // cola látigo con espina verde
+        px(x - 12, by + 25, 16, 5, '#1C1028');
+        px(x - 18, by + 22, 8, 4, '#08080C');
+        px(x - 21, by + 20, 4, 4, '#1ED060');
+        // alas más grandes, negras en bordes y moradas en interior
+        px(x - 18, by + 5 + flap, 24, 10, '#08080C');
+        px(x - 24, by + 15 + flap, 30, 9, '#141018');
+        px(x - 18, by + 22 + flap, 22, 7, '#2A1668');
+        px(x + 2, by + 10 + flap, 7, 17, '#4828B0');
+        px(x + sz + 30, by + 5 - flap, 24, 10, '#08080C');
+        px(x + sz + 30, by + 15 - flap, 30, 9, '#141018');
+        px(x + sz + 32, by + 22 - flap, 22, 7, '#2A1668');
+        px(x + sz + 29, by + 10 - flap, 7, 17, '#4828B0');
+        // venas verdes de poder
+        px(x - 12, by + 16 + flap, 16, 2, '#1ED060');
+        px(x + sz + 36, by + 16 - flap, 16, 2, '#1ED060');
+        px(x - 8, by + 24 + flap, 10, 2, '#2AF078');
+        px(x + sz + 38, by + 24 - flap, 10, 2, '#2AF078');
+        // cuello y cabeza agresiva
+        px(x + 22, by + 9, 8 + sz, 15, '#2C126E');
+        px(x + 25, by + 6, 16 + sz, 13, '#4828B0');
+        px(x + 28, by + 8, 12 + sz, 9, '#6840C0');
+        px(x + 31, by + 11, 8, 4, '#141018');
+        // cuernos afilados negros con verde
+        px(x + 24, by - 1, 5, 8, '#08080C');
+        px(x + sz + 39, by - 1, 5, 8, '#08080C');
+        px(x + 23, by - 4, 3, 4, '#1ED060');
+        px(x + sz + 43, by - 4, 3, 4, '#1ED060');
+        // ojos amenazantes
+        px(x + 30, by + 10, 6, 5, '#74FF80');
+        px(x + sz + 39, by + 10, 6, 5, '#74FF80');
+        px(x + 32, by + 12, 4, 2, '#001008');
+        px(x + sz + 41, by + 12, 4, 2, '#001008');
+        px(x + 31, by + 18, 9, 2, '#2AF078');
+        // patas y garras
+        px(x + 6, by + 32 + sz, 8, 8, '#2C126E');
+        px(x + sz + 25, by + 32 + sz, 8, 8, '#2C126E');
+        px(x + 3, by + 39 + sz, 6, 3, '#1ED060');
+        px(x + sz + 31, by + 39 + sz, 6, 3, '#1ED060');
       }
       break;
 
-    case 'wyvernlord': // Wyvernlord: dragón negro imponente con pecho morado y energía verde
+    case 'wyvernlord': // Wyvernlord: dragón negro imponente, pecho morado y energía verde
       {
         const flap = Math.sin(f * 0.12) * 4;
-        // alas enormes: casi todo negro, venas verdes
-        px(x - 26, by + 2 + flap, 32, 10, '#050508');
-        px(x - 34, by + 12 + flap, 40, 11, '#0A0810');
-        px(x - 30, by + 23 + flap, 32, 9, '#141018');
-        px(x - 22, by + 31 + flap, 20, 6, '#201828');
-        px(x + sz + 31, by + 2 - flap, 32, 10, '#050508');
-        px(x + sz + 31, by + 12 - flap, 40, 11, '#0A0810');
-        px(x + sz + 37, by + 23 - flap, 32, 9, '#141018');
-        px(x + sz + 41, by + 31 - flap, 20, 6, '#201828');
-        px(x - 18, by + 13 + flap, 18, 2, '#1ED060');
-        px(x - 16, by + 25 + flap, 14, 2, '#2AF078');
-        px(x + sz + 43, by + 13 - flap, 18, 2, '#1ED060');
-        px(x + sz + 43, by + 25 - flap, 14, 2, '#2AF078');
-        // cuerpo negro con pecho morado visible
-        px(x + 4, by + 19, 28 + sz, 18 + sz, '#050508');
-        px(x + 7, by + 21, 22 + sz, 14 + sz, '#0A0810');
-        px(x + 11, by + 23, 14 + sz, 10, '#4828B0'); // pecho morado conservado
-        px(x + 14, by + 24, 8 + sz, 6, '#6840C0');
-        px(x + 16, by + 25, 4, 3, '#1ED060');
-        // cuello y cabeza poderosa
-        px(x + 14, by + 7, 7 + sz, 15, '#050508');
-        px(x + 16, by + 6, 3 + sz, 15, '#201828');
-        px(x + 6, by - 2, 24 + sz, 14, '#050508');
-        px(x + 8, by + 0, 20 + sz, 10, '#141018');
-        px(x + 11, by + 2, 14 + sz, 6, '#302040');
-        // cuernos/corona negros con puntas verdes
-        px(x + 2, by - 9, 7, 9, '#050508');
-        px(x + sz + 28, by - 9, 7, 9, '#050508');
-        px(x + 7, by - 13, 20 + sz, 4, '#101010');
-        px(x + 12, by - 16, 8 + sz, 3, '#1ED060');
-        px(x + 5, by - 11, 3, 3, '#2AF078');
-        px(x + sz + 30, by - 11, 3, 3, '#2AF078');
-        // ojos verdes y mandíbula
-        px(x + 9, by + 3, 6, 5, '#74FF80');
-        px(x + sz + 23, by + 3, 6, 5, '#74FF80');
-        px(x + 11, by + 5, 4, 3, '#001008');
-        px(x + sz + 25, by + 5, 4, 3, '#001008');
-        px(x + 13, by + 10, 9, 3, '#050508');
-        px(x + 15, by + 13, 5, 2, '#2AF078');
+        // alas colosales negras, silueta de jefe
+        px(x - 34, by + 0 + flap, 42, 12, '#050508');
+        px(x - 42, by + 12 + flap, 50, 12, '#0A0810');
+        px(x - 38, by + 24 + flap, 42, 10, '#141018');
+        px(x - 28, by + 33 + flap, 28, 7, '#201828');
+        px(x + sz + 30, by + 0 - flap, 42, 12, '#050508');
+        px(x + sz + 30, by + 12 - flap, 50, 12, '#0A0810');
+        px(x + sz + 36, by + 24 - flap, 42, 10, '#141018');
+        px(x + sz + 42, by + 33 - flap, 28, 7, '#201828');
+        // venas verdes como grietas de energía
+        px(x - 26, by + 12 + flap, 24, 2, '#1ED060');
+        px(x - 21, by + 26 + flap, 18, 2, '#2AF078');
+        px(x + sz + 45, by + 12 - flap, 24, 2, '#1ED060');
+        px(x + sz + 45, by + 26 - flap, 18, 2, '#2AF078');
+        px(x - 6, by + 6 + flap, 4, 23, '#1ED060');
+        px(x + sz + 40, by + 6 - flap, 4, 23, '#1ED060');
+        // cuerpo negro pesado
+        px(x + 2, by + 18, 32 + sz, 21 + sz, '#050508');
+        px(x + 5, by + 21, 26 + sz, 16 + sz, '#0A0810');
+        // pecho morado conservado y visible
+        px(x + 10, by + 23, 16 + sz, 11, '#4828B0');
+        px(x + 13, by + 25, 10 + sz, 7, '#6840C0');
+        px(x + 16, by + 27, 5, 3, '#1ED060');
+        // cuello y cabeza de dragón imponente
+        px(x + 13, by + 6, 9 + sz, 16, '#050508');
+        px(x + 16, by + 4, 4 + sz, 17, '#201828');
+        px(x + 4, by - 4, 28 + sz, 16, '#050508');
+        px(x + 7, by - 1, 22 + sz, 11, '#141018');
+        px(x + 10, by + 2, 16 + sz, 7, '#302040');
+        // cuernos/corona enormes
+        px(x + 0, by - 12, 8, 11, '#050508');
+        px(x + sz + 30, by - 12, 8, 11, '#050508');
+        px(x + 6, by - 17, 22 + sz, 5, '#101010');
+        px(x + 12, by - 21, 10 + sz, 4, '#1ED060');
+        px(x + 2, by - 15, 4, 4, '#2AF078');
+        px(x + sz + 32, by - 15, 4, 4, '#2AF078');
+        // ojos verdes, mandíbula y colmillos
+        px(x + 8, by + 3, 7, 6, '#74FF80');
+        px(x + sz + 24, by + 3, 7, 6, '#74FF80');
+        px(x + 10, by + 5, 5, 3, '#001008');
+        px(x + sz + 26, by + 5, 5, 3, '#001008');
+        px(x + 12, by + 11, 11, 3, '#050508');
+        px(x + 14, by + 14, 2, 3, '#F8F8F8');
+        px(x + 21, by + 14, 2, 3, '#F8F8F8');
+        px(x + 16, by + 13, 5, 2, '#2AF078');
         // garras negras con uñas verdes
-        px(x + 5, by + 35 + sz, 8, 8, '#0A0810');
-        px(x + sz + 25, by + 35 + sz, 8, 8, '#0A0810');
-        px(x + 1, by + 41 + sz, 7, 3, '#1ED060');
-        px(x + sz + 32, by + 41 + sz, 7, 3, '#1ED060');
-        cx.globalAlpha = 0.08;
+        px(x + 4, by + 37 + sz, 9, 9, '#0A0810');
+        px(x + sz + 26, by + 37 + sz, 9, 9, '#0A0810');
+        px(x + 0, by + 44 + sz, 8, 3, '#1ED060');
+        px(x + sz + 33, by + 44 + sz, 8, 3, '#1ED060');
+        // aura verde ominosa
+        cx.globalAlpha = 0.1;
         cx.fillStyle = '#1ED060';
-        pixelGlow(x + 16, by + 18, 40 + sz, 24);
+        pixelGlow(x + 16, by + 18, 48 + sz, 28);
         cx.globalAlpha = 1;
       }
       break;
