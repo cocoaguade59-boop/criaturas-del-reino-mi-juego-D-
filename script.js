@@ -6728,41 +6728,38 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'thornbuck': // Carnero guardaespaldas punk
-      px(x + 4, by + 18, 24 + sz, 16 + sz, '#406028');
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#507030');
-      px(x + 6, by + 18, 20 + sz, 10, '#2A3820');
-      px(x + 8, by + 20, 16 + sz, 6, '#3A4830');
-      px(x + 6, by + 19, 2, 2, '#C8A830');
-      px(x + sz + 24, by + 19, 2, 2, '#C8A830');
-      px(x + 4, by + 2, 24 + sz, 16, '#406028');
-      px(x + 6, by + 4, 20 + sz, 12, '#507030');
-      px(x + 2, by - 2, 6, 8, '#3A5020');
-      px(x + sz + 24, by - 2, 6, 8, '#3A5020');
-      px(x, by - 4, 4, 4, '#486828');
-      px(x + sz + 28, by - 4, 4, 4, '#486828');
-      px(x + 1, by - 4, 2, 2, '#C8A830');
-      px(x + sz + 29, by - 4, 2, 2, '#C8A830');
-      px(x + 12, by - 2, 8 + sz, 4, '#38A020');
-      px(x + 14, by - 4, 4 + sz, 3, '#48C030');
-      px(x + 8, by + 8, 5, 4, '#fff');
-      px(x + sz + 20, by + 8, 5, 4, '#fff');
-      px(x + 10, by + 9, 3, 3, '#203010');
-      px(x + sz + 22, by + 9, 3, 3, '#203010');
-      px(x + 10, by + 9, 1, 1, '#C8A830');
-      px(x + sz + 22, by + 9, 1, 1, '#C8A830');
-      px(x + 12, by + 14, 8, 2, '#406028');
-      px(x + 13, by + 15, 2, 1, '#E8E8E8');
-      px(x + 17, by + 15, 2, 1, '#E8E8E8');
-      px(x + 6, by + 32 + sz, 6, 8, '#406028');
-      px(x + sz + 20, by + 32 + sz, 6, 8, '#406028');
-      px(x + 5, by + 38 + sz, 7, 2, '#3A2A1A');
-      px(x + sz + 19, by + 38 + sz, 7, 2, '#3A2A1A');
+    case 'thornbuck': // Espinardo: carnerito punk pequeño, bajo y con pocas espinas
+      {
+        const hop = Math.sin(f * 0.16) * 1;
+        px(x + 9, by + 25 + hop, 18 + sz, 10 + sz, '#406028');
+        px(x + 11, by + 27 + hop, 14 + sz, 6 + sz, '#5A7838');
+        px(x + 13, by + 28 + hop, 10 + sz, 3, '#6C9040');
+        px(x + 10, by + 22 + hop, 16 + sz, 5, '#1A2818');
+        px(x + 12, by + 23 + hop, 12 + sz, 3, '#2A3828');
+        px(x + 12, by + 22 + hop, 2, 2, '#C8A830');
+        px(x + sz + 22, by + 22 + hop, 2, 2, '#C8A830');
+        px(x + 8, by + 8 + hop, 20 + sz, 15, '#406028');
+        px(x + 10, by + 10 + hop, 16 + sz, 11, '#5A7838');
+        px(x + 12, by + 12 + hop, 12 + sz, 7, '#6C9040');
+        px(x + 4, by + 6 + hop, 6, 5, '#304818');
+        px(x + sz + 27, by + 6 + hop, 6, 5, '#304818');
+        px(x + 3, by + 5 + hop, 3, 3, '#D8B840');
+        px(x + sz + 31, by + 5 + hop, 3, 3, '#D8B840');
+        px(x + 13, by + 4 + hop, 9 + sz, 3, '#38A020');
+        px(x + 15, by + 2 + hop, 5 + sz, 3, '#48C030');
+        px(x + 11, by + 13 + hop, 5, 4, '#fff');
+        px(x + sz + 20, by + 13 + hop, 5, 4, '#fff');
+        px(x + 13, by + 14 + hop, 3, 2, '#203010');
+        px(x + sz + 22, by + 14 + hop, 3, 2, '#203010');
+        px(x + 13, by + 19 + hop, 7, 1, '#263818');
+        px(x + 10, by + 34 + sz + hop, 5, 5, '#406028');
+        px(x + sz + 21, by + 34 + sz + hop, 5, 5, '#406028');
+        px(x + 9, by + 38 + sz + hop, 6, 2, '#3A2A1A');
+        px(x + sz + 21, by + 38 + sz + hop, 6, 2, '#3A2A1A');
+        px(x + 7, by + 24 + hop, 3, 4, '#A8D860');
+        px(x + sz + 27, by + 24 + hop, 3, 4, '#A8D860');
+      }
       break;
-
-    // ==========================================
-    // DRAGÓN 🐉
-    // ==========================================
 
     case 'wyvern': // Wyvernito: cría acurrucada, casi sin volar
       {
@@ -7410,22 +7407,24 @@ function dCre(x, y, id, lv, f) {
         // aura fría pixelada detrás para presencia
         cx.globalAlpha = 0.08;
         cx.fillStyle = '#88D0F8';
-        pixelGlow(x + 16, by + 20 + frost, 30 + sz, 22);
+        pixelGlow(x + 16, by + 20 + frost, 38 + sz, 26);
         cx.globalAlpha = 1;
 
         // piel morada visible en sombras debajo de la armadura
-        px(x - 1, by + 19, 36 + sz, 16 + sz, SKP);
-        px(x + 3, by + 24, 28 + sz, 7, '#5A4090');
+        px(x - 6, by + 18, 46 + sz, 18 + sz, SKP);
+        px(x + 0, by + 25, 36 + sz, 8, '#5A4090');
         // armadura de hielo: placas dominantes
-        px(x - 3, by + 17, 39 + sz, 8, '#4F86B0');
-        px(x + 0, by + 20, 33 + sz, 11 + sz, '#6FA8D0');
-        px(x + 4, by + 22, 26 + sz, 7, '#A8E0F8');
-        px(x + 8, by + 24, 18 + sz, 3, '#E8F8F8');
+        px(x - 7, by + 16, 47 + sz, 9, '#4F86B0');
+        px(x - 3, by + 20, 41 + sz, 12 + sz, '#6FA8D0');
+        px(x + 2, by + 22, 34 + sz, 8, '#A8E0F8');
+        px(x + 7, by + 24, 24 + sz, 3, '#E8F8F8');
         // placas grandes del lomo
         px(x - 1, by + 11, 7, 9, '#C8F0F8');
         px(x + 8, by + 7, 7, 13, '#E8F8F8');
         px(x + 18, by + 8, 7, 12, '#C8F0F8');
         px(x + sz + 29, by + 12, 7, 8, '#B8E8F8');
+        px(x - 10, by + 18, 8, 8, '#E8F8F8');
+        px(x + sz + 37, by + 18, 8, 8, '#E8F8F8');
 
         // cuatro patas con armadura; piel morada apenas en articulaciones
         px(x + 0, by + 31 + sz, 7, 10, '#4F86B0');
@@ -7470,9 +7469,9 @@ function dCre(x, y, id, lv, f) {
         px(x + sz + 22, by + 6, 7, 1, '#2F2458');
 
         // barba helada más grande e imponente
-        px(x + 8, by + 17, 20 + sz, 5, '#E8F8F8');
-        px(x + 10, by + 21, 16 + sz, 5, '#C8F0F8');
-        px(x + 12, by + 25, 12 + sz, 4, '#A8E0F8');
+        px(x + 6, by + 17, 24 + sz, 6, '#E8F8F8');
+        px(x + 8, by + 22, 20 + sz, 5, '#C8F0F8');
+        px(x + 10, by + 26, 16 + sz, 4, '#A8E0F8');
         px(x + 15, by + 29, 6 + sz, 4, '#E8F8F8');
         px(x + 17, by + 33, 2 + sz, 3, '#FFFFFF');
         if (f % 20 < 10) {
@@ -7878,175 +7877,183 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'espinarcor': // Carnero con chaqueta de espinas
-      px(x + 4, by + 18, 24 + sz, 16 + sz, '#305820');
-      px(x + 6, by + 20, 20 + sz, 12 + sz, '#406028');
-      px(x + 6, by + 18, 20 + sz, 10, '#1A2818');
-      px(x + 8, by + 20, 16 + sz, 6, '#2A3828');
-      px(x + 6, by + 19, 2, 2, '#C8A830');
-      px(x + sz + 24, by + 19, 2, 2, '#C8A830');
-      px(x + 12, by + 19, 2, 2, '#C8A830');
-      px(x + 18, by + 19, 2, 2, '#C8A830');
-      px(x + 4, by + 2, 24 + sz, 16, '#305820');
-      px(x + 6, by + 4, 20 + sz, 12, '#406028');
-      px(x + 2, by - 2, 6, 8, '#2A4818');
-      px(x + sz + 24, by - 2, 6, 8, '#2A4818');
-      px(x, by - 4, 4, 4, '#386828');
-      px(x + sz + 28, by - 4, 4, 4, '#386828');
-      px(x + 1, by - 4, 2, 2, '#C8A830');
-      px(x + sz + 29, by - 4, 2, 2, '#C8A830');
-      px(x + 12, by - 2, 8 + sz, 4, '#38A020');
-      px(x + 14, by - 4, 4 + sz, 3, '#48C030');
-      px(x + 4, by + 18, 2, 3, '#C8A830');
-      px(x + sz + 26, by + 18, 2, 3, '#C8A830');
-      px(x + 8, by + 8, 5, 4, '#fff');
-      px(x + sz + 20, by + 8, 5, 4, '#fff');
-      px(x + 10, by + 9, 3, 3, '#203010');
-      px(x + sz + 22, by + 9, 3, 3, '#203010');
-      px(x + 12, by + 14, 8, 2, '#305820');
-      px(x + 13, by + 15, 2, 1, '#E8E8E8');
-      px(x + 17, by + 15, 2, 1, '#E8E8E8');
-      px(x + 6, by + 32 + sz, 6, 8, '#305820');
-      px(x + sz + 20, by + 32 + sz, 6, 8, '#305820');
-      break;
-
-    case 'espinardoom': // Carnero heavy metal gigante
-      px(x + 2, by + 14, 28 + sz, 20 + sz, '#283818');
-      px(x + 4, by + 16, 24 + sz, 16 + sz, '#385028');
-      px(x + 4, by + 14, 24 + sz, 12, '#0A0A1A');
-      px(x + 6, by + 16, 20 + sz, 8, '#1A1A2A');
-      px(x + 12, by + 18, 8, 6, '#E8E8E8');
-      px(x + 14, by + 19, 2, 2, '#181818');
-      px(x + 17, by + 19, 2, 2, '#181818');
-      px(x + 4, by + 24, 4, 2, '#A8A8A8');
-      px(x + sz + 24, by + 24, 4, 2, '#A8A8A8');
-      px(x + 2, by + 0, 28 + sz, 16, '#283818');
-      px(x + 4, by + 2, 24 + sz, 12, '#385028');
-      px(x - 2, by - 4, 8, 10, '#283818');
-      px(x + sz + 26, by - 4, 8, 10, '#283818');
-      px(x - 4, by - 6, 6, 6, '#486828');
-      px(x + sz + 30, by - 6, 6, 6, '#486828');
-      px(x - 5, by - 6, 3, 3, '#A8A8A8');
-      px(x + sz + 34, by - 6, 3, 3, '#A8A8A8');
-      px(x + 10, by - 6, 12 + sz, 8, '#38A020');
-      px(x + 12, by - 8, 8 + sz, 6, '#48C030');
-      const edf = Math.sin(f * 0.2) * 2;
-      px(x + 12, by - 10 + edf, 3, 4, '#E84020');
-      px(x + 16, by - 12 + edf, 3, 4, '#F86040');
-      px(x + 20, by - 10 + edf, 3, 4, '#E84020');
-      px(x + 6, by + 4, 6, 6, '#F8C030');
-      px(x + sz + 20, by + 4, 6, 6, '#F8C030');
-      px(x + 8, by + 6, 4, 4, '#181818');
-      px(x + sz + 22, by + 6, 4, 4, '#181818');
-      px(x + 8, by + 6, 2, 2, '#E84020');
-      px(x + sz + 22, by + 6, 2, 2, '#E84020');
-      px(x + 12, by + 12, 8, 4, '#283818');
-      px(x + 13, by + 13, 3, 1, '#E8E8E8');
-      px(x + 17, by + 13, 3, 1, '#E8E8E8');
-      px(x + 4, by + 32 + sz, 8, 8, '#283818');
-      px(x + sz + 20, by + 32 + sz, 8, 8, '#283818');
-      cx.globalAlpha = 0.06;
-      cx.fillStyle = '#48C030';
-      pixelGlow(x + 16, by + 16, 22 + sz, 18);
-      cx.globalAlpha = 1;
-      break;
-
-    // ==========================================
-    // EVOLUCIONES DRAGÓN 🐉
-    // ==========================================
-
-    case 'wyvernax': // Wyvernax: adolescente oscuro con acentos verdes
+    case 'espinarcor': // Espinarcor: carnero corredor, silueta horizontal de embestida
       {
-        const flap = Math.sin(f * 0.18) * 3;
-        // cuerpo largo horizontal: negro empieza a tomar protagonismo
-        px(x + 2, by + 22, 30 + sz, 11 + sz, '#141018');
-        px(x + 5, by + 24, 24 + sz, 7 + sz, '#201828');
-        px(x - 8, by + 25, 12, 5, '#0A0810'); // cola larga
-        px(x - 13, by + 23, 6, 4, '#1ED060'); // punta verde venenosa
-        // alas medianas negras, con venas verdes
-        px(x - 6, by + 10 + flap, 18, 9, '#0A0810');
-        px(x - 10, by + 17 + flap, 20, 7, '#141018');
-        px(x + sz + 24, by + 10 - flap, 18, 9, '#0A0810');
-        px(x + sz + 26, by + 17 - flap, 20, 7, '#141018');
-        px(x - 4, by + 14 + flap, 12, 2, '#1ED060');
-        px(x + sz + 30, by + 14 - flap, 12, 2, '#1ED060');
-        px(x - 1, by + 19 + flap, 8, 2, '#2AF078');
-        px(x + sz + 31, by + 19 - flap, 8, 2, '#2AF078');
-        // cuello/cabeza hacia delante
-        px(x + 22, by + 10, 7 + sz, 14, '#141018');
-        px(x + 25, by + 7, 14 + sz, 11, '#201828');
-        px(x + 28, by + 9, 10 + sz, 7, '#302040');
-        // cuernos negros y verdes, sin amarillo
-        px(x + 25, by + 1, 4, 7, '#050508');
-        px(x + sz + 37, by + 1, 4, 7, '#050508');
-        px(x + 24, by - 2, 3, 4, '#1ED060');
-        px(x + sz + 40, by - 2, 3, 4, '#1ED060');
-        // mirada verde agresiva
-        px(x + 29, by + 10, 5, 4, '#74FF80');
-        px(x + sz + 36, by + 10, 5, 4, '#74FF80');
-        px(x + 31, by + 11, 3, 2, '#001008');
-        px(x + sz + 38, by + 11, 3, 2, '#001008');
-        px(x + 29, by + 8, 5, 1, '#050508');
-        px(x + sz + 36, by + 8, 5, 1, '#050508');
-        px(x + 31, by + 18, 7, 2, '#2AF078');
-        // patas traseras colgando
-        px(x + 8, by + 31 + sz, 6, 6, '#141018');
-        px(x + sz + 24, by + 31 + sz, 6, 6, '#141018');
-        px(x + 10, by + 35 + sz, 2, 2, '#1ED060');
-        px(x + sz + 26, by + 35 + sz, 2, 2, '#1ED060');
+        const run = Math.sin(f * 0.18) * 2;
+        px(x + 0, by + 22 + run, 30 + sz, 12 + sz, '#305820');
+        px(x + 3, by + 24 + run, 24 + sz, 8 + sz, '#406028');
+        px(x + 6, by + 25 + run, 18 + sz, 5, '#508038');
+        px(x + 2, by + 19 + run, 26 + sz, 7, '#111820');
+        px(x + 5, by + 20 + run, 20 + sz, 4, '#253030');
+        for (let i = 0; i < 5; i++) px(x + 4 + i * 5, by + 18 + run, 2, 3, '#C8A830');
+        px(x + 22, by + 10 + run, 16 + sz, 14, '#305820');
+        px(x + 24, by + 12 + run, 12 + sz, 10, '#406028');
+        px(x + 26, by + 14 + run, 8 + sz, 6, '#5C8840');
+        px(x + 18, by + 8 + run, 9, 5, '#2A4818');
+        px(x + 15, by + 7 + run, 5, 3, '#D8B840');
+        px(x + sz + 36, by + 8 + run, 9, 5, '#2A4818');
+        px(x + sz + 43, by + 7 + run, 5, 3, '#D8B840');
+        px(x + 11, by + 15 + run, 18 + sz, 4, '#38A020');
+        px(x + 14, by + 12 + run, 12 + sz, 4, '#48C030');
+        px(x + 18, by + 9 + run, 5 + sz, 3, '#A8D860');
+        px(x + 4, by + 31 + sz + run, 7, 9, '#305820');
+        px(x + 17, by + 32 + sz - run, 7, 8, '#305820');
+        px(x + sz + 28, by + 31 + sz + run, 7, 9, '#305820');
+        px(x + 2, by + 39 + sz + run, 9, 2, '#2A2018');
+        px(x + sz + 28, by + 39 + sz + run, 9, 2, '#2A2018');
+        px(x + 27, by + 14 + run, 5, 4, '#fff');
+        px(x + sz + 35, by + 14 + run, 5, 4, '#fff');
+        px(x + 29, by + 15 + run, 3, 2, '#203010');
+        px(x + sz + 37, by + 15 + run, 3, 2, '#203010');
+        px(x + 29, by + 20 + run, 6, 1, '#203010');
       }
       break;
 
-    case 'wyvernlord': // Wyvernlord: señor negro del cielo con pixeles verdes
+    case 'espinardoom': // Espinardoom: bestia heavy metal, enorme y frontal
+      {
+        const pulse = Math.sin(f * 0.12) * 2;
+        px(x - 3, by + 18, 38 + sz, 22 + sz, '#223018');
+        px(x + 0, by + 20, 32 + sz, 18 + sz, '#385028');
+        px(x + 4, by + 22, 24 + sz, 12, '#486838');
+        px(x + 3, by + 17, 28 + sz, 12, '#050510');
+        px(x + 6, by + 19, 22 + sz, 8, '#151520');
+        px(x + 11, by + 20, 10 + sz, 5, '#E8E8E8');
+        px(x + 13, by + 21, 2, 2, '#181818');
+        px(x + 18, by + 21, 2, 2, '#181818');
+        px(x - 10, by + 17, 10, 16, '#1A2818');
+        px(x + sz + 35, by + 17, 10, 16, '#1A2818');
+        px(x - 12, by + 14, 6, 6, '#A8A8A8');
+        px(x + sz + 43, by + 14, 6, 6, '#A8A8A8');
+        px(x - 13, by + 14, 3, 3, '#E8E8E8');
+        px(x + sz + 47, by + 14, 3, 3, '#E8E8E8');
+        px(x + 0, by + 0, 32 + sz, 18, '#223018');
+        px(x + 2, by + 2, 28 + sz, 14, '#385028');
+        px(x + 6, by + 5, 20 + sz, 9, '#486838');
+        px(x - 8, by - 6, 12, 11, '#223018');
+        px(x - 12, by - 9, 8, 7, '#486828');
+        px(x - 14, by - 10, 4, 4, '#A8A8A8');
+        px(x + sz + 31, by - 6, 12, 11, '#223018');
+        px(x + sz + 39, by - 9, 8, 7, '#486828');
+        px(x + sz + 45, by - 10, 4, 4, '#A8A8A8');
+        px(x + 8, by - 8 + pulse, 18 + sz, 8, '#38A020');
+        px(x + 11, by - 11 + pulse, 12 + sz, 6, '#48C030');
+        px(x + 14, by - 14 + pulse, 6 + sz, 5, '#A8D860');
+        px(x + 6, by + 6, 7, 6, '#fff');
+        px(x + sz + 22, by + 6, 7, 6, '#fff');
+        px(x + 8, by + 8, 4, 3, '#111810');
+        px(x + sz + 24, by + 8, 4, 3, '#111810');
+        px(x + 7, by + 5, 7, 1, '#050510');
+        px(x + sz + 22, by + 5, 7, 1, '#050510');
+        px(x + 11, by + 14, 11, 3, '#111810');
+        px(x + 14, by + 15, 2, 1, '#E8E8E8');
+        px(x + 19, by + 15, 2, 1, '#E8E8E8');
+        px(x + 4, by + 38 + sz, 8, 8, '#223018');
+        px(x + sz + 24, by + 38 + sz, 8, 8, '#223018');
+        px(x + 2, by + 45 + sz, 11, 3, '#151510');
+        px(x + sz + 23, by + 45 + sz, 11, 3, '#151510');
+        cx.globalAlpha = 0.08;
+        cx.fillStyle = '#F8E830';
+        pixelGlow(x + 16, by + 20, 26 + sz, 20);
+        cx.globalAlpha = 1;
+      }
+      break;
+
+    case 'wyvernax': // Wyvernax: dragón juvenil morado con manchas negras y verdes
+      {
+        const flap = Math.sin(f * 0.16) * 3;
+        // cuerpo robusto todavía morado, con manchas negras graduales
+        px(x + 3, by + 20, 28 + sz, 14 + sz, '#3818A0');
+        px(x + 5, by + 22, 24 + sz, 10 + sz, '#5838C0');
+        px(x + 9, by + 24, 16 + sz, 6, '#6840C0');
+        px(x + 7, by + 21, 6, 5, '#151018'); // mancha negra
+        px(x + sz + 23, by + 27, 6, 4, '#151018');
+        // cola morada con punta negra/verde
+        px(x - 8, by + 25, 14, 5, '#281070');
+        px(x - 13, by + 23, 6, 4, '#101010');
+        px(x - 15, by + 22, 3, 3, '#1ED060');
+        // alas de dragón imponentes pero no finales: morado con manchas negras y venas verdes
+        px(x - 10, by + 8 + flap, 20, 9, '#2810A0');
+        px(x - 14, by + 16 + flap, 22, 8, '#3818B0');
+        px(x - 8, by + 20 + flap, 14, 6, '#181020');
+        px(x + sz + 25, by + 8 - flap, 20, 9, '#2810A0');
+        px(x + sz + 27, by + 16 - flap, 22, 8, '#3818B0');
+        px(x + sz + 30, by + 20 - flap, 14, 6, '#181020');
+        px(x - 5, by + 15 + flap, 12, 2, '#1ED060');
+        px(x + sz + 31, by + 15 - flap, 12, 2, '#1ED060');
+        // cuello y cabeza más dracónicos
+        px(x + 22, by + 10, 8 + sz, 14, '#3818A0');
+        px(x + 25, by + 7, 15 + sz, 12, '#4828B0');
+        px(x + 28, by + 9, 11 + sz, 8, '#6840C0');
+        px(x + 31, by + 10, 6, 4, '#151018');
+        // cuernos morados oscuros con puntas verdes
+        px(x + 25, by + 1, 4, 7, '#1C1028');
+        px(x + sz + 38, by + 1, 4, 7, '#1C1028');
+        px(x + 24, by - 2, 3, 4, '#1ED060');
+        px(x + sz + 41, by - 2, 3, 4, '#1ED060');
+        // ojos verdes
+        px(x + 29, by + 10, 5, 4, '#74FF80');
+        px(x + sz + 37, by + 10, 5, 4, '#74FF80');
+        px(x + 31, by + 11, 3, 2, '#001008');
+        px(x + sz + 39, by + 11, 3, 2, '#001008');
+        px(x + 31, by + 18, 7, 2, '#2AF078');
+        // patas/garras
+        px(x + 8, by + 31 + sz, 6, 7, '#3818A0');
+        px(x + sz + 24, by + 31 + sz, 6, 7, '#3818A0');
+        px(x + 10, by + 36 + sz, 2, 2, '#1ED060');
+        px(x + sz + 26, by + 36 + sz, 2, 2, '#1ED060');
+      }
+      break;
+
+    case 'wyvernlord': // Wyvernlord: dragón negro imponente con pecho morado y energía verde
       {
         const flap = Math.sin(f * 0.12) * 4;
-        // alas gigantes negras dominan toda la silueta
-        px(x - 24, by + 3 + flap, 30, 10, '#050508');
-        px(x - 30, by + 12 + flap, 36, 10, '#0A0810');
-        px(x - 26, by + 22 + flap, 28, 8, '#141018');
-        px(x - 20, by + 28 + flap, 18, 6, '#201828');
-        px(x + sz + 30, by + 3 - flap, 30, 10, '#050508');
-        px(x + sz + 30, by + 12 - flap, 36, 10, '#0A0810');
-        px(x + sz + 34, by + 22 - flap, 28, 8, '#141018');
-        px(x + sz + 38, by + 28 - flap, 18, 6, '#201828');
-        // venas verdes de ala
-        px(x - 18, by + 12 + flap, 18, 2, '#1ED060');
-        px(x - 16, by + 23 + flap, 14, 2, '#2AF078');
-        px(x + sz + 42, by + 12 - flap, 18, 2, '#1ED060');
-        px(x + sz + 42, by + 23 - flap, 14, 2, '#2AF078');
-        // cuerpo central compacto y negro
-        px(x + 6, by + 20, 24 + sz, 16 + sz, '#0A0810');
-        px(x + 8, by + 22, 20 + sz, 12 + sz, '#141018');
-        px(x + 11, by + 24, 14 + sz, 7, '#302040');
-        px(x + 14, by + 24, 5, 4, '#1ED060');
-        // cuello y cabeza coronada negra
-        px(x + 14, by + 8, 6 + sz, 14, '#0A0810');
+        // alas enormes: casi todo negro, venas verdes
+        px(x - 26, by + 2 + flap, 32, 10, '#050508');
+        px(x - 34, by + 12 + flap, 40, 11, '#0A0810');
+        px(x - 30, by + 23 + flap, 32, 9, '#141018');
+        px(x - 22, by + 31 + flap, 20, 6, '#201828');
+        px(x + sz + 31, by + 2 - flap, 32, 10, '#050508');
+        px(x + sz + 31, by + 12 - flap, 40, 11, '#0A0810');
+        px(x + sz + 37, by + 23 - flap, 32, 9, '#141018');
+        px(x + sz + 41, by + 31 - flap, 20, 6, '#201828');
+        px(x - 18, by + 13 + flap, 18, 2, '#1ED060');
+        px(x - 16, by + 25 + flap, 14, 2, '#2AF078');
+        px(x + sz + 43, by + 13 - flap, 18, 2, '#1ED060');
+        px(x + sz + 43, by + 25 - flap, 14, 2, '#2AF078');
+        // cuerpo negro con pecho morado visible
+        px(x + 4, by + 19, 28 + sz, 18 + sz, '#050508');
+        px(x + 7, by + 21, 22 + sz, 14 + sz, '#0A0810');
+        px(x + 11, by + 23, 14 + sz, 10, '#4828B0'); // pecho morado conservado
+        px(x + 14, by + 24, 8 + sz, 6, '#6840C0');
+        px(x + 16, by + 25, 4, 3, '#1ED060');
+        // cuello y cabeza poderosa
+        px(x + 14, by + 7, 7 + sz, 15, '#050508');
         px(x + 16, by + 6, 3 + sz, 15, '#201828');
-        px(x + 7, by - 2, 22 + sz, 13, '#050508');
-        px(x + 9, by + 0, 18 + sz, 9, '#141018');
-        px(x + 12, by + 2, 12 + sz, 5, '#302040');
-        // corona/cuernos negros con puntas verdes, sin amarillo
-        px(x + 3, by - 8, 6, 8, '#050508');
-        px(x + sz + 27, by - 8, 6, 8, '#050508');
-        px(x + 7, by - 12, 20 + sz, 4, '#101010');
-        px(x + 12, by - 15, 8 + sz, 3, '#1ED060');
-        px(x + 5, by - 10, 3, 3, '#2AF078');
-        px(x + sz + 29, by - 10, 3, 3, '#2AF078');
-        // ojos verdes brillantes
+        px(x + 6, by - 2, 24 + sz, 14, '#050508');
+        px(x + 8, by + 0, 20 + sz, 10, '#141018');
+        px(x + 11, by + 2, 14 + sz, 6, '#302040');
+        // cuernos/corona negros con puntas verdes
+        px(x + 2, by - 9, 7, 9, '#050508');
+        px(x + sz + 28, by - 9, 7, 9, '#050508');
+        px(x + 7, by - 13, 20 + sz, 4, '#101010');
+        px(x + 12, by - 16, 8 + sz, 3, '#1ED060');
+        px(x + 5, by - 11, 3, 3, '#2AF078');
+        px(x + sz + 30, by - 11, 3, 3, '#2AF078');
+        // ojos verdes y mandíbula
         px(x + 9, by + 3, 6, 5, '#74FF80');
-        px(x + sz + 22, by + 3, 6, 5, '#74FF80');
+        px(x + sz + 23, by + 3, 6, 5, '#74FF80');
         px(x + 11, by + 5, 4, 3, '#001008');
-        px(x + sz + 24, by + 5, 4, 3, '#001008');
-        px(x + 13, by + 10, 8, 3, '#050508');
-        px(x + 15, by + 13, 4, 2, '#2AF078');
-        // garras/patas grandes negras con uñas verdes
-        px(x + 5, by + 34 + sz, 8, 7, '#0A0810');
-        px(x + sz + 24, by + 34 + sz, 8, 7, '#0A0810');
-        px(x + 1, by + 39 + sz, 6, 3, '#1ED060');
-        px(x + sz + 31, by + 39 + sz, 6, 3, '#1ED060');
+        px(x + sz + 25, by + 5, 4, 3, '#001008');
+        px(x + 13, by + 10, 9, 3, '#050508');
+        px(x + 15, by + 13, 5, 2, '#2AF078');
+        // garras negras con uñas verdes
+        px(x + 5, by + 35 + sz, 8, 8, '#0A0810');
+        px(x + sz + 25, by + 35 + sz, 8, 8, '#0A0810');
+        px(x + 1, by + 41 + sz, 7, 3, '#1ED060');
+        px(x + sz + 32, by + 41 + sz, 7, 3, '#1ED060');
         cx.globalAlpha = 0.08;
         cx.fillStyle = '#1ED060';
-        pixelGlow(x + 16, by + 18, 36 + sz, 22);
+        pixelGlow(x + 16, by + 18, 40 + sz, 24);
         cx.globalAlpha = 1;
       }
       break;
