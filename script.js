@@ -3539,8 +3539,59 @@ function dFallenPortrait(id, x, y, sc = 4) {
   cx.restore();
 }
 
+// === ASSETS DE FONDOS DE BATALLA ===
+const BATTLE_BG_ASSETS = {
+  forest: {
+    src: 'assets/battle/forest-encounter.png',
+    img: null,
+    ready: false,
+    failed: false,
+  },
+};
+
+function initBattleBackgroundAssets() {
+  if (typeof Image === 'undefined') return;
+  Object.values(BATTLE_BG_ASSETS).forEach((bg) => {
+    if (bg.img) return;
+    const img = new Image();
+    bg.img = img;
+    img.onload = () => {
+      bg.ready = true;
+      bg.failed = false;
+    };
+    img.onerror = () => {
+      bg.ready = false;
+      bg.failed = true;
+    };
+    img.src = bg.src;
+  });
+}
+
+function drawBattleBackgroundAsset(key) {
+  const bg = BATTLE_BG_ASSETS[key];
+  if (!bg || !bg.img || !bg.ready || bg.img.naturalWidth <= 0) return false;
+  try {
+    cx.imageSmoothingEnabled = false;
+    // Efecto cover: cubre todo el canvas manteniendo proporción.
+    const iw = bg.img.naturalWidth;
+    const ih = bg.img.naturalHeight;
+    const scale = Math.max(640 / iw, 480 / ih);
+    const dw = Math.ceil(iw * scale);
+    const dh = Math.ceil(ih * scale);
+    const dx = Math.floor((640 - dw) / 2);
+    const dy = Math.floor((480 - dh) / 2);
+    cx.drawImage(bg.img, dx, dy, dw, dh);
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
 // === FONDO ESPECIAL PARA ENCUENTRO SALVAJE EN MAPA NORMAL ===
 function dWorldEncounterBG() {
+  // Si existe assets/battle/forest-encounter.png, usarlo. Si no, usar fallback por código.
+  if (drawBattleBackgroundAsset('forest')) return;
+
   // Cielo pixel-art del bosque exterior
   const gr = cx.createLinearGradient(0, 0, 0, 250);
   gr.addColorStop(0, '#6FB8E8');
@@ -20077,6 +20128,8 @@ function loop() {
 
 // === INICIALIZACIÓN ===
 function init() {
+  initBattleBackgroundAssets();
+
   // Generar mapas
   genWorld();
   genCave(cave1, CC, CR);
