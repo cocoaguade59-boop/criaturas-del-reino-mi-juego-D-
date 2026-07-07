@@ -3539,8 +3539,115 @@ function dFallenPortrait(id, x, y, sc = 4) {
   cx.restore();
 }
 
+// === FONDO ESPECIAL PARA ENCUENTRO SALVAJE EN MAPA NORMAL ===
+function dWorldEncounterBG() {
+  // Cielo pixel-art del bosque exterior
+  const gr = cx.createLinearGradient(0, 0, 0, 250);
+  gr.addColorStop(0, '#6FB8E8');
+  gr.addColorStop(0.55, '#B8E0F0');
+  gr.addColorStop(1, '#D8F0D0');
+  cx.fillStyle = gr;
+  cx.fillRect(0, 0, 640, 245);
+
+  // Nubes cuadradas suaves, sin curvas
+  for (let i = 0; i < 4; i++) {
+    const nx = (i * 190 - fr * 0.18) % 780 - 80;
+    const ny = 28 + (i % 2) * 34;
+    cx.fillStyle = 'rgba(120,160,190,.18)';
+    cx.fillRect(nx + 8, ny + 12, 92, 16);
+    cx.fillStyle = '#F8F8F0';
+    cx.fillRect(nx, ny + 10, 96, 14);
+    cx.fillRect(nx + 18, ny + 4, 28, 15);
+    cx.fillRect(nx + 48, ny, 34, 19);
+    cx.fillStyle = '#DCECF0';
+    cx.fillRect(nx + 4, ny + 22, 86, 3);
+  }
+
+  // Bosque profundo por capas
+  cx.fillStyle = '#184A2A';
+  cx.fillRect(0, 150, 640, 115);
+  for (let i = 0; i < 18; i++) {
+    const tx = i * 42 - ((fr * 0.05) % 42);
+    const h = 44 + (i % 4) * 10;
+    cx.fillStyle = i % 2 ? '#143A24' : '#1F5A32';
+    cx.fillRect(tx + 10, 150 - h, 18, h + 95);
+    cx.fillStyle = i % 2 ? '#20683A' : '#2A7A42';
+    cx.fillRect(tx, 122 - h * 0.25, 38, 16);
+    cx.fillRect(tx - 8, 135 - h * 0.25, 54, 18);
+    cx.fillRect(tx + 7, 108 - h * 0.25, 26, 18);
+  }
+  // Árboles frontales más definidos
+  for (let i = 0; i < 9; i++) {
+    const tx = i * 82 - 34;
+    cx.fillStyle = '#5A3818';
+    cx.fillRect(tx + 36, 142, 10, 105);
+    cx.fillStyle = '#6A4828';
+    cx.fillRect(tx + 37, 142, 3, 105);
+    cx.fillStyle = '#185C2A';
+    cx.fillRect(tx + 18, 104, 48, 26);
+    cx.fillStyle = '#20743A';
+    cx.fillRect(tx + 10, 124, 64, 28);
+    cx.fillStyle = '#2B8A45';
+    cx.fillRect(tx + 25, 86, 34, 25);
+    cx.fillStyle = '#45A85A';
+    cx.fillRect(tx + 31, 102, 16, 8);
+  }
+
+  // Suelo exterior con hierba alta de batalla
+  cx.fillStyle = '#2F7A30';
+  cx.fillRect(0, 245, 640, 235);
+  cx.fillStyle = '#3F8E3A';
+  cx.fillRect(0, 245, 640, 8);
+  for (let y = 260; y < 480; y += 18) {
+    cx.fillStyle = y % 36 === 0 ? '#2A6E2A' : '#347E34';
+    cx.fillRect(0, y, 640, 2);
+  }
+  // Parches de hierba alta frontales
+  const grassCols = ['#3A9C28', '#46B030', '#60C840'];
+  for (let i = 0; i < 90; i++) {
+    const gx = (i * 37 + (i % 5) * 9) % 640;
+    const gy = 255 + ((i * 23) % 190);
+    cx.fillStyle = grassCols[i % grassCols.length];
+    cx.fillRect(gx, gy, 3, 14 + (i % 4) * 4);
+    cx.fillStyle = '#8FE060';
+    if (i % 3 === 0) cx.fillRect(gx, gy, 3, 3);
+  }
+
+  // Plataformas estilo encuentro exterior: tierra y césped, no genéricas
+  cx.fillStyle = '#8A6A3A';
+  cx.fillRect(338, 177, 190, 16);
+  cx.fillStyle = '#A0804A';
+  cx.fillRect(346, 172, 174, 8);
+  cx.fillStyle = '#3A9C28';
+  cx.fillRect(342, 168, 182, 6);
+  cx.fillStyle = '#5FC848';
+  for (let i = 0; i < 18; i++) cx.fillRect(348 + i * 9, 164 + (i % 2) * 2, 4, 6);
+
+  cx.fillStyle = '#8A6A3A';
+  cx.fillRect(55, 307, 196, 16);
+  cx.fillStyle = '#A0804A';
+  cx.fillRect(64, 302, 178, 8);
+  cx.fillStyle = '#3A9C28';
+  cx.fillRect(60, 298, 186, 6);
+  cx.fillStyle = '#5FC848';
+  for (let i = 0; i < 19; i++) cx.fillRect(66 + i * 9, 294 + (i % 2) * 2, 4, 6);
+
+  // Brillos ambientales cuadrados tipo luciérnagas
+  for (let i = 0; i < 8; i++) {
+    const alpha = Math.sin(fr * 0.05 + i) * 0.25 + 0.35;
+    cx.globalAlpha = alpha;
+    cx.fillStyle = '#F8F8C0';
+    cx.fillRect((i * 79 + fr * 0.2) % 640, 180 + (i * 31) % 90, 2, 2);
+  }
+  cx.globalAlpha = 1;
+}
+
 // === GRADIENTE DE FONDO (para batalla) ===
 function dBattleBG() {
+  if (G.bs && !G.bs.isNPC && G.bs.bgMap === 'world' && !G.bs.isBoss) {
+    dWorldEncounterBG();
+    return;
+  }
   const gr = cx.createLinearGradient(0, 0, 0, 240);
   gr.addColorStop(0, '#1a0a3a');
   gr.addColorStop(0.5, '#2a1a4a');
@@ -15321,6 +15428,7 @@ function startWild(forceType) {
     fought: [0],
     isNPC: false,
     npcSprite: null,
+    bgMap: G.curMap,
     fleeChance: getWildFleeChance(),
     npcIntro: null,
     introPhase: 0,
