@@ -13382,7 +13382,7 @@ function startNewGameFlow() {
   G.pl.stepTarget = null;
   G.pl.moving = false;
   G.scr = 'intro';
-  G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+  G.intro = { phase: 0, y: 82, li: 0, ci: 0, tm: 0, full: false };
 }
 
 function uTitle() {
@@ -13640,13 +13640,12 @@ const INTRO_LINES = [
 ];
 
 function uIntro() {
-  if (!G.intro) G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+  if (!G.intro) G.intro = { phase: 0, y: 82, li: 0, ci: 0, tm: 0, full: false };
   const it = G.intro;
-  updateCamera(WC, WR);
   if (it.phase === 0) {
-    it.y += 0.045;
-    if (it.y >= 144 || kp(' ') || kp('Enter')) {
-      it.y = 144;
+    it.y += 2.4;
+    if (it.y >= 198 || kp(' ') || kp('Enter')) {
+      it.y = 198;
       it.phase = 1;
       it.tm = 0;
     }
@@ -13679,22 +13678,67 @@ function uIntro() {
 }
 
 function dIntro() {
-  updateCamera(WC, WR);
-  drawMap();
-  const it = G.intro || { y: 144, phase: 1, li: 0, ci: 0, full: false };
-  const ax = 20 * T - cam.x,
-    ay = it.y * T - cam.y;
-  dNPC(ax, ay - 8, 'alessandro', fr);
+  // Escena propia de introducción para evitar zonas negras por límites del mapa.
+  const it = G.intro || { y: 198, phase: 1, li: 0, ci: 0, full: false };
+
+  // Fondo completo de Aldea Pitch, dibujado a pantalla completa.
+  cx.fillStyle = '#58A830';
+  cx.fillRect(0, 0, 640, 480);
+  cx.fillStyle = '#48982A';
+  for (let yy = 0; yy < 480; yy += 32) {
+    for (let xx = 0; xx < 640; xx += 32) {
+      if (((xx + yy) / 32) % 2 === 0) cx.fillRect(xx, yy, 32, 32);
+    }
+  }
+  // Plaza y caminos pixelados
+  cx.fillStyle = '#C8B898';
+  cx.fillRect(192, 132, 256, 210);
+  cx.fillStyle = '#D8C8A8';
+  for (let yy = 142; yy < 332; yy += 32) cx.fillRect(206, yy, 228, 4);
+  for (let xx = 206; xx < 434; xx += 32) cx.fillRect(xx, 148, 4, 184);
+  cx.fillStyle = '#B8A888';
+  cx.fillRect(306, 0, 28, 480);
+  cx.fillRect(0, 250, 640, 28);
+
+  // Flores, cajas, pozo y muñecos de entrenamiento como contexto visual.
+  for (let i = 0; i < 12; i++) {
+    const fx = 70 + (i * 47) % 500;
+    const fy = 80 + (i * 71) % 300;
+    cx.fillStyle = i % 2 ? '#E85A82' : '#E8C830';
+    cx.fillRect(fx, fy, 5, 5);
+    cx.fillStyle = '#38A028';
+    cx.fillRect(fx + 2, fy + 5, 1, 6);
+  }
+  // Pozo
+  cx.fillStyle = '#6E6E6E'; cx.fillRect(286, 170, 42, 18);
+  cx.fillStyle = '#8A8A8A'; cx.fillRect(292, 164, 30, 8);
+  cx.fillStyle = '#202838'; cx.fillRect(296, 174, 22, 8);
+  cx.fillStyle = '#6A4828'; cx.fillRect(290, 144, 5, 24); cx.fillRect(319, 144, 5, 24); cx.fillRect(290, 140, 34, 5);
+  // Cajas
+  cx.fillStyle = '#8A5A28'; cx.fillRect(452, 226, 22, 22); cx.fillRect(478, 214, 24, 34);
+  cx.fillStyle = '#A07038'; cx.fillRect(456, 230, 14, 4); cx.fillRect(482, 218, 16, 4);
+  // Muñecos
+  cx.fillStyle = '#6A4828'; cx.fillRect(150, 210, 6, 42); cx.fillRect(132, 224, 42, 6);
+  cx.fillStyle = '#C8B080'; cx.fillRect(140, 202, 26, 16);
+  cx.fillStyle = '#E83030'; cx.fillRect(146, 208, 5, 5); cx.fillRect(156, 208, 5, 5);
+
+  // Protagonista al centro de la imagen, mirando hacia Alessandro.
+  dPlayerGBA(304, 252, 3, fr);
+
+  // Alessandro se mueve hasta quedar al frente del jugador.
+  dNPC(304, it.y, 'alessandro', fr);
+
   if (it.phase === 0) {
     dDialogBox(20, 390, 600, 70, 'Alessandro');
     cx.fillStyle = '#000';
     cx.font = '8px "Press Start 2P"';
-    cx.fillText('Alessandro se acerca...', 36, 420);
+    cx.fillText('Alessandro se acerca para darte la bienvenida...', 36, 420);
     cx.fillStyle = '#888';
     cx.font = '6px "Press Start 2P"';
     cx.fillText('SPACE: acelerar', 36, 448);
     return;
   }
+
   const shown = INTRO_LINES[it.li].substring(0, it.ci);
   const lines = wrapText(shown, 48);
   dDialogBox(20, 372, 600, 96, 'Alessandro');
@@ -16244,7 +16288,7 @@ function resetGame(startIntro = false) {
   if (startIntro) {
     G.pl.d = 3;
     G.scr = 'intro';
-    G.intro = { phase: 0, y: 141.2, li: 0, ci: 0, tm: 0, full: false };
+    G.intro = { phase: 0, y: 82, li: 0, ci: 0, tm: 0, full: false };
   }
 }
 
