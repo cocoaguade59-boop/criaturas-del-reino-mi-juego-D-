@@ -7341,73 +7341,89 @@ function dCre(x, y, id, lv, f) {
       }
       break;
 
-    case 'ajolord': // Ajolord: adolescente con brazos gruesos y caídos
+    case 'ajolord': // Ajolord: piel morada, brazos gruesos caídos y picos de hielo
       {
         const droop = Math.sin(f * 0.1) * 1;
-        // cuerpo tamaño intermedio
-        px(x + 4, by + 18, 24 + sz, 14 + sz, '#2060B0');
-        px(x + 6, by + 20, 20 + sz, 10 + sz, '#2878C8');
-        px(x + 8, by + 22, 16 + sz, 6, '#3090D8');
+        const P1 = '#5A4AA0', P2 = '#6A58B8', P3 = '#8070D0';
+        const ICE1 = '#B8E8F8', ICE2 = '#E8F8FF';
+        // cuerpo intermedio más morado, preparando la armadura de hielo final
+        px(x + 4, by + 18, 24 + sz, 14 + sz, P1);
+        px(x + 6, by + 20, 20 + sz, 10 + sz, P2);
+        px(x + 8, by + 22, 16 + sz, 6, P3);
+        // placas/picos de hielo en hombros y lomo
+        px(x + 5, by + 15, 5, 5, ICE1);
+        px(x + 13, by + 13, 5, 7, ICE2);
+        px(x + sz + 25, by + 15, 5, 5, ICE1);
+        px(x + 17, by + 17, 4, 3, '#C8F0F8');
         // brazos gruesos, largos y caídos como adolescente pesado
-        px(x - 2, by + 20 + droop, 9, 14, '#1858A8');
-        px(x - 5, by + 29 + droop, 8, 6, '#2068B8');
-        px(x - 8, by + 33 + droop, 7, 4, '#3090D8');
-        px(x + sz + 26, by + 20 - droop, 9, 14, '#1858A8');
-        px(x + sz + 32, by + 29 - droop, 8, 6, '#2068B8');
-        px(x + sz + 38, by + 33 - droop, 7, 4, '#3090D8');
-        // cabeza seria
-        px(x + 4, by + 4, 24 + sz, 16, '#2060B0');
-        px(x + 6, by + 6, 20 + sz, 12, '#2878C8');
-        px(x + 8, by + 8, 16 + sz, 8, '#3090D8');
-        // branquias intermedias
-        px(x - 2, by + 2, 6, 4, '#F060A0');
-        px(x - 4, by + 6, 6, 4, '#D85090');
-        px(x - 3, by + 10, 6, 4, '#F060A0');
-        px(x + sz + 28, by + 2, 6, 4, '#F060A0');
-        px(x + sz + 30, by + 6, 6, 4, '#D85090');
-        px(x + sz + 29, by + 10, 6, 4, '#F060A0');
-        // ojos con cejas, más serio pero no feo
-        px(x + 8, by + 8, 5, 5, '#fff');
-        px(x + sz + 18, by + 8, 5, 5, '#fff');
-        px(x + 10, by + 10, 3, 3, '#0840A0');
-        px(x + sz + 20, by + 10, 3, 3, '#0840A0');
-        px(x + 8, by + 7, 5, 1, '#103C88');
-        px(x + sz + 18, by + 7, 5, 1, '#103C88');
-        px(x + 14, by + 16, 5, 1, '#1858A0');
+        px(x - 2, by + 20 + droop, 9, 14, '#4A3C90');
+        px(x - 5, by + 29 + droop, 8, 6, '#5A4AA0');
+        px(x - 8, by + 33 + droop, 7, 4, '#8070D0');
+        px(x + sz + 26, by + 20 - droop, 9, 14, '#4A3C90');
+        px(x + sz + 32, by + 29 - droop, 8, 6, '#5A4AA0');
+        px(x + sz + 38, by + 33 - droop, 7, 4, '#8070D0');
+        // cabeza morada con placas de hielo
+        px(x + 4, by + 4, 24 + sz, 16, P1);
+        px(x + 6, by + 6, 20 + sz, 12, P2);
+        px(x + 8, by + 8, 16 + sz, 8, P3);
+        px(x + 10, by + 1, 5, 6, ICE2);
+        px(x + 18, by - 2, 5, 9, ICE1);
+        px(x + sz + 25, by + 1, 5, 6, ICE2);
+        // branquias intermedias congelándose
+        px(x - 2, by + 2, 6, 4, '#C8F0F8');
+        px(x - 4, by + 6, 6, 4, '#90D0F0');
+        px(x - 3, by + 10, 6, 4, '#C8F0F8');
+        px(x + sz + 28, by + 2, 6, 4, '#C8F0F8');
+        px(x + sz + 30, by + 6, 6, 4, '#90D0F0');
+        px(x + sz + 29, by + 10, 6, 4, '#C8F0F8');
+        // ojos y cejas frías
+        px(x + 8, by + 8, 5, 5, '#E8F8FF');
+        px(x + sz + 18, by + 8, 5, 5, '#E8F8FF');
+        px(x + 10, by + 10, 3, 3, '#103C88');
+        px(x + sz + 20, by + 10, 3, 3, '#103C88');
+        px(x + 8, by + 7, 5, 1, '#382878');
+        px(x + sz + 18, by + 7, 5, 1, '#382878');
+        px(x + 14, by + 16, 5, 1, '#403080');
         // cola lateral y pies
-        px(x - 2, by + 30, 10, 4, '#2060B0');
-        px(x - 7, by + 28, 6, 4, '#2878C8');
-        px(x - 11, by + 26, 5, 4, '#3090D8');
-        px(x + 6, by + 30 + sz, 5, 4, '#2060B0');
-        px(x + sz + 20, by + 30 + sz, 5, 4, '#2060B0');
+        px(x - 2, by + 30, 10, 4, P1);
+        px(x - 7, by + 28, 6, 4, P2);
+        px(x - 11, by + 26, 5, 4, ICE1);
+        px(x + 6, by + 30 + sz, 5, 4, P1);
+        px(x + sz + 20, by + 30 + sz, 5, 4, P1);
       }
       break;
 
-    case 'glaciolote': // Glaciolote: bestia cuadrúpeda imponente de hielo con barba
+    case 'glaciolote': // Glaciolote: armadura de hielo imponente con piel morada apenas visible
       {
         const frost = Math.sin(f * 0.08) * 1;
+        const SKP = '#4A3478';
         // aura fría pixelada detrás para presencia
         cx.globalAlpha = 0.08;
         cx.fillStyle = '#88D0F8';
         pixelGlow(x + 16, by + 20 + frost, 30 + sz, 22);
         cx.globalAlpha = 1;
 
-        // torso grande y bajo de bestia, mucho más imponente
-        px(x - 3, by + 18, 39 + sz, 16 + sz, '#4F86B0');
-        px(x + 0, by + 20, 33 + sz, 12 + sz, '#6FA8D0');
+        // piel morada visible en sombras debajo de la armadura
+        px(x - 1, by + 19, 36 + sz, 16 + sz, SKP);
+        px(x + 3, by + 24, 28 + sz, 7, '#5A4090');
+        // armadura de hielo: placas dominantes
+        px(x - 3, by + 17, 39 + sz, 8, '#4F86B0');
+        px(x + 0, by + 20, 33 + sz, 11 + sz, '#6FA8D0');
         px(x + 4, by + 22, 26 + sz, 7, '#A8E0F8');
         px(x + 8, by + 24, 18 + sz, 3, '#E8F8F8');
-        // lomo con placas de hielo
-        px(x + 1, by + 13, 6, 7, '#C8F0F8');
-        px(x + 9, by + 10, 6, 10, '#E8F8F8');
-        px(x + 18, by + 11, 6, 9, '#C8F0F8');
-        px(x + sz + 28, by + 14, 6, 6, '#B8E8F8');
+        // placas grandes del lomo
+        px(x - 1, by + 11, 7, 9, '#C8F0F8');
+        px(x + 8, by + 7, 7, 13, '#E8F8F8');
+        px(x + 18, by + 8, 7, 12, '#C8F0F8');
+        px(x + sz + 29, by + 12, 7, 8, '#B8E8F8');
 
-        // cuatro patas gruesas de criatura pesada
+        // cuatro patas con armadura; piel morada apenas en articulaciones
         px(x + 0, by + 31 + sz, 7, 10, '#4F86B0');
         px(x + 10, by + 32 + sz, 7, 10, '#4F86B0');
         px(x + sz + 22, by + 32 + sz, 7, 10, '#4F86B0');
         px(x + sz + 32, by + 31 + sz, 7, 10, '#4F86B0');
+        px(x + 2, by + 35 + sz, 3, 3, SKP);
+        px(x + sz + 34, by + 35 + sz, 3, 3, SKP);
         px(x - 1, by + 39 + sz, 10, 3, '#E8F8F8');
         px(x + 9, by + 40 + sz, 10, 3, '#E8F8F8');
         px(x + sz + 21, by + 40 + sz, 10, 3, '#E8F8F8');
@@ -7418,8 +7434,9 @@ function dCre(x, y, id, lv, f) {
         px(x - 20, by + 22, 8, 6, '#A8E0F8');
         px(x - 24, by + 20, 5, 4, '#E8F8F8');
 
-        // cabeza más grande, baja y amenazante
-        px(x + 2, by + 1, 31 + sz, 18, '#4F86B0');
+        // cabeza blindada: morado visible solo en ranuras
+        px(x + 2, by + 1, 31 + sz, 18, SKP);
+        px(x + 3, by + 0, 31 + sz, 8, '#4F86B0');
         px(x + 4, by + 3, 27 + sz, 14, '#6FA8D0');
         px(x + 7, by + 5, 21 + sz, 9, '#A8E0F8');
         // branquias/cristales laterales grandes
@@ -7431,16 +7448,16 @@ function dCre(x, y, id, lv, f) {
         px(x + sz + 35, by + 13, 8, 5, '#C8F0F8');
         // corona de hielo superior
         px(x + 5, by - 5, 5, 7, '#D8F8FF');
-        px(x + 13, by - 9, 5, 11, '#E8F8F8');
+        px(x + 13, by - 10, 6, 12, '#E8F8F8');
         px(x + 23, by - 6, 5, 8, '#C8F0F8');
-        px(x + 16, by - 12, 3, 5, '#FFFFFF');
-        // ojos intensos
+        px(x + 16, by - 13, 3, 5, '#FFFFFF');
+        // ojos intensos desde ranuras moradas
         px(x + 7, by + 7, 7, 6, '#D8F0F8');
         px(x + sz + 22, by + 7, 7, 6, '#D8F0F8');
         px(x + 9, by + 9, 4, 4, '#103C88');
         px(x + sz + 24, by + 9, 4, 4, '#103C88');
-        px(x + 7, by + 6, 7, 1, '#305878');
-        px(x + sz + 22, by + 6, 7, 1, '#305878');
+        px(x + 7, by + 6, 7, 1, '#2F2458');
+        px(x + sz + 22, by + 6, 7, 1, '#2F2458');
 
         // barba helada más grande e imponente
         px(x + 8, by + 17, 20 + sz, 5, '#E8F8F8');
@@ -7448,8 +7465,6 @@ function dCre(x, y, id, lv, f) {
         px(x + 12, by + 25, 12 + sz, 4, '#A8E0F8');
         px(x + 15, by + 29, 6 + sz, 4, '#E8F8F8');
         px(x + 17, by + 33, 2 + sz, 3, '#FFFFFF');
-        // boca seria bajo la barba
-        px(x + 13, by + 16, 9, 1, '#5088B0');
         if (f % 20 < 10) {
           cx.globalAlpha = 0.55;
           px(x + sz + 33, by + 2 + Math.sin(f * 0.06) * 3, 2, 2, '#E8F8F8');
@@ -7925,88 +7940,97 @@ function dCre(x, y, id, lv, f) {
     // EVOLUCIONES DRAGÓN 🐉
     // ==========================================
 
-    case 'wyvernax': // Wyvernax: adolescente alargado, planeador agresivo
+    case 'wyvernax': // Wyvernax: adolescente oscuro con acentos verdes
       {
         const flap = Math.sin(f * 0.18) * 3;
-        // cuerpo largo horizontal, distinto del bebé enrollado
-        px(x + 2, by + 22, 30 + sz, 11 + sz, '#3818A0');
-        px(x + 5, by + 24, 24 + sz, 7 + sz, '#5838C0');
-        px(x - 8, by + 25, 12, 5, '#281070'); // cola larga
-        px(x - 13, by + 23, 6, 4, '#C8A030');
-        // alas medianas abiertas, planeando
-        px(x - 6, by + 10 + flap, 18, 9, '#2810A0');
-        px(x - 10, by + 17 + flap, 20, 7, '#3818B0');
-        px(x + sz + 24, by + 10 - flap, 18, 9, '#2810A0');
-        px(x + sz + 26, by + 17 - flap, 20, 7, '#3818B0');
-        px(x - 4, by + 13 + flap, 4, 10, '#C8A030');
-        px(x + sz + 38, by + 13 - flap, 4, 10, '#C8A030');
+        // cuerpo largo horizontal: negro empieza a tomar protagonismo
+        px(x + 2, by + 22, 30 + sz, 11 + sz, '#141018');
+        px(x + 5, by + 24, 24 + sz, 7 + sz, '#201828');
+        px(x - 8, by + 25, 12, 5, '#0A0810'); // cola larga
+        px(x - 13, by + 23, 6, 4, '#1ED060'); // punta verde venenosa
+        // alas medianas negras, con venas verdes
+        px(x - 6, by + 10 + flap, 18, 9, '#0A0810');
+        px(x - 10, by + 17 + flap, 20, 7, '#141018');
+        px(x + sz + 24, by + 10 - flap, 18, 9, '#0A0810');
+        px(x + sz + 26, by + 17 - flap, 20, 7, '#141018');
+        px(x - 4, by + 14 + flap, 12, 2, '#1ED060');
+        px(x + sz + 30, by + 14 - flap, 12, 2, '#1ED060');
+        px(x - 1, by + 19 + flap, 8, 2, '#2AF078');
+        px(x + sz + 31, by + 19 - flap, 8, 2, '#2AF078');
         // cuello/cabeza hacia delante
-        px(x + 22, by + 10, 7 + sz, 14, '#3818A0');
-        px(x + 25, by + 7, 14 + sz, 11, '#4828B0');
-        px(x + 28, by + 9, 10 + sz, 7, '#6840C0');
-        // cuernos largos
-        px(x + 25, by + 1, 4, 7, '#C8A030');
-        px(x + sz + 37, by + 1, 4, 7, '#C8A030');
-        px(x + 24, by - 2, 3, 4, '#D8B040');
-        px(x + sz + 40, by - 2, 3, 4, '#D8B040');
-        // mirada agresiva
-        px(x + 29, by + 10, 5, 4, '#F0C020');
-        px(x + sz + 36, by + 10, 5, 4, '#F0C020');
-        px(x + 31, by + 11, 3, 2, '#100838');
-        px(x + sz + 38, by + 11, 3, 2, '#100838');
-        px(x + 29, by + 8, 5, 1, '#281070');
-        px(x + sz + 36, by + 8, 5, 1, '#281070');
-        px(x + 31, by + 18, 7, 2, '#E84020');
+        px(x + 22, by + 10, 7 + sz, 14, '#141018');
+        px(x + 25, by + 7, 14 + sz, 11, '#201828');
+        px(x + 28, by + 9, 10 + sz, 7, '#302040');
+        // cuernos negros y verdes, sin amarillo
+        px(x + 25, by + 1, 4, 7, '#050508');
+        px(x + sz + 37, by + 1, 4, 7, '#050508');
+        px(x + 24, by - 2, 3, 4, '#1ED060');
+        px(x + sz + 40, by - 2, 3, 4, '#1ED060');
+        // mirada verde agresiva
+        px(x + 29, by + 10, 5, 4, '#74FF80');
+        px(x + sz + 36, by + 10, 5, 4, '#74FF80');
+        px(x + 31, by + 11, 3, 2, '#001008');
+        px(x + sz + 38, by + 11, 3, 2, '#001008');
+        px(x + 29, by + 8, 5, 1, '#050508');
+        px(x + sz + 36, by + 8, 5, 1, '#050508');
+        px(x + 31, by + 18, 7, 2, '#2AF078');
         // patas traseras colgando
-        px(x + 8, by + 31 + sz, 6, 6, '#3818A0');
-        px(x + sz + 24, by + 31 + sz, 6, 6, '#3818A0');
+        px(x + 8, by + 31 + sz, 6, 6, '#141018');
+        px(x + sz + 24, by + 31 + sz, 6, 6, '#141018');
+        px(x + 10, by + 35 + sz, 2, 2, '#1ED060');
+        px(x + sz + 26, by + 35 + sz, 2, 2, '#1ED060');
       }
       break;
 
-    case 'wyvernlord': // Wyvernlord: señor del cielo, alas inmensas y cuerpo pequeño
+    case 'wyvernlord': // Wyvernlord: señor negro del cielo con pixeles verdes
       {
         const flap = Math.sin(f * 0.12) * 4;
-        // alas gigantes dominan toda la silueta
-        px(x - 24, by + 3 + flap, 30, 10, '#180870');
-        px(x - 30, by + 12 + flap, 36, 10, '#2810A0');
-        px(x - 26, by + 22 + flap, 28, 8, '#3818B0');
-        px(x - 20, by + 28 + flap, 18, 6, '#4828C0');
-        px(x + sz + 30, by + 3 - flap, 30, 10, '#180870');
-        px(x + sz + 30, by + 12 - flap, 36, 10, '#2810A0');
-        px(x + sz + 34, by + 22 - flap, 28, 8, '#3818B0');
-        px(x + sz + 38, by + 28 - flap, 18, 6, '#4828C0');
-        // huesos dorados de ala
-        px(x - 15, by + 10 + flap, 4, 22, '#C8A030');
-        px(x + sz + 47, by + 10 - flap, 4, 22, '#C8A030');
-        // cuerpo central relativamente compacto
-        px(x + 6, by + 20, 24 + sz, 16 + sz, '#280890');
-        px(x + 8, by + 22, 20 + sz, 12 + sz, '#3818A0');
-        px(x + 11, by + 24, 14 + sz, 7, '#5838C0');
-        // cuello y cabeza coronada
-        px(x + 14, by + 8, 6 + sz, 14, '#280890');
-        px(x + 16, by + 6, 3 + sz, 15, '#4828B0');
-        px(x + 7, by - 2, 22 + sz, 13, '#280890');
-        px(x + 9, by + 0, 18 + sz, 9, '#3818A0');
-        px(x + 12, by + 2, 12 + sz, 5, '#5838C0');
-        // corona/cuerno real
-        px(x + 3, by - 8, 6, 8, '#C8A030');
-        px(x + sz + 27, by - 8, 6, 8, '#C8A030');
-        px(x + 7, by - 12, 20 + sz, 4, '#E8C830');
-        px(x + 12, by - 15, 8 + sz, 3, '#F0D040');
-        // ojos brillantes
-        px(x + 9, by + 3, 6, 5, '#F0C020');
-        px(x + sz + 22, by + 3, 6, 5, '#F0C020');
-        px(x + 11, by + 5, 4, 3, '#080440');
-        px(x + sz + 24, by + 5, 4, 3, '#080440');
-        px(x + 13, by + 10, 8, 3, '#280890');
-        px(x + 15, by + 13, 4, 2, '#E84020');
-        // garras/patas grandes
-        px(x + 5, by + 34 + sz, 8, 7, '#280890');
-        px(x + sz + 24, by + 34 + sz, 8, 7, '#280890');
-        px(x + 1, by + 39 + sz, 6, 3, '#D8B040');
-        px(x + sz + 31, by + 39 + sz, 6, 3, '#D8B040');
-        cx.globalAlpha = 0.06;
-        cx.fillStyle = '#6030D0';
+        // alas gigantes negras dominan toda la silueta
+        px(x - 24, by + 3 + flap, 30, 10, '#050508');
+        px(x - 30, by + 12 + flap, 36, 10, '#0A0810');
+        px(x - 26, by + 22 + flap, 28, 8, '#141018');
+        px(x - 20, by + 28 + flap, 18, 6, '#201828');
+        px(x + sz + 30, by + 3 - flap, 30, 10, '#050508');
+        px(x + sz + 30, by + 12 - flap, 36, 10, '#0A0810');
+        px(x + sz + 34, by + 22 - flap, 28, 8, '#141018');
+        px(x + sz + 38, by + 28 - flap, 18, 6, '#201828');
+        // venas verdes de ala
+        px(x - 18, by + 12 + flap, 18, 2, '#1ED060');
+        px(x - 16, by + 23 + flap, 14, 2, '#2AF078');
+        px(x + sz + 42, by + 12 - flap, 18, 2, '#1ED060');
+        px(x + sz + 42, by + 23 - flap, 14, 2, '#2AF078');
+        // cuerpo central compacto y negro
+        px(x + 6, by + 20, 24 + sz, 16 + sz, '#0A0810');
+        px(x + 8, by + 22, 20 + sz, 12 + sz, '#141018');
+        px(x + 11, by + 24, 14 + sz, 7, '#302040');
+        px(x + 14, by + 24, 5, 4, '#1ED060');
+        // cuello y cabeza coronada negra
+        px(x + 14, by + 8, 6 + sz, 14, '#0A0810');
+        px(x + 16, by + 6, 3 + sz, 15, '#201828');
+        px(x + 7, by - 2, 22 + sz, 13, '#050508');
+        px(x + 9, by + 0, 18 + sz, 9, '#141018');
+        px(x + 12, by + 2, 12 + sz, 5, '#302040');
+        // corona/cuernos negros con puntas verdes, sin amarillo
+        px(x + 3, by - 8, 6, 8, '#050508');
+        px(x + sz + 27, by - 8, 6, 8, '#050508');
+        px(x + 7, by - 12, 20 + sz, 4, '#101010');
+        px(x + 12, by - 15, 8 + sz, 3, '#1ED060');
+        px(x + 5, by - 10, 3, 3, '#2AF078');
+        px(x + sz + 29, by - 10, 3, 3, '#2AF078');
+        // ojos verdes brillantes
+        px(x + 9, by + 3, 6, 5, '#74FF80');
+        px(x + sz + 22, by + 3, 6, 5, '#74FF80');
+        px(x + 11, by + 5, 4, 3, '#001008');
+        px(x + sz + 24, by + 5, 4, 3, '#001008');
+        px(x + 13, by + 10, 8, 3, '#050508');
+        px(x + 15, by + 13, 4, 2, '#2AF078');
+        // garras/patas grandes negras con uñas verdes
+        px(x + 5, by + 34 + sz, 8, 7, '#0A0810');
+        px(x + sz + 24, by + 34 + sz, 8, 7, '#0A0810');
+        px(x + 1, by + 39 + sz, 6, 3, '#1ED060');
+        px(x + sz + 31, by + 39 + sz, 6, 3, '#1ED060');
+        cx.globalAlpha = 0.08;
+        cx.fillStyle = '#1ED060';
         pixelGlow(x + 16, by + 18, 36 + sz, 22);
         cx.globalAlpha = 1;
       }
